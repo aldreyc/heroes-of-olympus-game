@@ -1,0 +1,22 @@
+{
+  "tool": "Built-in image_gen",
+  "purpose": "Replace shared lineup background crops with one transparent character-select portrait per hero.",
+  "reference": "/assets/reference/lineup.png",
+  "portraits": [
+    {
+      "hero": "jason",
+      "file": "/assets/art/portraits/jason.png",
+      "prompt": "Use case: background-extraction / identity-preserve.\nAsset type: individual transparent character-select portrait for a pixel-art browser fighting game.\nInput image 1 is Rodrigo's supplied character lineup and the edit target. Extract ONLY the FIRST, leftmost boy: Jason, the blond blue-eyed teenage boy wearing the purple T-shirt, dark backpack straps and jeans. Preserve his exact recognizable hairstyle, face, reserved expression, posture and purple outfit.\nRemove every other person completely. There must be exactly ONE character, no fragments or silhouettes of any neighbors.\nPreserve the reference's crisp detailed pixel-art illustration, warm palette and proportions. Do not redesign or age the character.\nComposition: square canvas, a centered large portrait from just above the entire head down to mid-thigh; include both shoulders and the complete arm pose. Head occupies the upper third. Small clear breathing room above the hair and at both sides; lower body may end naturally at the bottom of the frame. Keep the face prominent and the character upright. This is a portrait cutout, not a full-length sprite.\nBackground: genuine transparent alpha, including between limbs. No cream or white background, no ground shadow, no gradients, no text, no frame, no weapons or extra objects."
+    },
+    {
+      "hero": "piper",
+      "file": "/assets/art/portraits/piper.png",
+      "prompt": "Use case: background-extraction / identity-preserve.\nAsset type: individual transparent character-select portrait for a pixel-art browser fighting game.\nInput image 1 is Rodrigo's supplied character lineup and the edit target. Extract ONLY the SECOND person from the left: Piper, the teenage girl with long wavy dark brown hair, warm brown skin, purple open cardigan, white top, necklace and brown crossbody bag. Preserve her exact recognizable face, hairstyle, gentle confident expression, posture and outfit.\nRemove every other person completely. There must be exactly ONE character, no fragments or silhouettes of any neighbors.\nPreserve the reference's crisp detailed pixel-art illustration, warm palette and proportions. Do not redesign or age the character.\nComposition: square canvas, a centered large portrait from just above the entire head down to mid-thigh; include both shoulders and the complete arm pose. Head occupies the upper third. Small clear breathing room above the hair and at both sides; lower body may end naturally at the bottom of the frame. Keep the face prominent and the character upright. This is a portrait cutout, not a full-length sprite.\nBackground: genuine transparent alpha, including between limbs. No cream or white background, no ground shadow, no gradients, no text, no frame, no weapons or extra objects."
+    },
+    {
+      "hero": "leo",
+      "file": "/assets/art/portraits/leo.png",
+      "prompt": "Use case: background-extraction / identity-preserve.\nAsset type: individual transparent character-select portrait for a pixel-art browser fighting game.\nInput image 1 is Rodrigo's supplied character lineup and the edit target. Extract ONLY the THIRD person from the left: Leo, the smiling teenage boy with curly dark hair, brass goggles perched on his head, green plaid open overshirt, white T-shirt and mechanic's tool belt. Preserve his exact recognizable face, playful expression, hairstyle, hand-behind-head pose and outfit.\nRemove every other person completely. There must be exactly ONE character, no fragments or silhouettes of any neighbors.\nPreserve the reference's crisp detailed pixel-art illustration, warm palette and proportions. Do not redesign or age the character.\nComposition: square canvas, a centered large portrait from just above the entire head down to mid-thigh; include both shoulders and the complete arm pose. Head occupies the upper third. Small clear breathing room above the hair and at both sides; lower body may end naturally at the bottom of the frame. Keep the face prominent and the character upright. This is a portrait cutout, not a full-length sprite.\nBackground: genuine transparent alpha, including between limbs. No cream or white background, no ground shadow, no gradients, no text, no frame, no weapons or extra objects."
+    }
+  ]
+}

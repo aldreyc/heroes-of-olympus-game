@@ -1,0 +1,14 @@
+{
+  "tool": "built-in image_gen",
+  "reference": "public/assets/reference/lineup.png",
+  "assets": [
+    {
+      "file": "public/assets/art/bus.png",
+      "prompt": "Use case: illustration-story. Create a production-quality widescreen 16:9 pixel-art cinematic still for a Heroes of Olympus fan game. Reference attached is character appearance ONLY, preserve their designs faithfully. Inside a full-size moving school bus, camera from halfway down center aisle looking toward back rows. Jason (blond, purple t-shirt) wakes confused in the very back bench, Piper (long dark hair purple jacket) leans concerned toward him, Leo (curly brown hair goggles olive green overshirt) gestures animatedly nearby. Coach Hedge in blue tracksuit is nearer camera in aisle looking stern; in this scene human disguise, no visible goat legs or horns. Rows of vinyl seats, repeating windows, dusty Arizona sunshine, passing canyon landscape, cinematic warm amber highlights with indigo shadows. Rich crisp detailed pixel clusters, expressive faces matching attached lineup, strong composition, no text, no border, no UI. Bottom 20 percent should be darker unobtrusive seating for dialogue overlay. Image 1536x1024 or widescreen."
+    },
+    {
+      "file": "public/assets/art/rescue.png",
+      "prompt": "Use case illustration-story. Widescreen cinematic pixel-art keyframe for Heroes of Olympus fan game. Match the attached character lineup exactly in face hair costume colors: Jason blonde purple t-shirt jeans; Piper dark long hair purple jacket white shirt jeans; Leo curly dark hair goggles olive overshirt tool belt; Coach Hedge blue tracksuit satyr horns goat legs. Grand Canyon glass skywalk outside a sandstone museum in wind storm. Dynamic coherent action composition: at left-center Jason discovers flight, hovering over the canyon with arms around Piper pulling her back toward the stone ledge. Piper looks startled, hair blowing. At right on ledge Leo reaches helplessly toward Coach Hedge who is being lifted upward away by a dark smoky tornado wind spirit with a creepy face. Hedge just rescued Leo. Convey heroic rescue and separation, no gore, no injury, no lightning whatsoever, no text or UI. Rich crisp pixel art, golden canyon strata against cool slate teal storm, visible square pixels, expressive youthful characters matching reference. All faces readable. Lower 20% dark for caption overlay. Single dramatic scene, not panels."
+    }
+  ]
+}

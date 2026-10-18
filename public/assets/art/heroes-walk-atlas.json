@@ -1,0 +1,303 @@
+{
+  "frames": {
+    "jason-walk0": {
+      "frame": {
+        "x": 70,
+        "y": 78,
+        "w": 256,
+        "h": 283
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 283
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 283
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "jason-walk1": {
+      "frame": {
+        "x": 518,
+        "y": 79,
+        "w": 174,
+        "h": 282
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 174,
+        "h": 282
+      },
+      "sourceSize": {
+        "w": 174,
+        "h": 282
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "jason-walk2": {
+      "frame": {
+        "x": 826,
+        "y": 83,
+        "w": 263,
+        "h": 278
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 263,
+        "h": 278
+      },
+      "sourceSize": {
+        "w": 263,
+        "h": 278
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "jason-walk3": {
+      "frame": {
+        "x": 1242,
+        "y": 77,
+        "w": 169,
+        "h": 284
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 169,
+        "h": 284
+      },
+      "sourceSize": {
+        "w": 169,
+        "h": 284
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "piper-walk0": {
+      "frame": {
+        "x": 79,
+        "y": 403,
+        "w": 257,
+        "h": 286
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 257,
+        "h": 286
+      },
+      "sourceSize": {
+        "w": 257,
+        "h": 286
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "piper-walk1": {
+      "frame": {
+        "x": 495,
+        "y": 403,
+        "w": 191,
+        "h": 285
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 191,
+        "h": 285
+      },
+      "sourceSize": {
+        "w": 191,
+        "h": 285
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "piper-walk2": {
+      "frame": {
+        "x": 850,
+        "y": 406,
+        "w": 260,
+        "h": 283
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 260,
+        "h": 283
+      },
+      "sourceSize": {
+        "w": 260,
+        "h": 283
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "piper-walk3": {
+      "frame": {
+        "x": 1242,
+        "y": 403,
+        "w": 189,
+        "h": 285
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 189,
+        "h": 285
+      },
+      "sourceSize": {
+        "w": 189,
+        "h": 285
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "leo-walk0": {
+      "frame": {
+        "x": 78,
+        "y": 720,
+        "w": 262,
+        "h": 286
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 262,
+        "h": 286
+      },
+      "sourceSize": {
+        "w": 262,
+        "h": 286
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "leo-walk1": {
+      "frame": {
+        "x": 499,
+        "y": 719,
+        "w": 187,
+        "h": 284
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 187,
+        "h": 284
+      },
+      "sourceSize": {
+        "w": 187,
+        "h": 284
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "leo-walk2": {
+      "frame": {
+        "x": 839,
+        "y": 723,
+        "w": 270,
+        "h": 282
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 270,
+        "h": 282
+      },
+      "sourceSize": {
+        "w": 270,
+        "h": 282
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    },
+    "leo-walk3": {
+      "frame": {
+        "x": 1251,
+        "y": 720,
+        "w": 200,
+        "h": 283
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 200,
+        "h": 283
+      },
+      "sourceSize": {
+        "w": 200,
+        "h": 283
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1
+      }
+    }
+  },
+  "meta": {
+    "app": "image_gen; measured alpha bounds",
+    "image": "heroes-walk.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1536,
+      "h": 1024
+    },
+    "scale": "1",
+    "note": "Four walk phases per hero. Anchor sprites at feet and normalize overall scale to a 280px standing body. Raw crop widths differ naturally between stride and passing poses; do not scale each frame to identical width."
+  }
+}

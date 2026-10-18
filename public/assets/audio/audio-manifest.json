@@ -1,0 +1,291 @@
+{
+  "title": "Heroes of Olympus — Rodrigo's First Adventure",
+  "provider": "ElevenLabs",
+  "flow_url": "https://elevenlabs.io/app/flows/shhUIm2hH00sef6r7jWP",
+  "voice": {
+    "name": "Daniel — Warm, Confident & Compelling",
+    "voice_id": "8GmsjNWRZ3Rk8VmRpvBZ",
+    "description": "Rich, resonant American baritone; expressive storytelling with clear articulation.",
+    "model": "eleven_v4"
+  },
+  "assets": [
+    {
+      "key": "intro",
+      "file": "/assets/audio/intro.mp3",
+      "duration_seconds": 25.2,
+      "type": "narration",
+      "generation_id": "wR23BJhVqzv72kdqOylz",
+      "script": "Before the storm, there was only a name. Jason. He wakes on a school bus with no memory of his past. Beside him, Piper and Leo insist they are his friends. Ahead lies the Grand Canyon, and a danger older than the world they know. Somewhere in the wind, something is waiting. Every legend begins with a choice. Today, Rodrigo, the next move is yours.",
+      "suggested_volume": 0.9
+    },
+    {
+      "key": "ending",
+      "file": "/assets/audio/ending.mp3",
+      "duration_seconds": 15.76,
+      "type": "narration",
+      "generation_id": "Lg7Xc9B0W1MpYQKy5uxW",
+      "script": "The wind has fallen silent. But Coach Hedge is gone, carried away into the storm. Jason has saved his friends, yet his own past remains beyond his reach. Three heroes. One mystery. And a journey that has only just begun.",
+      "suggested_volume": 0.9
+    },
+    {
+      "key": "combat",
+      "file": "/assets/audio/combat.mp3",
+      "duration_seconds": 60,
+      "type": "music",
+      "model": "eleven_music_v2",
+      "generation_id": "VfL1ODH2mp7aq8ObnHyy",
+      "suggested_volume": 0.28,
+      "loop": true,
+      "prompt": "Original instrumental cinematic fantasy battle music for a beautiful 2D pixel-art action game, 120 BPM, D minor, heroic youthful adventure in an ancient mythic world. Strong memorable rising four-note brass motif, agile staccato strings, deep frame drums, subtle lyre and airy wooden flute, restrained retro synth arpeggio blended with warm orchestra. Immediately establish the driving rhythm, build confident energy through middle, keep the pulse steady and end on the dominant so it can repeat naturally. Epic but welcoming and adventurous, no horror, no vocals, no choir, no speech, no modern EDM drop. Balanced game-ready mix with space for sound effects. Original composition, no quotation of existing music."
+    },
+    {
+      "key": "wind",
+      "file": "/assets/audio/wind.mp3",
+      "duration_seconds": 15,
+      "type": "ambience",
+      "model": "eleven_text_to_sound_v2",
+      "generation_id": "K46TFFdDBmigIOtPcxdJ",
+      "suggested_volume": 0.18,
+      "loop": true,
+      "prompt": "Seamless looping wind ambience in a stone museum overlooking the Grand Canyon. Low distant desert wind, airy gusts swirling around stone pillars, intermittent dry paper flutter and soft grit skittering across a floor. A supernatural wind spirit subtly breathes within the wind. Atmospheric and clear, no voices, no music, no thunder, no lightning, no electric sounds, no sudden loud events."
+    },
+    {
+      "key": "ui",
+      "file": "/assets/audio/ui.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.24
+    },
+    {
+      "key": "confirm",
+      "file": "/assets/audio/confirm.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "slash",
+      "file": "/assets/audio/slash.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "hit",
+      "file": "/assets/audio/hit.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "heavy",
+      "file": "/assets/audio/heavy.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "block",
+      "file": "/assets/audio/block.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "jump",
+      "file": "/assets/audio/jump.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "land",
+      "file": "/assets/audio/land.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "coin",
+      "file": "/assets/audio/coin.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "fire",
+      "file": "/assets/audio/fire.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "charm",
+      "file": "/assets/audio/charm.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "lightning",
+      "file": "/assets/audio/lightning.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42,
+      "notes": "Jason power only. Wind spirit has no electrical effects."
+    },
+    {
+      "key": "gust",
+      "file": "/assets/audio/gust.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "victory",
+      "file": "/assets/audio/victory.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "defeat",
+      "file": "/assets/audio/defeat.wav",
+      "type": "sfx",
+      "provider": "Original procedural synthesis",
+      "suggested_volume": 0.42
+    },
+    {
+      "key": "bus",
+      "file": "/assets/audio/bus.mp3",
+      "duration_seconds": 15,
+      "type": "ambience",
+      "model": "eleven_text_to_sound_v2",
+      "generation_id": "Xivr0OuVhPvWlPjsaNwl",
+      "suggested_volume": 0.18,
+      "loop": true,
+      "prompt": "Interior of a full-size yellow school bus traveling smoothly along a dry paved highway. Quiet steady diesel engine hum and low road tire rumble heard from the back rows, gentle suspension creaks and soft window and seat rattles. Warm safe cabin ambience with plenty of space for dialogue. Continuous even texture, seamlessly looping. No voices, no passengers talking, no speech, no music, no horns, no abrupt bumps."
+    },
+    {
+      "key": "reveal",
+      "file": "/assets/audio/reveal.mp3",
+      "duration_seconds": 3.48,
+      "type": "sfx",
+      "model": "eleven_text_to_sound_v2",
+      "generation_id": "D7wQegfnfvFwD2jNWgSj",
+      "suggested_volume": 0.45,
+      "loop": false,
+      "prompt": "One supernatural wind spirit materializing: a low hollow breath gathers into a rushing spiral of desert wind, dry grit and loose paper whipping past, swells into a deep airy whoosh, then falls away. Cinematic eerie fantasy sound effect with a clear attack and graceful tail, not too frightening for a child. No voice or words, no music, no thunder, no lightning, no electricity, no monster roar."
+    },
+    {
+      "key": "prophecy-1",
+      "file": "prophecy-1.mp3",
+      "generation_id": "5pnUojB7Kv8nwlFfU78L",
+      "duration_seconds": 2.88,
+      "script": "Child of Lightning, beware the earth,",
+      "type": "narration",
+      "provider": "ElevenLabs",
+      "model": "eleven_v4",
+      "voice_id": "8GmsjNWRZ3Rk8VmRpvBZ",
+      "suggested_volume": 0.9
+    },
+    {
+      "key": "prophecy-2",
+      "file": "prophecy-2.mp3",
+      "generation_id": "X5dnseeCfak5rAef112h",
+      "duration_seconds": 3.36,
+      "script": "The giants' revenge, the seven shall birth.",
+      "type": "narration",
+      "provider": "ElevenLabs",
+      "model": "eleven_v4",
+      "voice_id": "8GmsjNWRZ3Rk8VmRpvBZ",
+      "suggested_volume": 0.9
+    },
+    {
+      "key": "prophecy-3",
+      "file": "prophecy-3.mp3",
+      "generation_id": "xsFOnWIC7CXJdWXeYZg5",
+      "duration_seconds": 2.8,
+      "script": "The forge and dove shall break the cage,",
+      "type": "narration",
+      "provider": "ElevenLabs",
+      "model": "eleven_v4",
+      "voice_id": "8GmsjNWRZ3Rk8VmRpvBZ",
+      "suggested_volume": 0.9
+    },
+    {
+      "key": "prophecy-4",
+      "file": "prophecy-4.mp3",
+      "generation_id": "Ipewcji1eo45Nv6sqPEK",
+      "duration_seconds": 2.96,
+      "script": "And death unleash through Hera's rage.",
+      "type": "narration",
+      "provider": "ElevenLabs",
+      "model": "eleven_v4",
+      "voice_id": "8GmsjNWRZ3Rk8VmRpvBZ",
+      "suggested_volume": 0.9
+    }
+  ],
+  "credits": "Original scripts and original procedural sound design created for Rodrigo's game. Narration, score, wind, bus ambience and spirit reveal generated with the user's connected ElevenLabs subscription. No existing soundtrack or audiobook recording used.",
+  "integration_notes": [
+    "Start audio only after a user gesture; provide a persistent mute control.",
+    "Duck music to 0.10 and wind to 0.08 during narration.",
+    "Stop intro when entering dialogue; stop ending when leaving the chapter-complete sequence.",
+    "Music source requested as repeat-friendly; use short crossfades if seamless boundaries are important.",
+    "Four variations per generation remain in the ElevenLabs flow; selected production takes are stored locally.",
+    "Prophecy: one recorded line per four-second fully-visible hold, after its 800ms fade-in. Skip or Escape cancels narration and all pending line timers. Sound state is explicitly labeled on every screen."
+  ],
+  "generations": {
+    "flow_id": "shhUIm2hH00sef6r7jWP",
+    "music_sessions": [
+      "pRd7RA5EmjgFKiZVfBrv",
+      "JCohl15UtQlTkSA0DP1k",
+      "sxCnbzM3ThOtKbke4Dxh",
+      "SpD6TVYO9zyho5NWDai6",
+      "A9WxcsWgFQquLpupTu7R",
+      "aoM3u9roo3yBdRebhYGz",
+      "URcWReKJnaE1Pg8v0KzR",
+      "dsHljBtoDgk6IPRKbci4"
+    ],
+    "intro_sessions": [
+      "6FsAH3D6UvoOtfs7uYwX",
+      "VstpQURj2LpFH1gUDh1p",
+      "foMBmYwLEVzD3ebIkoAH",
+      "vnyJ7xcAc8ipEH0AXN7Y"
+    ],
+    "ending_sessions": [
+      "4TLXC8lUN5ZFvHPgVqb9",
+      "4LRaNw3nfhQj81oSkH3f",
+      "ZufH0xYmpBh3o9Eq2Xnb",
+      "LfMGKIN2dhAHyh5FyEQP"
+    ],
+    "additional_scene_audio_sessions": [
+      "Fy0iC8VzjPEsxMeCTcmt",
+      "q3WGYadKZIXO6SFhmdet",
+      "9sUrrYWqx3TPhZvNNxOX",
+      "HBa6xQOptIv26vnl4tkQ",
+      "yDvXEO25ZtrRxgFA0TKW",
+      "HOpHbetkjnaoCJp7z1kx",
+      "c0aEM9QRzY9KK5slNXJG",
+      "1gv8MH2ZyGo0Oip2X93i"
+    ],
+    "prophecy_sessions": [
+      "rzbfFymCjYmPQZHXj0HI",
+      "C8MyTjUCmf1Y9In6bzac",
+      "6aMiTOIrtjg06uoZeWyr",
+      "R2Y1PS3yqGb6GnFe3AZw",
+      "Fws05VAAfVeIlrbh2YKH",
+      "TTRBD48Qoi0F5N5bGvrM",
+      "t9g97CiMlgVoGVty26Gc",
+      "Umua6L7Wl0SdVFxMPVih",
+      "KYTPQ2uOBlFqDt8Td89j",
+      "1TOiptzn9IwEchdHasyb",
+      "jZ6Lg3R0tnuUi0RwRZVY",
+      "T8PzFimXO48hrxDDZc9A",
+      "KAZCzOz3WlkWm1hlutDf",
+      "trQFSyz9Dt0x2DL7WqLH",
+      "QYk7kIp9nFhx4QwcWVSl",
+      "PZV4DkeKf4caGs6EzOhC"
+    ]
+  }
+}

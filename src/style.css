@@ -1,0 +1,1334 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap");
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #f2eadb;
+  background: #070c14;
+  --gold: #d5b373;
+  --muted: #a5adba;
+  --line: #d5b37340;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  overflow: hidden;
+}
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+button:focus-visible {
+  outline: 2px solid #fff4cc;
+  outline-offset: 5px;
+}
+button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+#app {
+  width: 100vw;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background: #080e18;
+}
+#game {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#game canvas {
+  image-rendering: pixelated;
+}
+#ui {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+#ui > * {
+  pointer-events: auto;
+}
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  background: linear-gradient(90deg, #070d18ed, #070d1880 60%, #070d1830);
+  animation: reveal 0.65s ease;
+}
+.screen:before {
+  content: "";
+  position: absolute;
+  inset: 22px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.27em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.serif,
+h1,
+h2,
+h3 {
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 500;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+h1 {
+  font-size: clamp(48px, 6.8vw, 106px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-shadow: 0 4px 40px #0007;
+}
+h2 {
+  font-size: clamp(30px, 4vw, 53px);
+}
+.gold {
+  color: var(--gold);
+}
+.muted {
+  color: var(--muted);
+}
+.title-screen {
+  align-items: center;
+  text-align: center;
+  background:
+    linear-gradient(90deg, #070d18f2 0%, #070d18d0 33%, #070d1833 80%),
+    linear-gradient(0deg, #070d18db, transparent 45%);
+}
+.title-screen h1 {
+  margin: 26px 0 22px;
+}
+.title-screen h1 span {
+  display: block;
+  color: var(--gold);
+  font-size: 0.7em;
+  letter-spacing: 0.035em;
+  margin-top: 12px;
+}
+.title-copy {
+  font-size: 15px;
+  line-height: 1.8;
+  max-width: 360px;
+  color: #c0c4c9;
+}
+.chapter-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0 32px;
+  font-size: 12px;
+  letter-spacing: 0.17em;
+  color: #e9dec8;
+}
+.chapter-label:before {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+.primary,
+.secondary {
+  border: 1px solid var(--gold);
+  padding: 16px 34px;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: 0.2s;
+  background: #d5b373;
+  color: #151b23;
+  min-width: 190px;
+}
+.primary:hover {
+  background: #f1d39c;
+  box-shadow: 0 0 30px #d5b37333;
+  transform: translateY(-2px);
+}
+.secondary {
+  background: #0d1623b0;
+  color: #e4c995;
+  border-color: #a68d614d;
+}
+.secondary:hover {
+  background: #243040;
+  border-color: #d5b373;
+}
+.title-footer {
+  position: absolute;
+  bottom: 48px;
+  left: 10%;
+  right: 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  color: #a9adb5;
+}
+.made-for {
+  position: absolute;
+  left: 54px;
+  top: 43px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #ccd0d2;
+}
+.seal {
+  font-size: 18px;
+  color: var(--gold);
+  margin-right: 10px;
+}
+.screen-heading {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.screen-heading h2 {
+  margin: 12px 0;
+}
+.screen-heading p {
+  font-size: 13px;
+  color: var(--muted);
+}
+.back {
+  position: absolute;
+  top: 45px;
+  left: 50px;
+  border: 0;
+  background: none;
+  color: #bfc3ca;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 8px;
+}
+.book {
+  width: 660px;
+  max-width: 90vw;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 30px;
+  align-items: center;
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: #0d1725d9;
+}
+.book-art {
+  height: 290px;
+  background:
+    linear-gradient(0deg, #0d1725, transparent),
+    url("/assets/art/arena.png") center/cover;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.book-art b {
+  font-size: 80px;
+  color: var(--gold);
+  text-shadow: 0 0 40px #ffeac4;
+}
+.book-art span {
+  font-family: "Cinzel", Georgia, serif;
+  font-size: 25px;
+  text-align: center;
+  line-height: 1.5;
+}
+.book p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #adb4c0;
+  margin: 18px 0;
+}
+.book h3 {
+  font-size: 26px;
+}
+.chip {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  color: var(--gold);
+}
+.roster {
+  display: flex;
+  gap: 18px;
+  width: 900px;
+  max-width: 90vw;
+}
+.hero-card {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid #a6b8cc28;
+  padding: 0;
+  background: #101a28;
+  text-align: left;
+  position: relative;
+  transition: 0.22s;
+  overflow: hidden;
+}
+.hero-card:hover,
+.hero-card.selected {
+  border-color: var(--gold);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px #0007;
+}
+.hero-card.selected:after {
+  content: "SELECTED";
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #172131;
+  background: var(--gold);
+  padding: 7px 9px;
+}
+.portrait {
+  height: clamp(180px, 31vh, 340px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 35%, var(--portrait-glow), transparent 72%),
+    linear-gradient(180deg, #172331, #101a28);
+  border-bottom: 1px solid #ffffff0c;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  padding: 18px 8px 0;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 10px 14px #0006);
+  transition: transform 0.25s ease;
+}
+.hero-card:hover .portrait img,
+.hero-card.selected .portrait img {
+  transform: translateY(-2px);
+}
+.portrait:after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 20%;
+  background: linear-gradient(transparent, #101a28);
+  pointer-events: none;
+}
+.portrait.jason {
+  --portrait-glow: #799ed345;
+}
+.portrait.piper {
+  --portrait-glow: #ba7daa40;
+}
+.portrait.leo {
+  --portrait-glow: #d69a5140;
+}
+.card-info {
+  padding: 18px 20px 20px;
+}
+.card-info h3 {
+  font-size: 22px;
+  margin: 8px 0;
+}
+.card-info p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #a6afbc;
+  min-height: 58px;
+}
+.card-info .eyebrow {
+  font-size: 8px;
+  letter-spacing: 0.16em;
+}
+.stat-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-top: 11px;
+  font-size: 9px;
+  color: #8d99aa;
+}
+.stat-row span {
+  margin-right: auto;
+}
+.pip {
+  height: 3px;
+  width: 18px;
+  background: #364153;
+}
+.pip.on {
+  background: var(--gold);
+}
+.select-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 900px;
+  max-width: 90vw;
+  margin-top: 24px;
+  font-size: 11px;
+  color: #aab2bf;
+}
+.legend {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+kbd {
+  font:
+    10px "DM Sans",
+    sans-serif;
+  border: 1px solid #ffffff35;
+  border-radius: 3px;
+  padding: 4px 6px;
+  color: #d5dbe5;
+  background: #101925;
+}
+.toolbar {
+  position: absolute;
+  top: 32px;
+  right: 34px;
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+  z-index: 20;
+}
+.icon-button {
+  border: 1px solid #c4cee330;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  background: #0c1423c9;
+  color: #d4c8ae;
+  font-size: 14px;
+}
+.icon-button:hover {
+  background: #344051;
+}
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 11px;
+  border: 1px solid #c4cee350;
+  border-radius: 7px;
+  background: #0c1423ed;
+  color: #e1d7c3;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+.sound-toggle.is-on {
+  border-color: #b9d3b780;
+  color: #d5edcc;
+}
+.sound-toggle.is-muted {
+  border-color: #dfaa7e80;
+  color: #f0c6a4;
+}
+.sound-toggle:hover { background: #253447; }
+.sound-toggle kbd { padding: 2px 4px; font-size: 9px; }
+.battle-toolbar { top: auto; bottom: 96px; right: 3%; }
+.prophecy {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: grid;
+  place-items: center;
+}
+.prophecy p {
+  font:
+    clamp(18px, 3vw, 38px) "Cinzel",
+    Georgia,
+    serif;
+  color: white;
+  text-align: center;
+  padding: 30px;
+  text-shadow: 0 0 16px #ffffff50;
+  opacity: 0;
+  transition: opacity 0.8s;
+}
+.prophecy p.visible {
+  opacity: 1;
+}
+.prophecy-skip {
+  position: absolute;
+  bottom: max(32px, env(safe-area-inset-bottom));
+  right: 34px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-color: #ffffff40;
+  background: #080808;
+  color: #eee;
+}
+.prophecy-skip:hover { background: #202020; border-color: #ffffff80; }
+.story-stage {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: reveal 1s;
+  overflow: hidden;
+}
+.story-stage.bus {
+  background-image: url("/assets/art/bus.png");
+  animation: bus-sway 5s ease-in-out infinite;
+}
+.story-stage.canyon {
+  background-image: url("/assets/art/title.png"), url("/assets/art/arena.png");
+}
+.story-stage.museum {
+  background-image: url("/assets/art/arena.png");
+}
+.story-stage:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    #050a13 0%,
+    #050a1340 40%,
+    transparent 60%,
+    #050a1370
+  );
+  pointer-events: none;
+}
+.cinema-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6.5%;
+  background: #050911;
+  z-index: 2;
+}
+.cinema-bar.top {
+  top: 0;
+}
+.cinema-bar.bottom {
+  bottom: 0;
+}
+.scene-tag {
+  position: absolute;
+  top: 12%;
+  left: 7%;
+  z-index: 3;
+  color: #eee3cb;
+}
+.scene-tag .eyebrow {
+  margin-bottom: 10px;
+}
+.scene-tag h3 {
+  font-size: 25px;
+}
+.dialogue {
+  position: absolute;
+  bottom: 10%;
+  left: 9%;
+  right: 9%;
+  z-index: 4;
+  border-left: 2px solid var(--gold);
+  padding: 10px 25px 12px;
+  background: linear-gradient(90deg, #08111bba, transparent);
+}
+.speaker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 13px;
+  text-transform: uppercase;
+}
+.dialogue p {
+  font-size: clamp(16px, 1.8vw, 23px);
+  line-height: 1.65;
+  max-width: 960px;
+  min-height: 55px;
+  color: #f4eee2;
+}
+.dialogue-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.dialogue-footer span {
+  font-size: 10px;
+  color: #8d98a8;
+  letter-spacing: 0.12em;
+}
+.small-button {
+  border: 1px solid #c3a56b55;
+  background: #101b2bbb;
+  color: #ebd8b6;
+  padding: 10px 18px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.skip {
+  position: absolute;
+  top: 12%;
+  right: 6%;
+  z-index: 5;
+}
+.story-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background: #c4a167;
+  transition: width 0.5s;
+  z-index: 5;
+}
+.hud {
+  position: absolute;
+  top: 30px;
+  left: 4%;
+  right: 4%;
+  display: grid;
+  grid-template-columns: 1fr 105px 1fr;
+  gap: 24px;
+  pointer-events: none;
+}
+.fighter-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+}
+.fighter-label small {
+  font-size: 9px;
+  color: #c8bba2;
+}
+.health {
+  height: 12px;
+  background: #101b2ad9;
+  border: 1px solid #dfbd7c60;
+  padding: 2px;
+  transform: skewX(-10deg);
+}
+.health i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #8f713d, #edd199);
+  transition: width 0.15s;
+}
+.enemy-hud .health i {
+  background: linear-gradient(90deg, #678d97, #abc5c8);
+  margin-left: auto;
+}
+.enemy-hud .health {
+  transform: skewX(10deg);
+}
+.meter {
+  height: 4px;
+  width: 45%;
+  background: #142133;
+  margin-top: 8px;
+}
+.meter i {
+  display: block;
+  height: 100%;
+  background: #94c7f1;
+  transition: width 0.2s;
+}
+.hud-center {
+  text-align: center;
+  color: #f3d7a4;
+  font:
+    30px "Cinzel",
+    Georgia,
+    serif;
+}
+.hud-center small {
+  display: block;
+  font: 8px "DM Sans";
+  letter-spacing: 0.2em;
+  color: #9ea9b9;
+  margin-bottom: 4px;
+}
+.combat-caption {
+  position: absolute;
+  top: 115px;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: #cfbea1;
+}
+.combat-help {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 16px;
+  white-space: nowrap;
+  background: #080f1cd9;
+  border: 1px solid #b9c1d522;
+  padding: 12px 20px;
+  font-size: 10px;
+  color: #c2cad6;
+}
+.combat-help .hint {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.touch-controls {
+  position: absolute;
+  bottom: 25px;
+  left: 3%;
+  right: 3%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.touch-group {
+  display: flex;
+  gap: 7px;
+  align-items: flex-end;
+  pointer-events: auto;
+}
+.touch-controls button {
+  border: 1px solid #d5c59e50;
+  background: #0c1729c9;
+  color: #e5d2aa;
+  width: 49px;
+  height: 49px;
+  border-radius: 9px;
+  font-size: 10px;
+  touch-action: none;
+  user-select: none;
+}
+.touch-controls button:active,
+.touch-controls button.held {
+  background: #9b814b;
+  color: #fff;
+}
+.touch-controls .attack {
+  border-radius: 50%;
+  width: 53px;
+  height: 53px;
+}
+.touch-controls .special {
+  border-color: #96bdf0;
+  color: #b6d6ff;
+}
+.modal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050b14c9;
+  backdrop-filter: blur(9px);
+  z-index: 30;
+}
+.modal-card {
+  text-align: center;
+  padding: 45px;
+  border: 1px solid var(--line);
+  background: #0b1422;
+  width: 490px;
+  max-width: 90vw;
+}
+.modal-card h2 {
+  margin: 13px 0 18px;
+}
+.modal-card p {
+  color: #a9b3c2;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 22px;
+}
+.button-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.button-row button {
+  min-width: 150px;
+}
+.complete {
+  background:
+    radial-gradient(ellipse at 50% 20%, #48516b50, transparent 60%), #080f1ce8;
+}
+.complete .crest {
+  color: var(--gold);
+  font-size: 58px;
+  margin: 8px 0;
+}
+.complete h2 {
+  margin: 18px 0;
+}
+.complete p {
+  color: #abb5c3;
+  max-width: 500px;
+  line-height: 1.85;
+  font-size: 14px;
+  text-align: center;
+}
+.results {
+  display: flex;
+  gap: 40px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 28px 0;
+  padding: 20px;
+}
+.results strong {
+  display: block;
+  font:
+    28px "Cinzel",
+    Georgia,
+    serif;
+  color: #e3ca9c;
+  text-align: center;
+}
+.results span {
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: #9aa7b8;
+}
+.toast {
+  position: absolute;
+  bottom: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  padding: 10px 20px;
+  background: #101d30;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: #f2dba8;
+  animation: reveal 0.3s;
+}
+.coin-scene {
+  position: absolute;
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+}
+.coin {
+  height: 60px;
+  width: 60px;
+  background: radial-gradient(circle, #fff1ae, #d7a93c, #75501b);
+  border: 3px solid #f2d793;
+  border-radius: 50%;
+  box-shadow: 0 0 50px #f7cf8660;
+  animation: coinflip 1.2s linear infinite;
+}
+.gold-sword {
+  font-size: 140px;
+  color: #f1cd71;
+  text-shadow: 0 0 40px #ffd670;
+  animation: swordreveal 0.8s ease both;
+}
+.memory-note {
+  font-size: 11px;
+  color: #7d8b9e;
+  margin-top: 24px;
+}
+.touch-controls {
+  display: none;
+}
+#app.touch .touch-controls {
+  display: flex;
+}
+#app.touch .combat-help {
+  bottom: 90px;
+  padding: 8px;
+  font-size: 9px;
+}
+#app.touch .combat-help .hint {
+  display: none;
+}
+#app.touch .combat-help .hint:first-child {
+  display: block;
+}
+.loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  background: #080f19;
+}
+.loading span {
+  font: 13px "Cinzel";
+  letter-spacing: 0.3em;
+  color: var(--gold);
+}
+.loading p {
+  font-size: 11px;
+  color: #8692a4;
+  margin-top: 14px;
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes bus-sway {
+  50% {
+    background-position: 50.3% 50.5%;
+  }
+}
+@keyframes coinflip {
+  50% {
+    transform: translateY(-60px) scaleX(0.1) rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes swordreveal {
+  from {
+    opacity: 0;
+    transform: scale(0.3) rotate(-40deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+@media (max-width: 750px) {
+  .screen {
+    padding: 30px 20px;
+  }
+  .screen:before {
+    inset: 12px;
+  }
+  .title-screen {
+    padding: 30px 8%;
+  }
+  .title-screen h1 {
+    font-size: 59px;
+  }
+  .title-copy {
+    max-width: 290px;
+    font-size: 12px;
+  }
+  .made-for {
+    left: 24px;
+    top: 26px;
+    font-size: 8px;
+  }
+  .title-footer {
+    bottom: 26px;
+    left: 8%;
+    font-size: 8px;
+  }
+  .title-footer span:last-child {
+    display: none;
+  }
+  .toolbar {
+    right: 20px;
+    top: 20px;
+  }
+  .battle-toolbar { top: auto; bottom: 96px; }
+  .prophecy-skip { right: 20px; bottom: 24px; }
+  .back {
+    left: 20px;
+    top: 20px;
+  }
+  .screen-heading {
+    margin-bottom: 18px;
+  }
+  .screen-heading h2 {
+    font-size: 28px;
+  }
+  .roster {
+    gap: 8px;
+    max-width: 96vw;
+  }
+  .card-info {
+    padding: 12px 10px;
+  }
+  .card-info h3 {
+    font-size: 15px;
+  }
+  .card-info p {
+    font-size: 10px;
+    min-height: 64px;
+  }
+  .portrait {
+    height: 200px;
+  }
+  .card-info .eyebrow {
+    font-size: 6px;
+  }
+  .select-bottom {
+    max-width: 94vw;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .book {
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    padding: 15px;
+  }
+  .book-art {
+    height: 240px;
+  }
+  .book-art span {
+    font-size: 20px;
+  }
+  .book h3 {
+    font-size: 21px;
+  }
+  .book p {
+    font-size: 12px;
+  }
+  .book .primary {
+    min-width: 0;
+    width: 100%;
+    padding: 15px 10px;
+  }
+  .hud {
+    top: 18px;
+    gap: 10px;
+    grid-template-columns: 1fr 50px 1fr;
+    left: 3%;
+    right: 3%;
+  }
+  .fighter-label {
+    font-size: 10px;
+  }
+  .fighter-label small {
+    display: none;
+  }
+  .hud-center {
+    font-size: 22px;
+  }
+  .combat-caption {
+    top: 90px;
+    font-size: 9px;
+  }
+  .combat-help {
+    gap: 8px;
+    padding: 8px;
+    font-size: 8px;
+  }
+  .dialogue {
+    left: 5%;
+    right: 5%;
+    padding-left: 18px;
+  }
+  .dialogue p {
+    font-size: 16px;
+  }
+  .dialogue-footer span {
+    font-size: 8px;
+  }
+  .scene-tag {
+    left: 7%;
+    top: 14%;
+  }
+  .scene-tag h3 {
+    font-size: 20px;
+  }
+  .skip {
+    top: 14%;
+  }
+  .results {
+    gap: 24px;
+  }
+  .legend {
+    font-size: 9px;
+  }
+  .stat-row .pip {
+    width: 10px;
+  }
+  .primary,
+  .secondary {
+    padding: 14px 22px;
+  }
+}
+@media (max-height: 600px) {
+  .title-screen h1 {
+    font-size: 60px;
+    margin: 12px 0;
+  }
+  .title-copy {
+    font-size: 12px;
+  }
+  .chapter-label {
+    margin: 15px 0;
+  }
+  .title-footer {
+    bottom: 25px;
+  }
+  .portrait {
+    height: 180px;
+  }
+  .screen-heading {
+    margin-bottom: 12px;
+  }
+  .screen-heading h2 {
+    font-size: 28px;
+    margin: 6px;
+  }
+  .card-info p {
+    display: none;
+  }
+  .card-info {
+    padding: 10px 16px;
+  }
+  .select-bottom {
+    margin-top: 15px;
+  }
+  .scene-tag {
+    top: 12%;
+  }
+  .dialogue {
+    bottom: 8%;
+  }
+  .dialogue p {
+    font-size: 16px;
+    min-height: 30px;
+  }
+  .dialogue-footer {
+    margin-top: 10px;
+  }
+  .complete .crest {
+    font-size: 30px;
+  }
+  .complete h2 {
+    margin: 10px;
+  }
+  .results {
+    padding: 10px;
+    margin: 15px;
+  }
+  .screen {
+    padding: 25px;
+  }
+  .book-art {
+    height: 210px;
+  }
+  .combat-help {
+    bottom: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+#app.played .combat-help {
+  opacity: 0.5;
+  font-size: 9px;
+  padding: 7px 12px;
+  transition: opacity 1s;
+}
+#app.played .combat-help:hover {
+  opacity: 1;
+}
+.story-stage.rescue {
+  background-size: cover;
+  background-position: center;
+  animation: rescue-drift 12s linear both;
+}
+@keyframes rescue-drift {
+  from {
+    background-size: 100% auto;
+  }
+  to {
+    background-size: 107% auto;
+  }
+}
+@media (max-width: 600px) and (orientation: portrait) {
+  .battle-toolbar { top: 20px; bottom: auto; }
+  .hud {
+    top: 24%;
+  }
+  .combat-caption {
+    top: 34%;
+    padding: 0 16px;
+  }
+  .combat-help {
+    bottom: 24%;
+  }
+  .touch-controls {
+    bottom: 12%;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .touch-controls button {
+    width: 48px;
+    height: 48px;
+  }
+  .story-stage {
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center 25%;
+    background-color: #080e18;
+  }
+  .story-stage.rescue {
+    animation: none;
+    background-size: 100% auto;
+    background-position: center 25%;
+  }
+  .dialogue {
+    bottom: 8%;
+  }
+  .scene-tag {
+    top: 11%;
+  }
+  .scene-tag h3 {
+    font-size: 18px;
+  }
+  .skip {
+    top: 6%;
+    right: 6%;
+  }
+  .dialogue p {
+    font-size: 15px;
+  }
+  .title-screen h1 {
+    font-size: 58px;
+  }
+  .book {
+    grid-template-columns: 1fr;
+    text-align: center;
+    max-width: 330px;
+  }
+  .book-art {
+    height: 150px;
+  }
+  .book-art b {
+    font-size: 45px;
+  }
+  .book-art span {
+    font-size: 19px;
+  }
+  .book p {
+    margin: 12px 0;
+  }
+  .portrait {
+    height: 180px;
+  }
+  .card-info h3 {
+    font-size: 13px;
+  }
+  .card-info .eyebrow {
+    font-size: 6px;
+  }
+  .card-info p {
+    display: none;
+  }
+  .card-info {
+    padding: 12px 8px;
+  }
+  .stat-row span {
+    font-size: 7px;
+  }
+  .stat-row .pip {
+    display: none;
+  }
+  .roster {
+    gap: 5px;
+  }
+  .select-bottom {
+    margin-top: 25px;
+  }
+  .complete h2 {
+    font-size: 27px;
+    text-align: center;
+  }
+  .results {
+    gap: 20px;
+  }
+  .results span {
+    font-size: 7px;
+  }
+  .results strong {
+    font-size: 24px;
+  }
+  .screen-heading p {
+    max-width: 290px;
+    line-height: 1.6;
+  }
+  .toolbar {
+    z-index: 40;
+  }
+  .made-for {
+    right: auto;
+    left: 8%;
+    top: 85px;
+  }
+  .title-footer {
+    font-size: 7px;
+  }
+}
+.speaker-portrait {
+  position: absolute;
+  left: -86px;
+  top: 8px;
+  width: 64px;
+  height: 76px;
+  border: 1px solid var(--gold);
+  background-image: url("/assets/reference/lineup.png");
+  background-size: auto 450%;
+  background-repeat: no-repeat;
+  background-color: #e7e1d1;
+  box-shadow: 0 0 24px #050b16;
+  image-rendering: pixelated;
+}
+.speaker-portrait.jason {
+  background-position: 9% 11%;
+}
+.speaker-portrait.piper {
+  background-position: 33% 16%;
+}
+.speaker-portrait.leo {
+  background-position: 61% 15%;
+}
+.speaker-portrait.hedge {
+  background-position: 91% 9%;
+}
+@media (max-width: 1000px) {
+  .speaker-portrait {
+    display: none;
+  }
+}

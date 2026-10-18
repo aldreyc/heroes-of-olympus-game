@@ -1,0 +1,51 @@
+{
+  "tool": "Built-in image_gen.imagegen",
+  "referenceImage": "/Users/aldrey/Downloads/Pixel-Art Heroes Lineup.png",
+  "outputs": [
+    {
+      "file": "heroes.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": true,
+      "prompt": "Use case: stylized-concept. Asset type: production 2D pixel-art fighting game sprite atlas on truly transparent background. The provided image is a CHARACTER DESIGN REFERENCE. Preserve the design of its first three heroes exactly: Jason with short tousled blonde hair, purple T shirt, blue jeans, sneakers; Piper with long dark brown hair, purple open jacket, white top, blue jeans, sneakers; Leo with curly dark brown hair, goggles on head, olive green open overshirt, white tee, blue jeans and brown tool belt. Omit the satyr. Create exactly 18 separate full body sprites arranged in exactly THREE ROWS and SIX EQUAL COLUMNS, one sprite inside each equal cell, no labels no grid no backgrounds no shadows. REQUEST CANVAS 1536 x 1024, each column 256 px and each row 341.33px. The same fixed scale for all characters, about 220px tall, generous transparent padding within every cell, complete feet and weapons inside cell. Every pose faces RIGHT in sideview or slight three-quarter sideview, as in a high quality 1990s arcade fighting game with clean chunky crisp pixels, limited palette and no antialiasing. Row 1 Jason carries an imperial-gold short sword. Row 2 Piper carries a bronze dagger. Row 3 Leo carries a small forged hammer. COLUMN ORDER FOR EVERY ROW: 1 fighting idle feet planted and guard up; 2 forward walking long stride; 3 jumping with legs tucked up; 4 braced defensive block weapon in front; 5 forward thrust quick attack full arm extension; 6 forceful dramatic overhead/downward strong attack with torso twisting (Leo has a small fire burst from his free hand). Sprites must not touch adjacent cells. All characters retain youthful slim proportions from reference. Transparent alpha background, no text, no symbols, no scenery. Maintain consistent baseline in each row except jump pose.",
+      "revisionPrompt": "Edit the supplied sprite atlas. Keep the exact existing character designs, 3 rows of 6 poses, pixel art style, and all poses and placement. IMPORTANT: remove the entire brown-blue gradient background so the whole space surrounding every character is completely transparent (alpha=0); no drop shadows, no colored haze. Weapons correction: replace every bronze dagger held by Piper (middle row) with a short wooden baseball-style club. Replace Leo's flame in bottom-right cell with a tiny cyan electrical spark gadget held in hand. Layout correction: every full sprite and its full weapon must fit inside its own 256px wide cell, in a 1536x1024 sheet; reduce all sprites uniformly 15% in scale to allow safe padding, and keep each sprite entirely inside its cell with at least 12px transparent edge margins. Preserve 6 columns and 3 rows; column order idle, walk, jump, block, thrust, overhead strike. Each row's standing poses share the same baseline. This is a technical transparent-background game sprite sheet, zero background colors or decorative elements. All empty pixels alpha zero.",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d8d-f9f4-7882-b873-169da16c5ad9/exec-cddccbe9-7c08-4749-9b83-4975786df836.png",
+      "validation": "18 full-body sprite poses. Jason golden sword; Piper wooden club; Leo hammer and cyan gadget spark. Alpha range 0..254; 996920 fully transparent pixels. Use atlas bounds rather than equal-cell cutting."
+    },
+    {
+      "file": "arena.png",
+      "size": [
+        1672,
+        941
+      ],
+      "transparent": false,
+      "prompt": "Use case: stylized-concept. Asset type: richly atmospheric 16:9 2D pixel-art fighting game arena background. Create a panoramic side-view interior of a Grand Canyon museum and visitor center adjoining the glass Skywalk. No characters, no creatures, no text, no UI. Composition: across bottom quarter a completely clear horizontal sandstone and dark slate tiled fighting floor, with its back edge at 77% image height; strong horizontal silhouette, no foreground obstacles. Tall expansive windows fill the middle and upper areas, showing vast layered red sandstone Grand Canyon cliffs and a distant curving glass Skywalk against approaching midnight-blue storm clouds with a small faraway lightning fork. The museum has substantial weathered sandstone pillars framing left and right, restrained geometric southwest architectural details, a dark exhibition display at far left and far right only, subtle warm amber practical lighting and dark bronze window mullions. Emphasize immense depth outside, beautiful burnt-orange canyon layers fading into dusty lavender and storm-blue haze. Moody blue ambient sky contrasted warm golden-orange sunset on cliffs. Crisply crafted pixel-art, hand-placed-looking square pixels, carefully clustered limited colors, highly detailed but readable arcade fighting game stage with cinematic composition, no blur no photographic textures no smooth vector art. 1920x1080 wide canvas desired. Keep center spacious for 2 fighters and top 15 percent comparatively quiet for health bar overlay. Avoid modern logos or printed lettering. Bottom fighting lane should feel physically grounded and completely unobstructed.",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d8d-f9f4-7882-b873-169da16c5ad9/exec-b8d71efe-5b54-4127-9a9d-857e962d4358.png",
+      "validation": "No characters or text; clear tiled fighting floor lower 29%, museum windows with canyon storm and skywalk."
+    },
+    {
+      "file": "title.png",
+      "size": [
+        1672,
+        941
+      ],
+      "transparent": false,
+      "prompt": "Use case: stylized-concept. Asset type: cinematic title-screen pixel-art backdrop for an epic modern Greek demigod adventure game. Produce spectacular 16:9 panorama of the Grand Canyon at twilight just before a storm, viewed from a sandstone overlook. No text, no logo, no characters, no UI. Canyon occupies lower 55% with intricately layered terracotta cliffs, shadowed deep indigo ravines, a narrow winding luminous river. At far right a discreet curved glass Skywalk juts out from the cliff, tiny and realistic. Left third has a closer dark sandstone rim and low scrub, subtly framing space for title text which will be added later. Sky fills upper 45% with towering painterly clustered pixel midnight-blue storm clouds, breaks of molten amber sunset along horizon, one dramatic jagged branching lightning bolt in far upper right. The center-left sky should be comparatively calm dark blue to support readable gold title lettering later. Premium hand-crafted pixel-art style inspired by cinematic 1990s adventure and fighting-game backgrounds, clearly visible crisp square pixels, beautiful color clustering, light dithered texture, refined depth and composition, no smooth airbrush or photographic textures. Palette: deep navy, storm violet, sandstone orange, sunlit gold. Moody, wondrous, heroic, immense scale. Full bleed art without border. All image content original. Desired canvas 1920x1080.",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d8d-f9f4-7882-b873-169da16c5ad9/exec-f409c236-9a88-429a-902f-1d397e8a9d78.png",
+      "validation": "No characters or text; quiet dark sky upper-left for title, storm lightning upper-right."
+    },
+    {
+      "file": "heroes-walk.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "transparent": true,
+      "promptFile": "walk-prompt.txt",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d8d-f9f4-7882-b873-169da16c5ad9/exec-9fb89dc8-1cb1-474f-a6cb-abe85df7c5eb.png",
+      "validation": "12 complete sprites in 3 rows of 4 walking phases; alpha 0..254 with 1124425 fully transparent pixels; measured frame rectangles in heroes-walk-atlas.json. Artwork copied without postprocessing."
+    }
+  ]
+}

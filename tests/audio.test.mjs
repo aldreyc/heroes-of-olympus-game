@@ -155,3 +155,15 @@ test("every preloaded audio key resolves to a bundled asset", () => {
   for (const file of Object.values(files))
     assert.ok(fs.statSync(`public/assets/audio/${file}`).size > 1000, file);
 });
+
+test('storm escalation raises wind while narration always stays audible', () => {
+  const {director} = setup();
+  director.wind(); director.setStorm(1);
+  assert.equal(director.ambient.volume,.23);
+  director.narration('intro');
+  assert.equal(director.ambient.volume,.08);
+  director.stopVoice();
+  assert.equal(director.ambient.volume,.23);
+  director.ambience('bus');
+  assert.equal(director.ambient.volume,.16);
+});

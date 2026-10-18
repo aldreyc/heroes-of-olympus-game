@@ -7,10 +7,10 @@ function pngSize(path) {
   return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
 }
 test("all named combat and walk frames stay inside their source image", () => {
-  for (const name of ["heroes", "heroes-walk"]) {
+  for (const name of ["heroes", "heroes-walk", "heroes-strikes-v2"]) {
     const { w, h } = pngSize(root + `art/${name}.png`);
     const atlas = JSON.parse(fs.readFileSync(root + `art/${name}-atlas.json`));
-    assert.equal(Object.keys(atlas.frames).length, name === "heroes" ? 18 : 12);
+    assert.equal(Object.keys(atlas.frames).length, name === "heroes" ? 18 : name === "heroes-walk" ? 12 : 3);
     for (const [key, entry] of Object.entries(atlas.frames)) {
       const f = entry.frame;
       assert.ok(
@@ -22,7 +22,7 @@ test("all named combat and walk frames stay inside their source image", () => {
   }
 });
 test("all scene backgrounds and integrated audio files are bundled", () => {
-  for (const n of ["bus", "rescue", "title", "arena"])
+  for (const n of ["bus", "rescue", "title", "arena", "wind-spirit-v2", "heroes-strikes-v2"])
     assert.ok(fs.statSync(root + `art/${n}.png`).size > 100000);
   for (const n of ["intro", "ending", "combat", "wind", "bus", "reveal"])
     assert.ok(fs.statSync(root + `audio/${n}.mp3`).size > 10000);
@@ -43,6 +43,15 @@ test("all scene backgrounds and integrated audio files are bundled", () => {
     "defeat",
   ])
     assert.ok(fs.statSync(root + `audio/${n}.wav`).size > 1000);
+});
+test("replacement strike frames occupy separate padded atlas columns", () => {
+  const atlas = JSON.parse(fs.readFileSync(root + "art/heroes-strikes-v2-atlas.json"));
+  const cell = atlas.meta.size.w / 3;
+  ["jason", "piper", "leo"].forEach((name, i) => {
+    const f = atlas.frames[name + "-quick"].frame;
+    assert.ok(f.x > cell * i + 10);
+    assert.ok(f.x + f.w < cell * (i + 1) - 10);
+  });
 });
 test("prophecy content exactly preserves the four supplied lines in the brief", () => {
   const brief = fs

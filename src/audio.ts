@@ -16,6 +16,7 @@ export class AudioDirector {
   music: Sound | null = null;
   voice: Sound | null = null;
   ambient: Sound | null = null;
+  private stormIntensity = 0;
   private manager: SoundManager | null = null;
 
   attach(manager: SoundManager) {
@@ -51,7 +52,12 @@ export class AudioDirector {
   private mix() {
     const speaking = this.voice !== null;
     this.music?.setVolume(speaking ? 0.09 : 0.25);
-    this.ambient?.setVolume(speaking ? 0.08 : 0.16);
+    this.ambient?.setVolume(speaking ? 0.08 : 0.16 + (this.ambient.key === "wind" ? this.stormIntensity * 0.07 : 0));
+  }
+
+  setStorm(intensity: number) {
+    this.stormIntensity = Math.max(0, Math.min(1, intensity));
+    this.mix();
   }
 
   playMusic(name = "combat") {
@@ -112,7 +118,9 @@ export class AudioDirector {
     const key = kind === "special" ? "coin" : kind;
     if (!this.manager?.game.cache.audio.exists(key)) return;
     // Phaser destroys one-shot sounds on completion.
-    this.manager.play(key, { volume: 0.28 });
+    const volume = ["heavy", "lightning"].includes(key) ? 0.34
+      : ["jump", "land", "slash"].includes(key) ? 0.2 : 0.28;
+    this.manager.play(key, { volume, detune: key === "hit" || key === "slash" ? Math.random() * 70 - 35 : 0 });
   }
 }
 

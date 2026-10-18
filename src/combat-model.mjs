@@ -71,12 +71,13 @@ export function hitOutcome({ attack, blocking, jumping, distance }) {
   if (blocking && attack !== "low") return "block";
   return "hit";
 }
-export function attackDamage(hero, move, combo) {
+export function attackDamage(hero, move, combo, counter = false) {
   const base = MOVES[move].damage;
   return (
     base +
     (hero === "jason" && move === "strong" ? 3 : 0) +
     (hero === "leo" && move === "special" ? 4 : 0) +
-    Math.min(combo, 5)
+    Math.min(combo, 5) +
+    (counter ? 5 : 0)
   );
 }

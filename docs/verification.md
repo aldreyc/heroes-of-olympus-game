@@ -1,5 +1,14 @@
 # Verification record
 
+## Storm and combat polish — 18 October 2026
+
+- Replaced the procedural spirit body with a detailed transparent pixel-art sprite, retaining animated wisps and orbiting debris. Enemy effects remain wind-only. Added layered haze, moving dust and papers, ground warnings, distinct Jason/Piper/Leo specials, impact bursts and a short finishing beat.
+- An offline rendering study exposed neighboring-pose fragments inside the old Jason/Piper quick-attack rectangles. Generated a separate, padded three-character strike atlas; inspected the replacement in the same offline composition and confirmed the extra feet are absent. PNG alpha and atlas bounds inspected. No original image was altered; new files are versioned siblings. Prompts and provenance are in `public/assets/art/combat-v2-provenance.json`.
+- Added perfect guards, one counter bonus per recovery window, quick → heavy → special chaining, a persistent Piper stagger state, a slightly faster second phase after the rescue, and bounded enemy movement. Wind volume increases in the second phase while narration still ducks it.
+- Improved health damage trails, special-ready feedback, spirit threshold indicator, chain countdown, touch hints, and end-of-chapter counter/guard statistics. Dialogue portraits now use the isolated character assets. Added wind-driven papers and a sword-reveal aura to the story.
+- **51 automated checks pass**, including the new mechanics, effect budgets, finite drawing commands, reduced-motion behavior, pause/finish lifecycle, atlas separation, narration ducking under stronger wind, and full simulated battles for all three heroes. TypeScript and Vite build pass.
+- Inspected static offline art studies rendered directly from the local graphics functions and assets with a native canvas adapter. These are composition checks only: no page was opened, no network used, and no browser restriction bypassed. They do not verify Phaser rendering, DOM layout, actual audio, input latency, or live gameplay. Browser testing remains pending.
+
 ## Latest playback revision
 
 The user asked for a faster, more natural prophecy. It now uses one continuous 11.68-second ElevenLabs narration rather than four isolated voice clips. Scribe transcription confirmed the supplied wording and provided line starts at 0, 3.08, 6.32, and 8.96 seconds. Fades are 160ms; total sequence is approximately 12.4 seconds instead of 24.65 seconds. Tests verify a single uninterrupted voice, line timing, completion after the recording, and skip/cancel behavior. The latest request supersedes the original four-second fixed hold per line. The public short alias is `heroes-of-olympus-game.vercel.app`.
@@ -33,7 +42,7 @@ The user subsequently supplied a screenshot showing both the default and exact `
 Once access is allowed, verify:
 
 1. Title → book → all three character choices, keyboard and mouse.
-2. Four prophecy lines, four seconds fully visible each, fade/black intervals, recorded narration, Skip prophecy/Escape, and explicit SOUND ON/OFF control. The latest user request intentionally adds these controls to the original black-screen-only brief.
+2. Four prophecy lines synchronized to the single natural reading, approximately 12.4 seconds total, Skip prophecy/Escape, and explicit SOUND ON/OFF control. Later user requests supersede the original fixed holds and black-screen-only controls requirement.
 3. Opening bus art, original dialogue, narrator, museum reveal, Jason sword transformation for every selected hero.
 4. Keyboard and on-screen movement/jump/block/quick/strong/special; correct attack damage and visible feedback.
 5. Wind spirit low/sweep/charge warnings, evasion, block and counterattack.
@@ -42,6 +51,7 @@ Once access is allowed, verify:
 8. Mute, focus loss pause, fullscreen and responsive portrait/landscape layouts.
 9. Asset loads and console errors, visual clipping and animation alignment.
 10. New Phaser audio integration: first Play gesture, intro after prophecy, scene skips, mute during a sound effect, music resume, and sound after returning from another tab. Compare narration/dialogue timing by listening.
+11. New spirit and strike sprites, attack/impact alignment, floor warnings, perfect guards, combo timing, counter feedback, damage trails, second-phase storm, reduced-motion behavior, and the brief finish before the ending. Check desktop and narrow touch layouts.
 
 Rodrigo's playtest feedback is not yet available. Satisfaction is not claimed.
 
@@ -50,7 +60,7 @@ Rodrigo's playtest feedback is not yet available. Satisfaction is not claimed.
 | Requirement | Current evidence | Remaining proof |
 | --- | --- | --- |
 | Title → book → Jason/Piper/Leo selection | Menu and selection handlers in `src/main.ts`; individual portraits derived from the supplied lineup in `public/assets/art/portraits` | Live keyboard, pointer, focus, selection persistence, and updated card framing checks |
-| Precise four-line prophecy on black | Exact text verified against supplied brief; timing and blank overlay implemented | Observe fades, four-second holds, black intervals, and final bus transition |
+| Four-line narrated prophecy on black | Exact text verified against supplied brief; continuous 11.68-second recording and synchronized text cues | Observe natural pacing, fades, skip/mute and final bus transition |
 | Bus and Grand Canyon story | Local bus/canyon/museum art, original dialogue, intro narration, bus/wind ambience | Rendered framing, readable text, motion, audio playback and timing |
 | Dark wind spirit with a visible face and no electricity | Smoke/face drawing and wind-only enemy effects in `src/battle.ts` | Visual quality and attack readability |
 | Jason coin → golden sword for every hero selection | Story stages explicitly use Jason; coin/sword presentation and cue implemented | Visual continuity, hand placement, transformation and immediate handoff |

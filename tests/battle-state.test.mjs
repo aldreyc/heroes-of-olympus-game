@@ -24,7 +24,7 @@ const sandbox = {
     Scene: class {},
     Math: { Clamp: (x, a, b) => Math.max(a, Math.min(b, x)) },
   },
-  audio: { sfx() {}, playMusic() {}, wind() {} },
+  audio: { sfx() {}, playMusic() {}, wind() {}, setStorm() {} },
   HEROES,
   MOVES,
   hitOutcome,
@@ -32,6 +32,11 @@ const sandbox = {
   matchMedia: () => ({ matches: true }),
   Math,
 };
+const vfx = { exports: {}, Math };
+vm.runInNewContext(ts.transpileModule(fs.readFileSync("src/combat-vfx.ts", "utf8"), {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS },
+}).outputText, vfx);
+Object.assign(sandbox, vfx.exports);
 vm.runInNewContext(code, sandbox);
 const Battle = sandbox.exports.OlympusScene;
 function battle() {
@@ -215,4 +220,128 @@ for(let hero=0;hero<HEROES.length;hero++)test(`${HEROES[hero].name} can win a co
   s.step(1/60);
  }
  assert.equal(result,true);assert.equal(rescueCount,1);assert.ok(s.health>0);assert.ok(s.stats.hits>0);
+});
+
+test('timed guard prevents damage and opens an immediate counter opportunity', () => {
+  const s = battle();
+  s.enemyPhase = 'attack'; s.enemyMove = 'sweep'; s.enemyTimer = .28;
+  s.keys.add('s');
+  advance(s, .05);
+  assert.equal(s.health, 100);
+  assert.equal(s.stats.perfectBlocks, 1);
+  assert.equal(s.meter, 55);
+  assert.equal(s.enemyPhase, 'recover');
+});
+
+test('holding guard early still blocks but does not grant a perfect guard', () => {
+  const s = battle();
+  s.enemyPhase = 'tell'; s.enemyMove = 'sweep'; s.enemyTimer = .4;
+  s.keys.add('s');
+  advance(s, .5);
+  assert.equal(s.health, 98);
+  assert.equal(s.stats.blocks, 1);
+  assert.equal(s.stats.perfectBlocks, 0);
+});
+
+test('airborne guarding cannot block a sweeping gust', () => {
+  const s = battle();
+  s.enemyPhase = 'attack'; s.enemyMove = 'sweep'; s.enemyTimer = .28;
+  s.y = 450; s.keys.add('s');
+  advance(s, .03);
+  assert.equal(s.health, 91);
+  assert.equal(s.stats.blocks, 0);
+});
+
+test('one recovery window rewards only one counter, even with multiple hits', () => {
+  const s = battle();
+  s.enemyPhase = 'recover'; s.enemyTimer = 10;
+  s.queue('quick'); advance(s, .5);
+  assert.equal(s.enemyHealth, 147);
+  assert.equal(s.stats.counters, 1);
+  s.ex = s.x + 140;
+  s.queue('quick'); advance(s, .5);
+  assert.equal(s.enemyHealth, 138); // second hit gets the chain bonus, not another counter bonus
+  assert.equal(s.stats.counters, 1);
+});
+
+test('connected quick-heavy-special chain preserves separate windups and meter cost', () => {
+  const s = battle(); s.enemyTimer = 100;
+  s.queue('quick'); advance(s, .2);
+  assert.equal(s.stats.hits, 1);
+  s.queue('strong'); advance(s, .13);
+  assert.equal(s.move, 'strong');
+  assert.equal(s.stats.hits, 1); // heavy is still winding up
+  advance(s, .32);
+  assert.equal(s.stats.hits, 2);
+  s.queue('special'); advance(s, .65);
+  assert.equal(s.stats.hits, 3);
+  assert.equal(s.meter, 15);
+});
+
+test('Piper voice interruption persists and suspends enemy attacks', () => {
+  const s = battle(); s.heroIndex = 1; s.meter = 50; s.enemyTimer = 100;
+  s.queue('special'); advance(s, .8);
+  assert.equal(s.enemyPhase, 'stunned');
+  assert.equal(s.health, 100);
+  const remaining = s.enemyTimer;
+  advance(s, 1);
+  assert.equal(s.enemyPhase, 'stunned');
+  assert.ok(s.enemyTimer < remaining);
+});
+
+test('finishing impact is brief, cannot accept attacks, and respects pause', () => {
+  const s = battle(); s.enemyHealth = 5; s.enemyTimer = 100;
+  let ends = 0; s.onEnd = () => ends++;
+  s.queue('quick'); advance(s, .2);
+  assert.equal(s.pendingResult, true);
+  assert.equal(ends, 0);
+  s.queue('strong'); assert.equal(s.buffer, '');
+  s.pause(); const remaining = s.finishTimer;
+  advance(s, 2); assert.equal(s.finishTimer, remaining); assert.equal(ends, 0);
+  s.resume(); advance(s, 1);
+  assert.equal(ends, 1);
+});
+
+test('wind spirit pursuit stays inside the arena', () => {
+  const s = battle(); s.x = 1100; s.ex = 1169; s.enemyTimer = .8;
+  advance(s, .4);
+  assert.ok(s.ex <= 1170);
+});
+
+test('new effects stay bounded and all visual lifetimes freeze while paused', () => {
+  const s = battle();
+  s.effects = new Proxy({}, {get:()=>()=>{}});
+  for(let i=0;i<30;i++) s.impact(400,450,0xffffff);
+  assert.equal(s.impacts.length,12);
+  s.particles=[{x:1,y:1,vx:20,vy:10,life:.4,max:.7,color:0xffffff,size:3}];
+  let destroyed=0;
+  s.callouts=[{obj:{setY(){},setAlpha(){},destroy(){destroyed++}},life:.3,y:20}];
+  s.pause(); s.drawEffects(.5);
+  assert.equal(s.particles[0].life,.4);
+  assert.equal(s.impacts[0].life,.38);
+  assert.equal(s.callouts[0].life,.3);
+  s.resume(); s.drawEffects(.5);
+  assert.equal(s.particles.length,0);
+  assert.equal(s.impacts.length,0);
+  assert.equal(s.callouts.length,0);
+  assert.equal(destroyed,1);
+});
+
+test('committed attacks cannot hit an enemy behind the fighter', () => {
+  const s=battle(); s.enemyTimer=100;
+  s.move='quick'; s.moveTime=0; s.facing=1;
+  s.ex=s.x-140;
+  advance(s,.3);
+  assert.equal(s.stats.hits,0);
+});
+
+test('pausing freezes atmospheric motion while the reveal can animate independently', () => {
+  const s=battle();
+  const object=new Proxy({}, {get:()=>()=>object});
+  s.smoke=object;s.weather=object;s.floorFX=object;s.spirit=object;s.effects=object;s.backdrop=object;
+  s.pause(); const clock=s.clock;
+  s.update(0,50); assert.equal(s.clock,clock);
+  s.reveal=true;
+  s.update(50,50); assert.ok(s.clock>clock);
+  assert.equal(s.mode,'pause');
 });

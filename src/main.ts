@@ -72,7 +72,11 @@ function toolbar() {
     else void app.requestFullscreen().catch(() => {});
   });
   on("pause", pauseMenu);
-  on("controls", () => app.classList.toggle("touch"));
+  on("controls", () => {
+    app.classList.toggle("touch");
+    lastHud = "";
+    updateHud();
+  });
   if (restoreSoundFocus) document.getElementById("sound")?.focus({ preventScroll: true });
 }
 function title() {
@@ -174,15 +178,18 @@ function runStory(beats: Beat[], done: () => void) {
     if (special && !gameStarted) {
       scene.startFight(0);
       scene.pause();
+      scene.reveal = true;
       scene.label.setText("");
       audio.music?.pause();
       gameStarted = true;
       scene.player.setVisible(false);
       scene.ground.setVisible(false);
     }
+    const windScene = special || b.scene === "rescue" || b.effect === "wind";
+    const windArt = windScene ? `<div class="story-wind" aria-hidden="true">${Array.from({length: 12}, (_, i) => `<i style="--i:${i}"></i>`).join("")}</div>` : "";
     setPage(
       "story",
-      `<section class="story-stage ${b.scene}" ${b.scene === "rescue" ? 'style="background-image:url(/assets/art/rescue.png)"' : special ? 'style="background:none"' : ""}><div class="cinema-bar top"></div><div class="cinema-bar bottom"></div><div class="scene-tag"><div class="eyebrow">THE LOST HERO · CHAPTER ONE</div><h3>${b.title}</h3></div><button class="small-button skip" id="skip">SKIP SCENE ↗</button>${b.effect === "coin" ? '<div class="coin-scene"><div class="coin"></div></div>' : b.effect === "sword" ? '<div class="coin-scene"><svg class="gold-sword" viewBox="0 0 100 160" width="130" height="200"><path d="M50 3L61 25L56 110H44L39 25Z" fill="#f6d477" stroke="#fff0b8" stroke-width="2"/><path d="M50 10V110" stroke="#fff3cb"/><path d="M25 111Q50 98 75 111L73 119H27Z" fill="#b78836"/><path d="M45 118H55V147H45Z" fill="#72502d"/><circle cx="50" cy="150" r="8" fill="#e5be60"/></svg></div>' : ""}<div class="dialogue">${["Jason", "Piper", "Leo", "Coach Hedge"].includes(b.speaker) ? `<div class="speaker-portrait ${b.speaker === "Coach Hedge" ? "hedge" : b.speaker.toLowerCase()}" aria-hidden="true"></div>` : ""}<div class="speaker">${b.speaker}</div><p>${b.text}</p><div class="dialogue-footer"><span>${String(idx + 1).padStart(2, "0")} / ${String(beats.length).padStart(2, "0")} &nbsp; · &nbsp; SPACE TO CONTINUE</span><button class="small-button" id="next">${idx === beats.length - 1 ? "CONTINUE" : "NEXT"} <span aria-hidden="true">→</span></button></div></div><div class="story-progress" style="width:${((idx + 1) / beats.length) * 100}%"></div></section>`,
+      `<section class="story-stage ${b.scene}" ${b.scene === "rescue" ? 'style="background-image:url(/assets/art/rescue.png)"' : special ? 'style="background:none"' : ""}>${windArt}<div class="cinema-bar top"></div><div class="cinema-bar bottom"></div><div class="scene-tag"><div class="eyebrow">THE LOST HERO · CHAPTER ONE</div><h3>${b.title}</h3></div><button class="small-button skip" id="skip">SKIP SCENE ↗</button>${b.effect === "coin" ? '<div class="coin-scene"><div class="coin"></div></div>' : b.effect === "sword" ? '<div class="coin-scene sword-moment"><svg class="gold-sword" viewBox="0 0 100 160" width="130" height="200"><path d="M50 3L61 25L56 110H44L39 25Z" fill="#f6d477" stroke="#fff0b8" stroke-width="2"/><path d="M50 10V110" stroke="#fff3cb"/><path d="M25 111Q50 98 75 111L73 119H27Z" fill="#b78836"/><path d="M45 118H55V147H45Z" fill="#72502d"/><circle cx="50" cy="150" r="8" fill="#e5be60"/></svg></div>' : ""}<div class="dialogue">${["Jason", "Piper", "Leo", "Coach Hedge"].includes(b.speaker) ? `<div class="speaker-portrait ${b.speaker === "Coach Hedge" ? "hedge" : b.speaker.toLowerCase()}" aria-hidden="true"></div>` : ""}<div class="speaker">${b.speaker}</div><p>${b.text}</p><div class="dialogue-footer"><span>${String(idx + 1).padStart(2, "0")} / ${String(beats.length).padStart(2, "0")} &nbsp; · &nbsp; SPACE TO CONTINUE</span><button class="small-button" id="next">${idx === beats.length - 1 ? "CONTINUE" : "NEXT"} <span aria-hidden="true">→</span></button></div></div><div class="story-progress" style="width:${((idx + 1) / beats.length) * 100}%"></div></section>`,
     );
     if (b.scene === "bus") audio.ambience("bus");
     else if (b.scene === "canyon") audio.wind();
@@ -219,7 +226,22 @@ function beginBattle() {
   bindBattle();
 }
 function battleHTML() {
-  return `<section class="hud"><div><div class="fighter-label"><span>${HEROES[selected].short}</span><small>${HEROES[selected].weapon}</small></div><div class="health"><i id="hero-health"></i></div><div class="meter"><i id="hero-meter"></i></div></div><div class="hud-center"><small>SURVIVE THE</small>STORM</div><div class="enemy-hud"><div class="fighter-label"><small>VENTUS · WIND SPIRIT</small><span>DYLAN</span></div><div class="health"><i id="enemy-health"></i></div></div></section><div class="combat-caption" id="combat-caption">PROTECT YOUR FRIENDS · SPECIAL REQUIRES 50 SPIRIT</div><div class="combat-help"><span class="hint"><kbd>A</kbd><kbd>D</kbd> MOVE</span><span class="hint"><kbd>W</kbd> JUMP</span><span class="hint"><kbd>S</kbd> BLOCK</span><span class="hint"><kbd>J</kbd> QUICK</span><span class="hint"><kbd>K</kbd> STRONG</span><span class="hint"><kbd>L</kbd> SPECIAL</span></div><div class="touch-controls"><div class="touch-group"><button data-hold="a" aria-label="Move left">◀</button><button data-hold="d" aria-label="Move right">▶</button><button data-action="jump" aria-label="Jump">↑</button><button data-hold="s" aria-label="Block">GUARD</button></div><div class="touch-group"><button class="attack" data-action="quick">QUICK</button><button class="attack" data-action="strong">HEAVY</button><button class="attack special" data-action="special">SPIRIT</button></div></div>`;
+  return `<section class="hud" aria-label="Battle status">
+    <div><div class="fighter-label"><span>${HEROES[selected].short}</span><small>${HEROES[selected].weapon}</small></div>
+      <div class="health" id="hero-hp-bar" role="progressbar" aria-label="Hero health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i class="damage-trail" id="hero-trail"></i><i id="hero-health"></i></div>
+      <div class="meter" id="spirit-bar" role="progressbar" aria-label="Spirit" aria-valuemin="0" aria-valuemax="100" aria-valuenow="35"><i id="hero-meter"></i></div>
+      <div class="meter-label"><span id="spirit-status">BUILD SPIRIT</span><span>${HEROES[selected].special.toUpperCase()}</span></div>
+    </div>
+    <div class="hud-center"><small>SURVIVE THE</small>STORM</div>
+    <div class="enemy-hud"><div class="fighter-label"><small>VENTUS · WIND SPIRIT</small><span>DYLAN</span></div>
+      <div class="health" id="enemy-hp-bar" role="progressbar" aria-label="Wind spirit health" aria-valuemin="0" aria-valuemax="160" aria-valuenow="160"><i class="damage-trail" id="enemy-trail"></i><i id="enemy-health"></i></div>
+      <div class="storm-stage" id="storm-stage">I · PROTECT YOUR FRIENDS</div>
+    </div>
+  </section>
+  <div class="combat-caption" id="combat-caption">PROTECT YOUR FRIENDS · SPECIAL REQUIRES 50 SPIRIT</div>
+  <div class="chain-readout" id="chain-readout" aria-hidden="true"><strong id="chain-count">2</strong><span>HIT CHAIN<i id="chain-time"></i></span></div>
+  <div class="combat-help"><span class="hint"><kbd>A</kbd><kbd>D</kbd> MOVE</span><span class="hint"><kbd>W</kbd> JUMP</span><span class="hint"><kbd>S</kbd> BLOCK</span><span class="hint"><kbd>J</kbd> QUICK</span><span class="hint"><kbd>K</kbd> STRONG</span><span class="hint"><kbd>L</kbd> SPECIAL</span></div>
+  <div class="touch-controls"><div class="touch-group"><button data-hold="a" aria-label="Move left">◀</button><button data-hold="d" aria-label="Move right">▶</button><button data-action="jump" aria-label="Jump">↑</button><button data-hold="s" aria-label="Block">GUARD</button></div><div class="touch-group"><button class="attack" data-action="quick">QUICK</button><button class="attack" data-action="strong">HEAVY</button><button class="attack special" data-action="special">SPIRIT</button></div></div>`;
 }
 function bindBattle() {
   lastHud = "";
@@ -276,21 +298,42 @@ function bindBattle() {
 }
 function updateHud() {
   if (page !== "battle") return;
-  const stamp = `${scene.health},${scene.enemyHealth},${scene.meter}`;
+  const stamp = `${scene.health},${scene.enemyHealth},${scene.meter},${scene.streak},${Math.ceil(scene.streakTimer * 10)},${scene.storyTriggered}`;
   if (stamp === lastHud) return;
   lastHud = stamp;
-  const hp = document.getElementById("hero-health");
-  if (hp) hp.style.width = `${scene.health}%`;
-  const enemy = document.getElementById("enemy-health");
-  if (enemy) enemy.style.width = `${(scene.enemyHealth / 160) * 100}%`;
-  const meter = document.getElementById("hero-meter");
-  if (meter) meter.style.width = `${scene.meter}%`;
+  for (const [id, width] of [
+    ["hero-health", scene.health], ["hero-trail", scene.health],
+    ["enemy-health", scene.enemyHealth / 160 * 100], ["enemy-trail", scene.enemyHealth / 160 * 100],
+    ["hero-meter", scene.meter],
+  ] as [string, number][]) {
+    const el = document.getElementById(id);
+    if (el) el.style.width = `${width}%`;
+  }
+  document.getElementById("hero-hp-bar")?.setAttribute("aria-valuenow", String(scene.health));
+  document.getElementById("enemy-hp-bar")?.setAttribute("aria-valuenow", String(scene.enemyHealth));
+  document.getElementById("spirit-bar")?.setAttribute("aria-valuenow", String(scene.meter));
+  document.getElementById("hero-hp-bar")?.classList.toggle("low-health", scene.health <= 25);
+  const ready = scene.meter >= 50;
+  document.getElementById("spirit-bar")?.classList.toggle("ready", ready);
+  const status = document.getElementById("spirit-status");
+  if (status) status.textContent = ready ? "L · READY" : `${Math.round(scene.meter)} / 50`;
+  document.querySelector('[data-action="special"]')?.classList.toggle("ready", ready);
+  const stage = document.getElementById("storm-stage");
+  if (stage) stage.textContent = scene.storyTriggered ? "II · HOLD THE LINE" : "I · PROTECT YOUR FRIENDS";
+  const chain = document.getElementById("chain-readout");
+  const chained = scene.streak >= 2 && scene.streakTimer > 0;
+  chain?.classList.toggle("visible", chained);
+  const count = document.getElementById("chain-count");
+  if (count) count.textContent = String(scene.streak);
+  const chainTime = document.getElementById("chain-time");
+  if (chainTime) chainTime.style.transform = `scaleX(${Math.max(0, scene.streakTimer) / 1.6})`;
   const caption = document.getElementById("combat-caption");
-  if (caption)
-    caption.textContent =
-      scene.meter >= 50
-        ? `${HEROES[selected].special.toUpperCase()} READY · PRESS L`
-        : `SPIRIT ${Math.round(scene.meter)} / 50 · JUMP THE LOW GUST, BLOCK THE SWEEP`;
+  if (caption) {
+    caption.classList.toggle("ready", ready);
+    caption.textContent = ready
+      ? `${HEROES[selected].special.toUpperCase()} READY · ${app.classList.contains("touch") ? "TAP SPIRIT" : "PRESS L"}`
+      : `JUMP LOW GUSTS · BLOCK SWEEPS · STRIKE DURING RECOVERY`;
+  }
 }
 function resumeBattle() {
   setPage("battle", battleHTML());
@@ -305,7 +348,7 @@ function pauseMenu() {
   scene.pause();
   setPage(
     "pause",
-    `<div class="modal"><div class="modal-card"><div class="eyebrow">Take a breath, demigod</div><h2>Paused</h2><p>Move with A / D. Jump with W or Space.<br>Hold S to block. J: quick · K: strong · L: special.<br>Read the wind. Every attack leaves an opening.</p><div class="button-row">${button("RESUME", "resume")}${button("RESTART", "retry", "secondary")}${button("CHARACTERS", "characters", "secondary")}</div></div></div>`,
+    `<div class="modal"><div class="modal-card"><div class="eyebrow">Take a breath, demigod</div><h2>Paused</h2><p>Move with A / D. Jump with W or Space.<br>Hold S to block. J: quick · K: strong · L: special.<br>Time your guard just before impact for a perfect block.<br>Connect J → K → L to chain your attacks.<br>Strike during recovery for bonus counter damage.</p><div class="button-row">${button("RESUME", "resume")}${button("RESTART", "retry", "secondary")}${button("CHARACTERS", "characters", "secondary")}</div></div></div>`,
   );
   on("resume", resumeBattle);
   on("retry", beginBattle);
@@ -330,7 +373,7 @@ function chapterComplete() {
   const stats = scene.stats;
   setPage(
     "complete",
-    `<section class="screen complete"><div class="eyebrow">THE LOST HERO · CHAPTER ONE</div><div class="crest">✦</div><h2>You stood against the storm.</h2><p>Jason, Piper, and Leo are safe. Coach Hedge is still out there.<br>This chapter ends. Your legend has only begun.</p><div class="results"><div><strong>${stats.hits}</strong><span>STRIKES LANDED</span></div><div><strong>${stats.blocks}</strong><span>ATTACKS BLOCKED</span></div><div><strong>${stats.bestCombo}</strong><span>BEST HIT CHAIN</span></div></div><div class="button-row">${button("PLAY AGAIN", "replay")}${button("CHOOSE HERO", "characters", "secondary")}</div><button class="small-button" style="margin-top:18px" id="home">RETURN TO TITLE</button><p class="memory-note">For Rodrigo. Your heroes. Your adventure.</p></section>`,
+    `<section class="screen complete"><div class="eyebrow">THE LOST HERO · CHAPTER ONE</div><div class="crest">✦</div><h2>You stood against the storm.</h2><p>Jason, Piper, and Leo are safe. Coach Hedge is still out there.<br>This chapter ends. Your legend has only begun.</p><div class="results"><div><strong>${stats.hits}</strong><span>STRIKES LANDED</span></div><div><strong>${stats.perfectBlocks}</strong><span>PERFECT GUARDS</span></div><div><strong>${stats.counters}</strong><span>COUNTERATTACKS</span></div><div><strong>${stats.bestCombo}</strong><span>BEST HIT CHAIN</span></div></div><div class="button-row">${button("PLAY AGAIN", "replay")}${button("CHOOSE HERO", "characters", "secondary")}</div><button class="small-button" style="margin-top:18px" id="home">RETURN TO TITLE</button><p class="memory-note">For Rodrigo. Your heroes. Your adventure.</p></section>`,
   );
   on("replay", beginBattle);
   on("characters", selectHero);

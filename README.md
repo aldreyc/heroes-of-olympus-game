@@ -20,7 +20,7 @@ npm run preview
 
 The `dist` directory is a static deployable website. No server API, credentials, or ElevenLabs subscription is required to play. The generated audio is bundled locally.
 
-Audio is preloaded and played through Phaser's sound manager. The first button or keyboard interaction activates sound; M or the music-note button controls all audio, including active effects. Narration lowers the music and ambience automatically. Missing audio does not stop the chapter.
+Audio is preloaded and played through Phaser's sound manager. The first button or keyboard interaction activates sound; M or the SOUND ON / OFF button controls all audio, including active effects. Narration lowers the music and ambience automatically. Missing audio does not stop the chapter.
 
 ## Controls
 
@@ -44,13 +44,19 @@ Play at https://heroes-of-olympus-game.vercel.app. The Vercel project is `heroes
 
 Quick strikes build spirit. Jump low gusts, block sweeping gusts and charges, then counterattack during recovery. Piper's special stuns; Jason has stronger heavy sword strikes; Leo has the strongest gadget burst.
 
+A guard started within 180ms of impact prevents chip damage and grants extra spirit. Each enemy recovery window rewards one counterattack with +5 damage and +8 spirit. A connected quick attack can flow into a heavy, and a connected heavy into a special: press J → K → L as each strike connects. Specials still cost 50 spirit. The storm intensifies after the rescue, with slightly shorter pauses between enemy attacks and the same readable warnings.
+
+Combat has layered dust, paper debris, ground warnings, an illustrated wind spirit with animated wisps, distinct hero specials, impact rings, brief hit pauses, a chain indicator, and delayed damage trails. Reduced-motion preferences lower debris and disable camera shake and looping story papers. Effects and callouts freeze when paused; the final hit gets a short finish before the ending.
+
 ## Content and assets
 
 - `src/main.ts`: menus, prophecy timing, chapter flow, HUD, input UI
 - `src/battle.ts`: fixed-step combat, enemy patterns, frame animation and effects
+- `src/combat-vfx.ts`: layered storm, wind warnings, spirit wisps and hero effects
 - `src/story.ts`: original dialogue and cinematic beats
 - `src/audio.ts`: narration, music, ambience and effect mixing
 - `public/assets/art`: generated art and measured sprite atlases
+- `public/assets/art/combat-v2-provenance.json`: prompts for the new spirit and isolated strike sprites
 - `public/assets/audio/audio-manifest.json`: ElevenLabs generation records, scripts, and mix notes
 - `docs/canon-notes.md`: sources and explicit gameplay adaptations
 

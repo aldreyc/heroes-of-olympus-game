@@ -625,6 +625,7 @@ kbd {
   color: #c8bba2;
 }
 .health {
+  position: relative;
   height: 12px;
   background: #101b2ad9;
   border: 1px solid #dfbd7c60;
@@ -632,12 +633,28 @@ kbd {
   transform: skewX(-10deg);
 }
 .health i {
+  position: relative;
+  z-index: 1;
   display: block;
   height: 100%;
   width: 100%;
   background: linear-gradient(90deg, #8f713d, #edd199);
   transition: width 0.15s;
 }
+.health i.damage-trail {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: calc(100% - 4px);
+  max-width: calc(100% - 4px);
+  background: #f1e4b9;
+  opacity: 0.8;
+  z-index: 0;
+  transition: width 0.55s 0.18s ease-out;
+}
+.enemy-hud .health i.damage-trail { left: auto; right: 2px; }
+.health.low-health { border-color: #efb28f; }
+.health.low-health i:not(.damage-trail) { background: linear-gradient(90deg, #a95738, #efc092); }
 .enemy-hud .health i {
   background: linear-gradient(90deg, #678d97, #abc5c8);
   margin-left: auto;
@@ -646,11 +663,51 @@ kbd {
   transform: skewX(10deg);
 }
 .meter {
+  position: relative;
   height: 4px;
-  width: 45%;
+  width: 100%;
   background: #142133;
   margin-top: 8px;
 }
+.meter:after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  left: 50%;
+  width: 2px;
+  background: #ece5cd;
+}
+.meter.ready i { background: #e9d39b; box-shadow: 0 0 12px #e9c98455; }
+.meter-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+  font-size: 8px;
+  color: #d5cbaa;
+  letter-spacing: 0.1em;
+}
+.storm-stage { margin-top: 13px; text-align: right; color: #bacdd2; font-size: 8px; letter-spacing: 0.15em; }
+.chain-readout {
+  position: absolute;
+  top: 160px;
+  left: 5%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #f4dba7;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.15s, transform 0.15s;
+  text-shadow: 0 2px 8px #050a12;
+  pointer-events: none !important;
+}
+.chain-readout.visible { opacity: 1; transform: translateX(0); }
+.chain-readout strong { font: 46px "Cinzel", Georgia, serif; }
+.chain-readout span { font-size: 9px; letter-spacing: 0.15em; }
+.chain-readout i { display: block; height: 2px; margin-top: 9px; background: #f4dba7; transform-origin: left; transition: transform 0.1s linear; }
+.combat-caption.ready { color: #ffe0a0; text-shadow: 0 0 14px #e8c17655; }
 .meter i {
   display: block;
   height: 100%;
@@ -740,6 +797,7 @@ kbd {
   border-color: #96bdf0;
   color: #b6d6ff;
 }
+.touch-controls .special.ready { background: #3c3221ed; border-color: #f3d593; color: #fff2d4; box-shadow: 0 0 16px #d8b87840; }
 .modal {
   position: absolute;
   inset: 0;
@@ -797,11 +855,40 @@ kbd {
 }
 .results {
   display: flex;
-  gap: 40px;
+  gap: 28px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   margin: 28px 0;
   padding: 20px;
+}
+.story-wind { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.story-wind i {
+  position: absolute;
+  left: -5%;
+  top: calc(20% + var(--i) * 5%);
+  width: 13px;
+  height: 6px;
+  background: #cbbd9855;
+  box-shadow: 22px 3px 0 -2px #e3d9bd22;
+  animation: paper-gust calc(3.5s + var(--i) * 0.17s) linear infinite;
+  animation-delay: calc(var(--i) * -0.71s);
+}
+.sword-moment:before {
+  content: "";
+  position: absolute;
+  inset: -50px;
+  border: 2px solid #eccc7b70;
+  border-radius: 50%;
+  box-shadow: 0 0 90px #eccc7b40, inset 0 0 70px #eccc7b30;
+  animation: sword-aura 1s ease-out both;
+}
+@keyframes paper-gust {
+  from { transform: translateX(110vw) translateY(-25px) rotate(0); }
+  to { transform: translateX(-10vw) translateY(40px) rotate(540deg); }
+}
+@keyframes sword-aura {
+  from { opacity: 1; transform: scale(0.2); }
+  to { opacity: 0; transform: scale(1.6); }
 }
 .results strong {
   display: block;
@@ -1151,8 +1238,10 @@ kbd {
   *:before,
   *:after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .story-wind { display: none; }
 }
 #app.played .combat-help {
   opacity: 0.5;
@@ -1185,6 +1274,10 @@ kbd {
     top: 34%;
     padding: 0 16px;
   }
+  .chain-readout { top: 39%; left: 4%; }
+  .chain-readout strong { font-size: 30px; }
+  .meter-label span:last-child { display: none; }
+  .storm-stage { font-size: 6px; }
   .combat-help {
     bottom: 24%;
   }
@@ -1277,7 +1370,10 @@ kbd {
     text-align: center;
   }
   .results {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 30px;
+    text-align: center;
   }
   .results span {
     font-size: 7px;
@@ -1316,13 +1412,18 @@ kbd {
   image-rendering: pixelated;
 }
 .speaker-portrait.jason {
-  background-position: 9% 11%;
+  background-image: url("/assets/art/portraits/jason.png");
 }
 .speaker-portrait.piper {
-  background-position: 33% 16%;
+  background-image: url("/assets/art/portraits/piper.png");
 }
 .speaker-portrait.leo {
-  background-position: 61% 15%;
+  background-image: url("/assets/art/portraits/leo.png");
+}
+.speaker-portrait:is(.jason, .piper, .leo) {
+  background-size: auto 155%;
+  background-position: center 5%;
+  background-color: #1b2a3b;
 }
 .speaker-portrait.hedge {
   background-position: 91% 9%;

@@ -4,7 +4,7 @@ type SoundManager = Phaser.Scene["sound"];
 type Sound = ReturnType<SoundManager["add"]>;
 
 export const AUDIO_FILES: Record<string, string> = Object.fromEntries([
-  ...["intro", "ending", "combat", "wind", "bus", "reveal", "prophecy-1", "prophecy-2", "prophecy-3", "prophecy-4"].map((key) => [key, key + ".mp3"]),
+  ...["intro", "ending", "combat", "wind", "bus", "reveal", "prophecy-natural"].map((key) => [key, key + ".mp3"]),
   ...[
     "ui", "confirm", "slash", "hit", "heavy", "block", "jump", "land",
     "coin", "fire", "charm", "lightning", "gust", "victory", "defeat",

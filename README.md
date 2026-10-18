@@ -36,7 +36,11 @@ Audio is preloaded and played through Phaser's sound manager. The first button o
 
 On touch devices the on-screen controls appear automatically. Use two fingers to move and attack together. Landscape is recommended for the largest arena.
 
-The prophecy has four recorded ElevenLabs voice lines timed to their text. Use **Skip prophecy** or Escape to go straight to the bus scene. Skipping stops the voice and cancels all remaining prophecy timers. The sound toggle remains available during the prophecy.
+The prophecy uses one continuous ElevenLabs reading with natural pauses. The full sequence takes about 12.4 seconds, with each line synchronized to the spoken verse. Use **Skip prophecy** or Escape to go straight to the bus scene. Skipping stops the voice and cancels all remaining prophecy timers. The sound toggle remains available during the prophecy.
+
+## Online preview
+
+Play at https://heroes-of-olympus-game.vercel.app. The Vercel project is `heroes-of-olympus-game` in `aldreys-projects`; login protection is disabled. This short alias points to the current preview. When publishing a new preview, move the alias to the ready deployment with `vercel alias set <deployment-url> heroes-of-olympus-game.vercel.app --scope aldreys-projects`.
 
 Quick strikes build spirit. Jump low gusts, block sweeping gusts and charges, then counterattack during recovery. Piper's special stuns; Jason has stronger heavy sword strikes; Leo has the strongest gadget burst.
 

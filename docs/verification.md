@@ -1,5 +1,9 @@
 # Verification record
 
+## Latest playback revision
+
+The user asked for a faster, more natural prophecy. It now uses one continuous 11.68-second ElevenLabs narration rather than four isolated voice clips. Scribe transcription confirmed the supplied wording and provided line starts at 0, 3.08, 6.32, and 8.96 seconds. Fades are 160ms; total sequence is approximately 12.4 seconds instead of 24.65 seconds. Tests verify a single uninterrupted voice, line timing, completion after the recording, and skip/cancel behavior. The latest request supersedes the original four-second fixed hold per line. The public short alias is `heroes-of-olympus-game.vercel.app`.
+
 ## Completed
 
 - TypeScript and Vite production build passed.

@@ -467,7 +467,7 @@ kbd {
   padding: 30px;
   text-shadow: 0 0 16px #ffffff50;
   opacity: 0;
-  transition: opacity 0.8s;
+  transition: opacity 0.16s;
 }
 .prophecy p.visible {
   opacity: 1;

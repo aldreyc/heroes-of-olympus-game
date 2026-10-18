@@ -5,19 +5,10 @@ import { audio } from "./audio";
 import { playProphecy } from "./prophecy";
 import { HEROES } from "./combat-model.mjs";
 import { opening, interruption, ending, type Beat } from "./story";
-import type { Olympus3D } from "./three/view";
 const ui = document.querySelector<HTMLElement>("#ui")!;
 const persistent = document.querySelector<HTMLElement>("#persistent")!;
 const app = document.querySelector<HTMLElement>("#app")!;
 const scene = new OlympusScene();
-const threeHost = document.createElement("div");
-threeHost.id = "game-3d";
-threeHost.hidden = true;
-app.insertBefore(threeHost, ui);
-let visualMode: "2d" | "3d" = "2d";
-let threeView: Olympus3D | null = null;
-let loading3d = false;
-let modeMessage = "";
 let selected = Math.max(
   0,
   Math.min(2, Number(localStorage.getItem("olympus-hero") || 0)),
@@ -49,8 +40,6 @@ function clearTimers() {
 function setPage(name: string, html: string) {
   clearTimers();
   page = name;
-  app.dataset.page = name;
-  threeView?.setStage(name, selected);
   ui.innerHTML = html;
   toolbar();
   requestAnimationFrame(() =>
@@ -73,8 +62,7 @@ function toolbar() {
   const sound = `<button class="sound-toggle ${audio.muted ? "is-muted" : "is-on"}" id="sound" aria-pressed="${!audio.muted}" aria-label="Sound ${audio.muted ? "off. Unmute" : "on. Mute"} sound (M)" title="${audio.muted ? "Turn sound on" : "Turn sound off"} (M)">${soundIcon}<span>SOUND <strong>${audio.muted ? "OFF" : "ON"}</strong></span><kbd aria-hidden="true">M</kbd></button>`;
   persistent.innerHTML = page === "loading"
     ? ""
-    : `<nav class="toolbar ${page === "battle" ? "battle-toolbar" : ""}" aria-label="Game settings">${visualMode === "3d" && page !== "prophecy" ? `<button class="quality-toggle" id="quality" title="Switch 3D graphics quality">3D · ${threeView?.qualityName === "performance" ? "PERFORMANCE" : "CINEMATIC"}</button>` : ""}${sound}${page === "prophecy" ? "" : '<button class="icon-button" id="fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>'}${page === "battle" ? '<button class="icon-button" id="controls" title="On-screen controls" aria-label="Toggle on-screen controls">⌨</button><button class="icon-button" id="pause" title="Pause (Escape)" aria-label="Pause game">Ⅱ</button>' : ""}</nav>`;
-  on("quality", () => { threeView?.toggleQuality(); toolbar(); });
+    : `<nav class="toolbar ${page === "battle" ? "battle-toolbar" : ""}" aria-label="Game settings">${sound}${page === "prophecy" ? "" : '<button class="icon-button" id="fullscreen" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>'}${page === "battle" ? '<button class="icon-button" id="controls" title="On-screen controls" aria-label="Toggle on-screen controls">⌨</button><button class="icon-button" id="pause" title="Pause (Escape)" aria-label="Pause game">Ⅱ</button>' : ""}</nav>`;
   on("sound", () => {
     audio.setMute();
     toolbar();
@@ -97,47 +85,12 @@ function title() {
   scene.scenery();
   setPage(
     "title",
-    `<section class="screen title-screen"><div class="made-for"><span class="seal">✦</span> A LEGEND FOR RODRIGO</div><div class="eyebrow">A demigod’s journey begins</div><h1>HEROES<span>OF OLYMPUS</span></h1><p class="title-copy">Some heroes are born from legends.<br>Others wake up with no memory of one.</p><div class="chapter-label">BOOK I &nbsp; / &nbsp; THE LOST HERO</div><div class="mode-picker" role="group" aria-label="Choose your visual experience"><button id="mode-2d" aria-pressed="${visualMode === "2d"}" ${loading3d ? "disabled" : ""}><span class="mode-glyph" aria-hidden="true">▦</span><span><strong>2D PIXEL ART</strong><small>Rodrigo’s original heroes</small></span></button><button id="mode-3d" aria-pressed="${visualMode === "3d"}" ${loading3d ? "disabled" : ""}><span class="mode-glyph" aria-hidden="true">◇</span><span><strong>3D CINEMATIC</strong><small>Step into the storm</small></span></button></div><p class="mode-status" role="status">${loading3d ? "Bringing the 3D world to life…" : modeMessage || "One story. Two ways to become a hero."}</p><button class="primary" id="play" ${loading3d ? "disabled" : ""}>PLAY ${visualMode.toUpperCase()} &nbsp; →</button><div class="title-footer"><span>AN ADVENTURE INSPIRED BY RICK RIORDAN’S WORLD</span><span>YOUR HEROES · YOUR ADVENTURE</span></div></section>`,
+    `<section class="screen title-screen"><div class="made-for"><span class="seal">✦</span> A LEGEND FOR RODRIGO</div><div class="eyebrow">A demigod’s journey begins</div><h1>HEROES<span>OF OLYMPUS</span></h1><p class="title-copy">Some heroes are born from legends.<br>Others wake up with no memory of one.</p><div class="chapter-label">BOOK I &nbsp; / &nbsp; THE LOST HERO</div>${button("PLAY &nbsp; →", "play")}<div class="title-footer"><span>AN ADVENTURE INSPIRED BY RICK RIORDAN’S WORLD</span><span>PIXEL ART · STORY · COMBAT</span></div></section>`,
   );
-  on("mode-2d", () => { void chooseVisualMode("2d"); });
-  on("mode-3d", () => { void chooseVisualMode("3d"); });
   on("play", () => {
     audio.playMusic();
     books();
   });
-}
-async function chooseVisualMode(mode: "2d" | "3d") {
-  if (loading3d) return;
-  modeMessage = "";
-  if (mode === "3d" && !threeView) {
-    loading3d = true;
-    title();
-    try {
-      const { Olympus3D } = await import("./three/view");
-      threeHost.hidden = false;
-      threeView = new Olympus3D(threeHost, (message) => {
-        queueMicrotask(() => {
-          visualMode = "2d"; localStorage.setItem("olympus-visual-mode", "2d");
-          threeView?.dispose(); threeView = null; threeHost.hidden = true;
-          app.classList.remove("mode-3d"); scene.cameras.main.setVisible(true);
-          const toast = document.getElementById("toast")!; toast.hidden = false; toast.className = "toast visible"; toast.textContent = message;
-          window.setTimeout(() => { toast.hidden = true; }, 7000);
-          toolbar();
-        });
-      });
-      await threeView.prepare();
-    } catch (error) {
-      console.error("3D initialization failed", error);
-      threeView?.dispose(); threeView = null; threeHost.hidden = true;
-      modeMessage = "3D needs WebGL 2 on this device. You can keep playing in 2D.";
-      mode = "2d";
-    } finally { loading3d = false; }
-  }
-  visualMode = mode; localStorage.setItem("olympus-visual-mode", mode);
-  app.classList.toggle("mode-3d", mode === "3d");
-  threeView?.setEnabled(mode === "3d");
-  scene.cameras.main.setVisible(mode === "2d");
-  title();
 }
 function books() {
   scene.scenery();
@@ -158,7 +111,6 @@ function drawSelect() {
     "select",
     `<section class="screen"><button class="back" id="back">← BOOKS</button><div class="screen-heading"><div class="eyebrow">Three heroes. One destiny.</div><h2>Who will face the storm?</h2><p>Choose your courage. Each hero fights their own way.</p></div><div class="roster" role="group" aria-label="Choose a hero">${HEROES.map((h, i) => `<button class="hero-card ${menuChoice === i ? "selected" : ""}" id="hero-${i}" aria-pressed="${menuChoice === i}" aria-label="Choose ${h.name}"><div class="portrait ${h.id}" aria-hidden="true"><img src="/assets/art/portraits/${h.id}.png" alt="" draggable="false"></div><div class="card-info"><div class="eyebrow">${h.title}</div><h3>${h.name}</h3><p>${h.description}</p><div class="stat-row"><span>${h.weapon.toUpperCase()}</span>${[0, 1, 2, 3, 4].map((x) => `<i class="pip ${x < h.stats[0] ? "on" : ""}"></i>`).join("")}</div></div></button>`).join("")}</div><div class="select-bottom"><div class="legend"><span><kbd>←</kbd> <kbd>→</kbd> CHOOSE</span><span><kbd>ENTER</kbd> CONFIRM</span></div>${button(`PLAY AS ${HEROES[menuChoice].short} →`, "confirm")}</div><p class="memory-note">Character designs by Rodrigo · An original game adaptation</p></section>`,
   );
-  threeView?.setStage("select", menuChoice);
   HEROES.forEach((_, i) =>
     on(`hero-${i}`, () => {
       menuChoice = i;
@@ -239,7 +191,6 @@ function runStory(beats: Beat[], done: () => void) {
       "story",
       `<section class="story-stage ${b.scene}" ${b.scene === "rescue" ? 'style="background-image:url(/assets/art/rescue.png)"' : special ? 'style="background:none"' : ""}>${windArt}<div class="cinema-bar top"></div><div class="cinema-bar bottom"></div><div class="scene-tag"><div class="eyebrow">THE LOST HERO · CHAPTER ONE</div><h3>${b.title}</h3></div><button class="small-button skip" id="skip">SKIP SCENE ↗</button>${b.effect === "coin" ? '<div class="coin-scene"><div class="coin"></div></div>' : b.effect === "sword" ? '<div class="coin-scene sword-moment"><svg class="gold-sword" viewBox="0 0 100 160" width="130" height="200"><path d="M50 3L61 25L56 110H44L39 25Z" fill="#f6d477" stroke="#fff0b8" stroke-width="2"/><path d="M50 10V110" stroke="#fff3cb"/><path d="M25 111Q50 98 75 111L73 119H27Z" fill="#b78836"/><path d="M45 118H55V147H45Z" fill="#72502d"/><circle cx="50" cy="150" r="8" fill="#e5be60"/></svg></div>' : ""}<div class="dialogue">${["Jason", "Piper", "Leo", "Coach Hedge"].includes(b.speaker) ? `<div class="speaker-portrait ${b.speaker === "Coach Hedge" ? "hedge" : b.speaker.toLowerCase()}" aria-hidden="true"></div>` : ""}<div class="speaker">${b.speaker}</div><p>${b.text}</p><div class="dialogue-footer"><span>${String(idx + 1).padStart(2, "0")} / ${String(beats.length).padStart(2, "0")} &nbsp; · &nbsp; SPACE TO CONTINUE</span><button class="small-button" id="next">${idx === beats.length - 1 ? "CONTINUE" : "NEXT"} <span aria-hidden="true">→</span></button></div></div><div class="story-progress" style="width:${((idx + 1) / beats.length) * 100}%"></div></section>`,
     );
-    threeView?.setStage("story", selected, b);
     if (b.scene === "bus") audio.ambience("bus");
     else if (b.scene === "canyon") audio.wind();
     if (b.voice) audio.narration(b.voice);
@@ -429,14 +380,6 @@ function chapterComplete() {
   on("home", title);
 }
 scene.onUpdate = updateHud;
-scene.onFrame = (dt) => {
-  threeView?.update(scene, dt);
-  const quality = document.getElementById("quality");
-  if (quality && threeView) {
-    const label = `3D · ${threeView.qualityName.toUpperCase()}`;
-    if (quality.textContent !== label) quality.textContent = label;
-  }
-};
 scene.onEnd = finishBattle;
 scene.onStory = () => runStory(interruption, resumeBattle);
 window.addEventListener("keydown", (e) => {
@@ -479,10 +422,7 @@ window.addEventListener("blur", () => {
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && page === "battle") pauseMenu();
 });
-window.addEventListener("game-ready", () => {
-  title();
-  if (localStorage.getItem("olympus-visual-mode") === "3d") void chooseVisualMode("3d");
-}, { once: true });
+window.addEventListener("game-ready", title, { once: true });
 setPage(
   "loading",
   '<section class="loading"><span>HEROES OF OLYMPUS</span><p>Gathering the heroes…</p></section>',
@@ -504,8 +444,6 @@ new Phaser.Game({
 Object.defineProperty(window, "olympus", {
   get: () => ({
     page,
-    visualMode,
-    graphics: threeView?.enabled ? threeView.diagnostics() : null,
     hero: HEROES[selected].id,
     mode: scene.mode,
     hp: scene.health,

@@ -1,17 +1,5 @@
 # Verification record
 
-## 3D edition — 18 October 2026
-
-Added the opening-screen 2D / 3D selector, a lazy-loaded Three.js renderer, original articulated models for the trio and Coach Hedge, modeled museum/canyon/bus environments, procedural sky and layered wind spirit, physical materials and reflections, shadows, bloom, action effects and camera framing. Both renderers use the same existing combat simulation and audio. The 3D story follows the same bus, reveal, single-sword transformation, rescue, abduction and ending. The current 2D artwork is preserved.
-
-- TypeScript and production build pass. All **63 automated tests pass**. The suite includes renderer geometry/animation checks, all hero moves in both directions, attack phases, camera coverage at the arena edges, bounded effect pools, story staging, frozen pause state, lazy loading, saved mode, quality switching, initialization failure, and context-loss fallback preserving combat health. DOM mode-flow tests use Happy DOM and a mocked GPU; they are not browser tests.
-- Inspected offline lineup projections made directly from the 3D meshes. Corrected hair obscuring Piper's face. Inspected a native SceneKit composition of local geometry to assess the arena and weapon pose; this approximates materials and does not reproduce Three.js rendering. Improved the fighting stance, hand-linked weapon rotation and strike follow-through.
-- The two custom sky/storm GLSL programs compiled and linked in a native macOS OpenGL context, with WebGL renderer prefixes adapted and Three.js color-output chunks omitted. Also inspected a native offscreen rendering of the storm's local geometry and shader. This validates core shader syntax and appearance, not the complete WebGL/Three.js program or browser integration.
-- All studies read local source and geometry only. No website, browser, CDP session, alternate origin, or denied browser surface was accessed.
-- **Live browser / WebGL testing remains pending under the existing permission block.** In particular, actual shader integration, postprocessing, frame rate, DOM overlays, audio, real controls, mobile devices, and a complete visual playthrough require verification. No claim of modern Mortal Kombat production fidelity or Rodrigo's satisfaction is made.
-
-Additional manual checks when browser access is restored: choose each mode from the first screen; restore a saved 3D choice; play the whole chapter with all three heroes; inspect the single sword through every move and reveal; try both quality presets, fullscreen and portrait/landscape; pause and resume; finish, lose, retry and return to 2D; inspect GPU errors and context-loss recovery.
-
 ## Jason weapon correction — 18 October 2026
 
 The user's report was confirmed in the original Jason idle artwork: his raised free hand held an erroneous second blade. Checked the publisher's Jason profile (linked in `canon-notes.md`) and all active combat poses. Replaced only the idle art with a single-sword frame, including the story sword reveal that uses the same pose. Preserved its on-screen height and foot anchor. Generated with the built-in image tool; prompt and source recorded in `public/assets/art/jason-idle-v2-provenance.json`. Visually inspected the new asset; checked transparent alpha and atlas bounds. All 51 existing automated checks and the build passed. Live browser verification remains pending under the existing permission block.

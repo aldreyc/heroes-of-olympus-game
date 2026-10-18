@@ -87,6 +87,7 @@ export class OlympusScene extends Phaser.Scene {
     perfectBlocks: 0,
   };
   onUpdate: () => void = () => {};
+  onFrame: (delta: number) => void = () => {};
   onStory: () => void = () => {};
   onEnd: (won: boolean) => void = () => {};
   label!: Phaser.GameObjects.Text;
@@ -384,6 +385,7 @@ export class OlympusScene extends Phaser.Scene {
         .setX(640 + Math.sin(this.clock * 0.12) * 8)
         .setDisplaySize(1300, 732);
     } else this.backdrop.setX(640);
+    this.onFrame(dt);
   }
   step(dt: number) {
     if (this.mode !== "battle") return;

@@ -1,10 +1,10 @@
 # Heroes of Olympus — Rodrigo's opening chapter
 
-A browser game built with Phaser, TypeScript, and Vite. Rodrigo's character lineup guides the pixel art. The chapter contains three selectable fighters, a timed prophecy, original dialogue, narrated opening and ending, a Grand Canyon battle, a mid-fight rescue, and replay/defeat paths.
+A browser game with a **2D Pixel Art / 3D Cinematic** choice on the first screen. Built with Phaser, Three.js, TypeScript, and Vite. Rodrigo's character lineup guides both styles. The chapter contains three selectable fighters, a timed prophecy, original dialogue, narrated opening and ending, a Grand Canyon battle, a mid-fight rescue, and replay/defeat paths.
 
 ## Run
 
-Requires Node.js 20.19+ or 22.12+.
+Requires Node.js 22.15+; Node.js 24 LTS is recommended.
 
 ```sh
 npm install
@@ -21,6 +21,17 @@ npm run preview
 The `dist` directory is a static deployable website. No server API, credentials, or ElevenLabs subscription is required to play. The generated audio is bundled locally.
 
 Audio is preloaded and played through Phaser's sound manager. The first button or keyboard interaction activates sound; M or the SOUND ON / OFF button controls all audio, including active effects. Narration lowers the music and ambience automatically. Missing audio does not stop the chapter.
+
+
+## Two ways to play
+
+Choose **2D Pixel Art** or **3D Cinematic**, then press Play. The choice is saved on the device. Both versions include the same full opening chapter, prophecy, narration, music, three fighters, enemy patterns, combos, rescue, and ending. Return to the title to change modes.
+
+The 3D edition uses original articulated, stylized models in a modeled canyon museum and school bus. It includes physical materials, environment reflections, soft shadows, bloom, animated cloth, a layered procedural storm with orbiting debris, 3D weapon trails, perfect-guard shields, and separate lightning / voice / gadget powers. Jason has one sword attached to one hand. These are bespoke stylized characters, not photorealistic assets or imported Mortal Kombat models.
+
+The **3D · CINEMATIC / PERFORMANCE** button switches quality. Performance mode lowers resolution and disables bloom and shadows; coarse-pointer devices start in that preset. Sustained slow rendering also selects it automatically unless the user explicitly picked a preset. Reduced-motion settings limit camera movement and debris. WebGL 2 is required for 3D. Initialization failure or loss of the graphics context returns rendering to 2D; a fight in progress keeps its health and state.
+
+Three.js is loaded only when 3D is selected (about 165 KB gzipped in the current build). Both views consume the same authoritative combat simulation; neither changes attack ranges or outcomes. No external models, runtime AI requests, or new asset downloads are needed for 3D.
 
 ## Controls
 
@@ -53,6 +64,7 @@ Combat has layered dust, paper debris, ground warnings, an illustrated wind spir
 - `src/main.ts`: menus, prophecy timing, chapter flow, HUD, input UI
 - `src/battle.ts`: fixed-step combat, enemy patterns, frame animation and effects
 - `src/combat-vfx.ts`: layered storm, wind warnings, spirit wisps and hero effects
+- `src/three/`: Three.js renderer, articulated fighters, museum/bus/canyon sets, storm shaders, effects and quality management
 - `src/story.ts`: original dialogue and cinematic beats
 - `src/audio.ts`: narration, music, ambience and effect mixing
 - `public/assets/art`: generated art and measured sprite atlases
@@ -69,4 +81,4 @@ npm test
 npm run build
 ```
 
-Unit tests exercise actual combat state transitions (hit once per swing, meter consumption, gravity/landing, story interruption, victory, defeat), damage/defense rules, and audio mixing/lifecycle behavior with a mocked sound manager. They do not replace browser playtesting. Browser verification is tracked separately in `docs/verification.md`.
+Unit tests exercise actual combat state transitions (hit once per swing, meter consumption, gravity/landing, story interruption, victory, defeat), damage/defense rules, and audio mixing/lifecycle behavior with a mocked sound manager. Additional tests cover 3D geometry/animation, camera coverage, story staging, fixed effect budgets, and menu-to-fight mode switching with a mocked GPU. They do not replace browser playtesting. Browser verification is tracked separately in `docs/verification.md`.

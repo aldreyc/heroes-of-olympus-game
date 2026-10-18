@@ -1,0 +1,7 @@
+{
+  "tool": "Built-in image_gen",
+  "mode": "edit / precise-object-edit",
+  "output": "public/assets/art/camp-woods-v2.png",
+  "reference": "public/assets/art/camp-woods-v1.png",
+  "prompt": "Use case: precise-object-edit. Edit target: the supplied forest game background. Preserve the existing crisp pixel art, color palette, enormous foreground tree trunks and branches, side-view horizontal walking path at 76 percent image height, moonlit blue atmosphere, bronze scraps at the right and open right-hand clearing. Change only the distant landscape: this is Camp Half-Blood's woodland on Long Island. Remove the giant mountains, sheer cliff and far-away Greek temple. Replace those distant regions with layers of dense low woodland, more tall dark pines and oaks, a little moonlit mist and a quiet small woodland glade. No mountain peaks, no canyon, no large valley, no distant buildings or temple, no highland landscape. Keep the moon peeking between branches and the path layout absolutely unchanged. No characters, creatures or text. Wide 16:9 background fills entire canvas."
+}

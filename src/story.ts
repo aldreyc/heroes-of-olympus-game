@@ -1,149 +1,49 @@
 export type Beat = {
   scene: string;
+  chapter?: string;
   title: string;
   speaker: string;
   text: string;
   duration?: number;
   effect?: string;
   voice?: string;
+  /** A brief verified quotation, user-supplied reaction, or action caption. */
+  kind?: "quote" | "reaction" | "action" | "prophecy";
+  shot?: string;
 };
+const action = (scene: string, title: string, text: string, shot?: string, duration = 5500): Beat =>
+  ({ scene, title, speaker: "", text, kind: "action", shot, duration });
+// Quoted dialogue: 18 words total from the attributed opening excerpt, not a reconstructed transcript.
+// Source and the deliberate game chronology are documented in docs/story-revision.md.
 export const opening: Beat[] = [
-  {
-    scene: "bus",
-    title: "Somewhere in Arizona",
-    speaker: "The story begins",
-    text: "Before the storm, there was only a name. Jason. He wakes on a school bus with no memory of his past. Beside him, Piper and Leo insist they are his friends. Ahead lies the Grand Canyon, and a danger older than the world they know. Somewhere in the wind, something is waiting. Every legend begins with a choice. Today, Rodrigo, the next move is yours.",
-    duration: 26500,
-    voice: "intro",
-  },
-  {
-    scene: "bus",
-    title: "A name without a past",
-    speaker: "Jason",
-    text: "Jason. That’s my name. But this bus… these people… why can’t I remember anything?",
-  },
-  {
-    scene: "bus",
-    title: "A name without a past",
-    speaker: "Piper",
-    text: "Hey. Look at me. You’re safe. It’s Piper. You really don’t remember us?",
-  },
-  {
-    scene: "bus",
-    title: "A name without a past",
-    speaker: "Leo",
-    text: "Not even your best friend? Wow. I knew my jokes were bad, but that hurts.",
-  },
-  {
-    scene: "bus",
-    title: "A name without a past",
-    speaker: "Coach Hedge",
-    text: "Keep it down back there. And when we get off this bus, nobody wanders away. Got it?",
-  },
-  {
-    scene: "canyon",
-    title: "The Grand Canyon",
-    speaker: "Jason",
-    text: "A whole world opens beneath the sky. I should remember seeing something like this. I should remember something.",
-  },
-  {
-    scene: "museum",
-    title: "The museum · Skywalk entrance",
-    speaker: "Coach Hedge",
-    text: "I was watching those two. Then you showed up. Whatever you are, kid, stay close. There’s something wrong with this wind.",
-  },
-  {
-    scene: "museum",
-    title: "Something in the wind",
-    speaker: "Piper",
-    text: "The doors are closed. So why are all the papers moving?",
-    effect: "wind",
-  },
-  {
-    scene: "reveal",
-    title: "The storm has a face",
-    speaker: "Dylan",
-    text: "You finally noticed. Let’s see how long your little group can stay together.",
-    effect: "spirit",
-  },
-  {
-    scene: "reveal",
-    title: "The storm has a face",
-    speaker: "Coach Hedge",
-    text: "Behind me! All of you! Nobody takes my students.",
-    effect: "spirit",
-  },
-  {
-    scene: "reveal",
-    title: "A choice before a memory",
-    speaker: "Jason",
-    text: "There’s a coin in my pocket. My hand knows what to do… even if I don’t.",
-    effect: "coin",
-    duration: 6500,
-  },
-  {
-    scene: "reveal",
-    title: "A blade of gold",
-    speaker: "Jason",
-    text: "Piper. Leo. Stay together. We get through this together.",
-    effect: "sword",
-    duration: 3800,
-  },
+  action("bus", "The Wilderness School bus", "Jason wakes beside two people who know him. He cannot remember either of them—or his own past."),
+  { scene: "bus", title: "A name without a past", speaker: "Piper", text: "Jason, you okay?", kind: "quote" },
+  { scene: "bus", title: "A name without a past", speaker: "Jason", text: "I don't know you.", kind: "quote" },
+  action("bus", "A friend he cannot remember", "Leo asks whether Jason remembers him and their friendship. Jason searches his memory, but nothing comes back."),
+  { scene: "canyon", title: "The wind changes", speaker: "Coach Hedge", text: "I don't like this weather.", kind: "reaction", shot: "confront", duration: 3200 },
+  action("museum", "Toward shelter", "The students head toward the museum for shelter from the wind.", "confront", 4500),
+  action("museum", "The museum entrance", "Jason, Piper, and Leo enter with the school group, walking together.", "entrance", 6500),
+  action("museum", "Dylan steps in", "Dylan pushes ahead of Leo and comes between Jason and Piper.", "passes", 5500),
+  { scene: "museum", title: "The rising storm", speaker: "Coach Hedge", text: "Go, go, go!", kind: "quote", shot: "confront", duration: 2400 },
+  action("museum", "The storm has a face", "Dylan’s human outline breaks apart into dark, swirling vapor.", "transform", 6500),
+  action("reveal", "A choice before a memory", "Jason flips the coin. Instinct takes over.", undefined, 3800),
+  { ...action("reveal", "A blade of gold", "The coin becomes one golden sword. The friends turn to face the wind spirit.", undefined, 3500), effect: "sword" },
 ];
-export const interruption: Beat[] = [
-  {
-    scene: "rescue",
-    title: "The edge of the world",
-    speaker: "Piper",
-    text: "Jason!",
-    duration: 2200,
-  },
-  {
-    scene: "rescue",
-    title: "A power without a memory",
-    speaker: "Jason",
-    text: "I’ve got you. I don’t know how—but I’ve got you.",
-    duration: 4200,
-  },
-  {
-    scene: "rescue",
-    title: "Nobody left behind",
-    speaker: "Coach Hedge",
-    text: "Let the kid go! Leo, get back to the others!",
-    duration: 4200,
-  },
-];
+opening[opening.length - 2].effect = "coin";
+
+/** The playable encounter ends before the rescue: Dylan is driven back, not killed. */
 export const ending: Beat[] = [
-  {
-    scene: "rescue",
-    title: "The wind takes a hero",
-    speaker: "Leo",
-    text: "Coach! He pushed me clear… and that thing took him instead.",
-  },
-  {
-    scene: "canyon",
-    title: "Three friends. One mystery.",
-    speaker: "Piper",
-    text: "You flew, Jason. You caught me. Who are you? How could you do that?",
-  },
-  {
-    scene: "canyon",
-    title: "Three friends. One mystery.",
-    speaker: "Leo",
-    text: "And do you remember us now? Anything at all?",
-  },
-  {
-    scene: "canyon",
-    title: "Three friends. One mystery.",
-    speaker: "Jason",
-    text: "I wish I did. I don’t know who I am. But we’re going to find Coach Hedge.",
-  },
-  {
-    scene: "canyon",
-    title: "This is only the beginning",
-    speaker: "The story continues",
-    text: "The wind has fallen silent. But Coach Hedge is gone, carried away into the storm. Jason has saved his friends, yet his own past remains beyond his reach. Three heroes. One mystery. And a journey that has only just begun.",
-    duration: 16300,
-    voice: "ending",
-  },
+  action("rescue", "Over the edge", "A violent gust flings Piper over the railing.", "piper-fall", 4500),
+  action("rescue", "Jason jumps", "Jason dives after her.", "jason-dive", 4200),
+  action("rescue", "A handhold", "Dylan hurls Leo toward the canyon. Leo catches a narrow ledge and hangs on.", "leo-ledge", 5500),
+  action("rescue", "The coach climbs", "Hedge reaches Leo and brings him back to safety.", "hedge-rescue", 5500),
+  action("rescue", "The air catches them", "Jason catches Piper. The wind holds them above the river, then lifts them toward the rim.", "flight", 6500),
+  action("museum", "Back at the rim", "Jason and Piper land beside Leo. Dylan has seized Coach Hedge.", "reunion", 4500),
+  { scene: "museum", title: "The wind takes a hero", speaker: "The three friends", text: "Coach Hedge, no!", kind: "reaction", shot: "seized", duration: 2500 },
+  { scene: "museum", title: "Into the clouds", speaker: "Dylan", text: "The mistress calls me back!", kind: "quote", shot: "seized", duration: 2700 },
+  action("museum", "Beyond their reach", "The storm spirit spirals upward with Hedge. They gather speed and vanish into the cloud bank.", "departure", 8500),
+  action("canyon", "A shape in the clearing sky", "Two winged horses draw a chariot down toward the damaged walkway.", "chariot-arrival", 6500),
+  { scene: "canyon", title: "Annabeth and Butch", speaker: "Annabeth", text: "Where is he?", kind: "quote", shot: "annabeth", duration: 3800 },
+  action("canyon", "Searching for Percy", "Annabeth is looking for Percy Jackson. Butch urges the group to leave before more storm spirits arrive.", "annabeth", 5500),
+  action("canyon", "A way out", "Jason, Piper, and Leo board the chariot with Annabeth and Butch. They set off for Camp Half-Blood.", "chariot-leave", 14000),
 ];

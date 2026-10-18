@@ -7,6 +7,7 @@ Research checked 17 October 2026. This is an implementation reference, not dialo
 - Jason wakes on a school bus without his memories; Piper and Leo believe they already know him. They attend the Wilderness School. Piper is worried about her missing father, but the opening should keep that thread understated. [Rick Riordan: The Lost Hero](https://rickriordan.com/book/the-lost-hero/)
 - The field trip is to the Grand Canyon. Coach Hedge is their chaperone. Dylan is a disguised storm spirit. Jason's gold coin becomes a gold sword; Jason discovers flight. Annabeth later arrives in a flying chariot while searching for Percy. [Disney's Read Riordan book overview](https://www.readriordan.com/book/the-lost-hero/)
 - Jason is a son of Jupiter. His coin can become a sword or javelin, but this chapter deliberately uses the sword. [Read Riordan: Jason Grace](https://www.readriordan.com/2018/04/12/spotlight-on-jason-grace/)
+- Weapon audit, 18 October: Jason carries one golden sword in this encounter. The old idle sprite incorrectly included a second blade in his raised hand. Replaced that pose with `jason-idle-v2.png`, showing one sword and an empty fist; reviewed all four walk frames plus jump, block, strike and heavy poses for a single weapon. The original atlas remains a source for the other poses, but Jason's idle no longer uses its incorrect frame.
 - Piper has charmspeak before attending the Wilderness School, although that does not mean she consciously understands it during the canyon encounter. Her voice can support a brief stagger mechanic without presenting her as an experienced spellcaster. [Read Riordan: Piper McLean](https://www.readriordan.com/2018/03/15/5-reasons-you-love-piper-mclean/)
 
 ## Detailed opening sequence
@@ -34,33 +35,9 @@ The following details are checked against the opening two chapters reproduced as
 - The four prophecy lines and their timing are user-supplied requirements. Use that text exactly as requested; presenting it before the bus is deliberate foreshadowing rather than the novel's scene order.
 - Avoid later-series revelations in dialogue, including explaining the memory swap or naming the hidden enemy too early.
 
-## Suggested original dialogue
+## Current dialogue and staging
 
-These lines are newly written for this game; none should be labeled quotations from the book.
+The 18 October revision supersedes the earlier invented dialogue and half-health rescue. See [story-revision.md](story-revision.md) for verified short quotations, source limitations, the user-requested game chronology, and local verification.
+## Camp continuation adaptation
 
-**Bus**
-
-- Jason: "I know I'm supposed to remember you. There's just… nothing."
-- Piper: "Then stay with us. We can work it out together."
-- Leo: "I'm Leo. Excellent mechanic. Terrible study partner. Ringing any bells?"
-- Hedge: "Valdez! If that speaker starts singing again, you're carrying it home."
-
-**Arrival / warning**
-
-- Hedge: "I was watching two kids. Now there's you. Stick close until help arrives."
-- Jason: "Help with what?"
-- Hedge: "Whatever's hiding in that wind."
-
-**Reveal / coin**
-
-- Piper: "Dylan? What's happening to you?"
-- Dylan: "The disguise has served its purpose."
-- Jason: "My hands remember something my mind doesn't."
-
-**Rescue / ending**
-
-- Hedge: "I've got Leo! Jason, reach Piper!"
-- Piper: "You caught me… and the air caught us. How?"
-- Leo: "Gold sword. Flying. Missing coach. We need a much better explanation."
-- Jason: "I wish I had one. I still don't know who I am."
-- Piper: "Then that's what we find out next. Together."
+The local continuation follows Rodrigo's requested simultaneous parent signs at touchdown and Drew guiding all three to their cabins. This is a condensed game sequence, not the novel's exact claiming chronology. All added prose is action caption text. See [camp-revision.md](camp-revision.md) for sources, deliberate adaptations and asset provenance.

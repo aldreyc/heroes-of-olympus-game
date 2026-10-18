@@ -1,0 +1,12 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_v4",
+  "voice": "Emily E.-RPG’s Games Immersive Stories",
+  "voice_id": "HBDoL4wkcalemIO0nUAu",
+  "generation": "GpDJRKv9WDy9qirLQjxx",
+  "flow": "ile25rCzAX8dwFr3LKDQ",
+  "duration": 13.92,
+  "prompt": "[serious] Child of Lightning, beware the earth. The giants' revenge, the seven shall birth. The forge and dove shall break the cage. And death unleash through Hera's rage.",
+  "textOrigin": "User supplied four lines in heroes-first-battle-build-brief.md",
+  "date": "2026-10-18"
+}

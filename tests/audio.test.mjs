@@ -80,6 +80,21 @@ test("saved mute is applied before the first sound can play", () => {
   assert.equal(sounds.length, 0);
 });
 
+test("story footsteps use a quiet loaded sound and respect mute", () => {
+  const { director, sounds } = setup();
+  director.sfx("step");
+  assert.equal(sounds[0].key, "land");
+  assert.equal(sounds[0].volume, 0.045);
+  director.setMute();
+  director.sfx("step");
+  assert.equal(sounds.length, 1);
+});
+test("Festus's footsteps use a subdued heavy sound and respect mute", () => {
+  const { director, sounds } = setup();
+  director.sfx("dragon-step");assert.equal(sounds[0].key,"heavy");assert.equal(sounds[0].volume,.085);
+  director.setMute();director.sfx("dragon-step");assert.equal(sounds.length,1);
+});
+
 test("narration lowers music and ambience and restores both on completion", () => {
   const { director } = setup();
   director.playMusic();
@@ -154,4 +169,16 @@ test("every preloaded audio key resolves to a bundled asset", () => {
   const { files } = setup();
   for (const file of Object.values(files))
     assert.ok(fs.statSync(`public/assets/audio/${file}`).size > 1000, file);
+});
+
+test('storm escalation raises wind while narration always stays audible', () => {
+  const {director} = setup();
+  director.wind(); director.setStorm(1);
+  assert.equal(director.ambient.volume,.23);
+  director.narration('intro');
+  assert.equal(director.ambient.volume,.08);
+  director.stopVoice();
+  assert.equal(director.ambient.volume,.23);
+  director.ambience('bus');
+  assert.equal(director.ambient.volume,.16);
 });

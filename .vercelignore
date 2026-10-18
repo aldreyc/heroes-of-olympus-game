@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.git/
+.vercel/
+.env*
+playwright-report/
+test-results/
+tmp/
+*.log

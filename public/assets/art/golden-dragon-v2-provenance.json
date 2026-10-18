@@ -1,0 +1,24 @@
+{
+  "mode": "built-in image_gen",
+  "date": "2026-10-18",
+  "assets": [
+    {
+      "file": "golden-dragon-v2.png",
+      "prompt": "Use case: illustration-story. Asset: transparent four-frame 2D pixel-art enemy sprite sheet for a side-on fighting game. Exactly one fully MECHANICAL GOLD dragon in each of four cells, 2 by 2 grid, large clear gutters and margins. The reference is Festus, which is the design family to match, but this enemy is a smaller compact automaton made entirely of bright pure polished yellow gold, without bronze, rust or green patina. Visible interlocking golden armor plates, round gear joints, rivets, segmented articulated tail, hinged metal wings, mechanical claws, red luminous eyes. Same compact mechanical gold dragon in four poses: top left idle, top right one foreclaw stepping forward, bottom left aggressive open mouth casting fire but DO NOT draw flames, bottom right recoiling with head lowered. Facing LEFT in every cell. Similar detail to reference but stouter and smaller silhouette. Side view, exactly four legs, no riders, no flesh or organic scales. Folded wings swept behind its back. Full body safely within each quadrant including tail and horns, equal scale and leg baseline in every cell. Rich crisp detailed pixel-art clusters and dark outlines. No text, no floor, no shadows, no background. Genuine transparent background.",
+      "references": [
+        "festus-discovery-v1.png"
+      ],
+      "transparent": true,
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-b4d40bbc-99e7-479c-9049-5d4d1407ed05.png"
+    },
+    {
+      "file": "festus-window-v1.png",
+      "prompt": "Use case: illustration-story. Asset: single transparent 2D pixel-art action cutout for a dramatic game cinematic. Use reference solely to match Festus's bronze mechanical dragon design, amber eyes, segmented neck, exposed gears and patinated bronze wings. Festus faces RIGHT, flying in from the left with mechanical wings raised, hind feet tucked, head thrust forward and mouth wide open ready to breathe fire. The mouth interior glows bright orange but DO NOT draw the fire jet; it will be animated in code. Entire dragon visible with tail and wings safely inside frame, no cropped tips. Heroic sweeping silhouette, detailed pixel art consistent with reference. No riders, no glass, no background or floor, no text or labels, genuine transparent background.",
+      "references": [
+        "/Users/aldrey/Code/heroes-of-olympus-game/public/assets/art/festus-discovery-v1.png"
+      ],
+      "transparent": true,
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-7c06ab82-2bc5-4cd0-8082-8b6a9daecff4.png"
+    }
+  ]
+}

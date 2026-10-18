@@ -1,0 +1,59 @@
+{
+  "tool": "Built-in image_gen",
+  "mode": "reference-guided generation",
+  "purpose": "Grounded cinematic poses, connected flight embrace, canyon contact and chariot staging",
+  "assets": [
+    {
+      "file": "story-ledge-v2.png",
+      "refs": [
+        "story-heroes-v1.png"
+      ],
+      "transparent": false,
+      "prompt": "Use case: illustration-story. A wide 16:9 cinematic pixel-art scene for a detailed 2D fantasy game, matching the reference character artwork. Leo, the reference's third boy (curly dark hair, goggles on head, olive overshirt, tool belt, jeans), is dangling from a narrow rock ledge on the Grand Canyon wall. Both hands grip a secure horizontal ledge above his head, his legs press against the vertical red sandstone, and his head turns down anxiously toward the immense drop and distant river below. Show unmistakable hand-to-rock contact, bent elbows, weight and a precarious hanging pose. Camera looks diagonally down along the sheer cliff, canyon and far-away winding river filling the left two-thirds, Leo clearly visible on the right third in the upper half. No museum, no flat interior floor, no other people, no speech or text. Deep canyon perspective, layered warm sandstone, cool clearing storm sky, crisp polished pixel art. Leave bottom 24% unobtrusive for captions."
+    },
+    {
+      "file": "story-cliff-rescue-v2.png",
+      "refs": [
+        "story-heroes-v1.png",
+        "story-cast-v1.png"
+      ],
+      "transparent": false,
+      "prompt": "Use case: illustration-story. Wide 16:9 polished detailed pixel-art scene. Match character references: Leo is the curly-haired boy with goggles, olive shirt and tool belt; Coach Hedge is the horned bearded satyr in navy tracksuit with goat hooves. On the steep Grand Canyon wall, Hedge braces his hooves on projecting rocks and reaches down, grasping Leo's forearm firmly and pulling him toward a secure ledge. Leo's other hand clings to the wall, his body visibly hanging with bent knees. A real active climbing rescue with contact between hands, arms and rock, not standing poses or people floating. Diagonal downward camera perspective, cliff on right third, enormous canyon and very distant river visible on left. Warm layered sandstone, cool clearing storm light. Crisp pixel art matching reference, no museum, no extra characters, no text. Keep the main rescue in upper two-thirds and bottom 24% clear for captions."
+    },
+    {
+      "file": "story-flight-embrace-v2.png",
+      "refs": [
+        "story-heroes-v1.png"
+      ],
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Transparent cutout, crisp detailed pixel-art game sprite of TWO characters in ONE connected midair rescue embrace. Match reference identities: blond Jason in purple T-shirt, jeans, sneakers; dark-haired Piper in purple cardigan, white top, jeans, shoulder bag. They are teenagers floating upward together. Jason's arm securely supports Piper around her waist and upper back; Piper has both arms around Jason's shoulders, their torsos close and faces near each other, relieved and startled, a protective hug, no kissing. Their bodies form one natural joined silhouette; legs hang downward with knees relaxed, feet visible. Three-quarter side view, full bodies and complete hair and shoes, centered with transparent margins. Hands and arms clearly anatomically connected and touching. No other people, no weapons, no ground, no backdrop, no text. Genuine transparent alpha."
+    },
+    {
+      "file": "story-chariot-arrival-v2.png",
+      "refs": [
+        "story-chariot-v1.png",
+        "story-cast-v1.png"
+      ],
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Edit/reference-consistent transparent 2D pixel-art chariot sprite. Match reference vehicle exactly: pair of gray winged horses harnessed to the navy-and-gold, bronze-trimmed two-wheeled Greek chariot, three-quarter side view facing left, full wings, heads, hooves and wheels inside canvas. ADD Annabeth (blond ponytail, plain orange T-shirt, jeans) and Butch (shaved head, bulky teen, orange T-shirt, rainbow arm tattoo) visibly riding INSIDE the chariot basket. Their lower legs and feet must be concealed by the opaque front and side walls; their upper torsos rise naturally above the rim at proper human scale. Butch holds the reins and Annabeth holds the rim. No person outside, on top of, behind or floating beside the vehicle. Horses actively flying, wings raised, hooves tucked. Match crisp detailed pixel-art reference, no text or environment, real transparent background."
+    },
+    {
+      "file": "story-chariot-landed-v2.png",
+      "refs": [
+        "story-chariot-v1.png"
+      ],
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Transparent 2D pixel-art game vehicle sprite. Preserve the exact navy/gold chariot design, pair of gray winged horses, bronze harness, side-view facing left and proportions of the reference. Change it to a LANDED RESTING pose. Both horses stand calmly with all four legs grounded, hooves resting on one shared horizontal ground line. Wings folded neatly along their backs, heads lowered slightly and relaxed, harness slack. Both chariot wheels touch the SAME ground line as the horses' hooves. Chariot basket EMPTY because its riders disembarked. Full horses, tails, folded wings, harness and complete wheels inside canvas with margins. Detailed crisp pixel art, not 3D, no painted ground, background, text or characters. Genuine transparent alpha."
+    },
+    {
+      "file": "story-chariot-departure-v2.png",
+      "refs": [
+        "story-chariot-v1.png",
+        "story-cast-v1.png",
+        "story-heroes-v1.png"
+      ],
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Transparent polished 2D pixel-art game sprite, matching all references. The same pair of gray flying winged horses draw the same navy-and-gold Greek chariot facing left. All FIVE teenage passengers ride safely INSIDE its roomy basket: blond Annabeth and shaved-headed bulky Butch in orange T-shirts at the front, Butch holding reins; behind them blond Jason in purple, dark-haired Piper in purple cardigan, curly-haired Leo in olive with goggles. All lower bodies and feet are hidden naturally by the chariot's solid walls. Only heads, shoulders and appropriate upper torsos visible above the rim. Nobody floats outside or perches on wheels or horses. Horses in rising flight with wings extended. Keep the vehicle's design and scale consistent with reference; full wings and wheels visible, margins, no text or backdrop, real transparent alpha."
+    }
+  ]
+}

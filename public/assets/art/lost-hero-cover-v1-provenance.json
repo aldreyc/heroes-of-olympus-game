@@ -1,0 +1,10 @@
+{
+  "tool": "Built-in image_gen",
+  "mode": "edit / style-transfer",
+  "output": "public/assets/art/lost-hero-cover-pixel-v1.png",
+  "reference": "public/assets/reference/lost-hero-official-cover.png",
+  "sourcePage": "https://rickriordan.com/book/the-lost-hero/",
+  "sourceImage": "https://cdn.rickriordan.com/wp-content/uploads/2016/03/11231104/the-lost-hero-3D.png",
+  "attribution": "The Lost Hero by Rick Riordan. Original cover illustration by John Rocco. This asset is a generated pixel-art adaptation of the original cover, not publisher-supplied artwork.",
+  "prompt": "Use case: style-transfer.\nAsset type: portrait pixel-art book cover for a 2D game's book-selection screen.\nInput image 1 is the edit target: the official original cover of The Lost Hero by Rick Riordan, shown as a perspective hardcover book mockup.\nPrimary request: convert this exact original cover design into a polished, faithful pixel-art front cover. Produce a flat straight-on rectangular FRONT COVER ONLY filling a portrait 2:3 canvas edge to edge. Remove all perspective, page blocks, book spine, drop shadow and surrounding transparency.\nPreserve the recognizable original composition: the gold series band and emblem along the top, large gold book title beneath, three young riders on bronze mechanical dragon Festus descending toward the viewer above a wintry castle, luminous turquoise/teal sky, red-coral author name along the bottom. Preserve the dragon's mechanical head and golden wings and the cover's original color relationships and layout.\nStyle: crisp deliberate pixel art, stepped pixel edges, limited shaded pixel clusters, detailed retro game cover, no painterly smoothing.\nText verbatim: series band \"THE HEROES OF OLYMPUS\"; title \"THE LOST HERO\"; author \"RICK RIORDAN\". Keep title prominent, legible and spelled correctly. No extra invented text. Do not replace the cover with a generic lightning or sword icon. No new characters, logos, UI or decorative border. Opaque flat cover."
+}

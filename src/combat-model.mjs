@@ -1,3 +1,5 @@
+// Target encounter length assumes active attacking with jump/guard/counter play.
+export const BATTLE_RULES = { heroHealth: 3600, spiritHealth: 3200, targetSeconds: [120, 180], jasonTargetSeconds: [75, 120] };
 export const HEROES = [
   {
     id: "jason",
@@ -71,12 +73,14 @@ export function hitOutcome({ attack, blocking, jumping, distance }) {
   if (blocking && attack !== "low") return "block";
   return "hit";
 }
-export function attackDamage(hero, move, combo) {
+export const JASON_DAMAGE_BONUS = { quick: 8, strong: 18, special: 24 };
+export function attackDamage(hero, move, combo, counter = false) {
   const base = MOVES[move].damage;
   return (
     base +
-    (hero === "jason" && move === "strong" ? 3 : 0) +
+    (hero === "jason" ? JASON_DAMAGE_BONUS[move] : 0) +
     (hero === "leo" && move === "special" ? 4 : 0) +
-    Math.min(combo, 5)
+    Math.min(combo, 5) +
+    (counter ? 5 : 0)
   );
 }

@@ -9,6 +9,15 @@ type ProphecyActions = {
   unschedule: (id: number) => void;
 };
 
+// Matched to the selected continuous recording using ElevenLabs word timings.
+export const PROPHECY_TIMING = {
+  leadMs: 250,
+  fadeMs: 160,
+  lineStartMs: [0, 3080, 6320, 8960],
+  durationMs: 11800,
+  tailMs: 220,
+};
+
 export function playProphecy(lines: string[], actions: ProphecyActions) {
   let active = true;
   const timers = new Set<number>();
@@ -30,21 +39,26 @@ export function playProphecy(lines: string[], actions: ProphecyActions) {
   const skip = () => {
     if (cancel()) actions.done();
   };
-  const show = (index: number) => {
-    if (index >= lines.length) { skip(); return; }
-    actions.show(lines[index]);
-    // Read during the four-second fully-visible hold, after the 800ms fade.
-    after(800, () => actions.speak(`prophecy-${index + 1}`));
-    after(4800, () => {
-      actions.stopVoice();
-      actions.hide();
-      after(800, () => {
-        actions.clear();
-        if (index + 1 < lines.length) after(300, () => show(index + 1));
-        else after(700, skip);
-      });
+  const timing = PROPHECY_TIMING;
+  after(timing.leadMs, () => {
+    if (!lines.length) { skip(); return; }
+    actions.show(lines[0]);
+    actions.speak("prophecy-natural");
+  });
+  for (let index = 1; index < lines.length; index++) {
+    const cue = timing.leadMs + timing.lineStartMs[index];
+    after(cue - timing.fadeMs, actions.hide);
+    after(cue, () => {
+      actions.clear();
+      actions.show(lines[index]);
     });
-  };
-  after(650, () => show(0));
+  }
+  after(timing.leadMs + timing.durationMs, () => {
+    actions.hide();
+    after(timing.fadeMs, () => {
+      actions.clear();
+      after(timing.tailMs, skip);
+    });
+  });
   return { skip, cancel };
 }

@@ -38,20 +38,25 @@ function setup() {
   return { playback, advance, events, timers };
 }
 
-test("all prophecy lines get a full four-second hold and correctly matched narration", () => {
+test("prophecy flows as one voice track with text synchronized to the spoken lines", () => {
   const { advance, events, timers } = setup();
   advance(30000);
   const shown = events.filter(e => e.type === "show");
   const spoken = events.filter(e => e.type === "speak");
   const hidden = events.filter(e => e.type === "hide");
   assert.deepEqual(shown.map(e => e.value), lines);
-  assert.deepEqual(spoken.map(e => e.value), ["prophecy-1", "prophecy-2", "prophecy-3", "prophecy-4"]);
+  assert.deepEqual(spoken.map(e => e.value), ["prophecy-natural"]);
+  assert.equal(spoken[0].at, shown[0].at);
+  assert.deepEqual(shown.map(e => e.at - spoken[0].at), [0, 3080, 6320, 8960]);
   for (let i = 0; i < 4; i++) {
-    assert.equal(spoken[i].at - shown[i].at, 800);
-    assert.equal(hidden[i].at - spoken[i].at, 4000);
-    if (i < 3) assert.equal(shown[i + 1].at - hidden[i].at, 1100);
+    assert.ok(hidden[i].at > shown[i].at);
+    if (i < 3) assert.equal(shown[i + 1].at - hidden[i].at, 160);
   }
-  assert.equal(events.filter(e => e.type === "done").length, 1);
+  const finished = events.filter(e => e.type === "done");
+  assert.equal(finished.length, 1);
+  assert.ok(finished[0].at > spoken[0].at + 11680, "does not cut off the recording");
+  assert.ok(finished[0].at < 14000, "keeps the whole sequence under 14 seconds");
+  assert.equal(events.filter(e => e.type === "stop").length, 1, "voice runs uninterrupted between lines");
   assert.equal(timers.size, 0);
 });
 

@@ -47,7 +47,7 @@ test("hero strengths change damage without making quick attacks strongest", () =
     attackDamage("jason", "strong", 0) > attackDamage("piper", "strong", 0),
   );
   assert.ok(
-    attackDamage("leo", "special", 0) > attackDamage("jason", "special", 0),
+    attackDamage("leo", "special", 0) > attackDamage("piper", "special", 0),
   );
   for (const hero of HEROES)
     assert.ok(
@@ -63,5 +63,13 @@ test("combos have bounded bonus and all attacks have counterplay windows", () =>
     assert.ok(move.windup > 0);
     assert.ok(move.active > 0);
     assert.ok(move.recovery > move.active);
+  }
+});
+test("Jason's playtest tuning strengthens every attack while preserving the other heroes", () => {
+  for (const [move, damage] of Object.entries({ quick: 16, strong: 33, special: 52 })) {
+    assert.equal(attackDamage("jason", move, 0), damage);
+    assert.equal(attackDamage("jason", move, 3, true), damage + 8);
+    assert.equal(attackDamage("piper", move, 0), MOVES[move].damage);
+    assert.equal(attackDamage("leo", move, 0), MOVES[move].damage + (move === "special" ? 4 : 0));
   }
 });

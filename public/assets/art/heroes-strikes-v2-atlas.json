@@ -1,0 +1,72 @@
+{
+  "frames": {
+    "jason-quick": {
+      "frame": {
+        "x": 78,
+        "y": 208,
+        "w": 534,
+        "h": 363
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 534,
+        "h": 363
+      },
+      "sourceSize": {
+        "w": 534,
+        "h": 363
+      }
+    },
+    "piper-quick": {
+      "frame": {
+        "x": 857,
+        "y": 207,
+        "w": 500,
+        "h": 364
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 500,
+        "h": 364
+      },
+      "sourceSize": {
+        "w": 500,
+        "h": 364
+      }
+    },
+    "leo-quick": {
+      "frame": {
+        "x": 1584,
+        "y": 203,
+        "w": 486,
+        "h": 368
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 486,
+        "h": 368
+      },
+      "sourceSize": {
+        "w": 486,
+        "h": 368
+      }
+    }
+  },
+  "meta": {
+    "image": "heroes-strikes-v2.png",
+    "size": {
+      "w": 2172,
+      "h": 724
+    },
+    "note": "Three separate strike figures. Alpha bounds measured independently within padded columns; no raster alterations."
+  }
+}

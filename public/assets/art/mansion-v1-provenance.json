@@ -1,0 +1,33 @@
+{
+  "mode": "built-in image_gen",
+  "date": "2026-10-18",
+  "assets": [
+    {
+      "name": "festus-escape-party-v1",
+      "transparent": true,
+      "refs": [
+        "festus-trio-flight-v1.png",
+        "story-cast-v1.png"
+      ],
+      "prompt": "Use case: illustration-story. Asset: transparent detailed pixel-art 2D game sprite sheet, four separate full dragon-and-riders poses arranged 2 by 2, large empty gutters, NO frame overlap, all tail and wing tips safely inside cells. Reference 1 is the exact Festus bronze mechanical dragon and Jason/Piper/Leo identities. Reference 2 supplies ONLY Coach Hedge, the first figure, horned bearded satyr in blue tracksuit; ignore the other reference 2 people. Exactly FOUR travelers in EVERY cell: Leo steering at front (curly hair, goggles, olive jacket), Piper behind him (long dark hair, purple jacket), blond Jason behind Piper (purple shirt), and small horned Coach Hedge in blue tracksuit sitting securely at rear. Do not omit anyone. All facing RIGHT. TOP LEFT: Festus crouched on ground, wings folded, all four riding on his back, ready to leave. TOP RIGHT: airborne, wing raised. BOTTOM LEFT: airborne, wing downstroke. BOTTOM RIGHT: wounded flight, one hinged metal wing sagging with faint blue electrical spark at wing joint; all four lean forward and cling tightly, no falling riders. Same body scale and clear rider count in all cells, no drastic body rotation (we animate descent in code). Warm patinated BRONZE dragon with visible gears and amber eyes, distinct from the small pure-gold enemy. Rich crisp pixel-art rendering matching references, dark outlines. True transparent background. No scenery, no shadows, no words, no borders.",
+      "file": "festus-escape-party-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-56d9bb63-60c1-4a36-8037-983b3dc72bf0.png"
+    },
+    {
+      "name": "mansion-approach-sky-v1",
+      "transparent": false,
+      "refs": [],
+      "prompt": "Use case: illustration-story. Asset: wide 16:9 2D pixel-art game cinematic background, no characters or creatures. An aerial view across winter mountain foothills at blue twilight: layered snowy pine forests and dark ridgelines far below, lavender-blue clouds framing a wide clear central flight corridor, distant warm horizon light, the glitter of a far city on the left horizon. At the lower RIGHT, a SMALL distant wealthy hillside MANSION with warm windows, private grounds and a long snowy driveway among pines. It is a private house, NOT a castle or palace. It must stay distant so an aircraft-sized dragon can descend toward it. Luxurious but mysterious warm light against cold sapphire sky. Detailed crisp pixel clusters, atmospheric depth, calm high sky above with room for a dragon sprite and a diagonal blue energy beam drawn later. No laser or explosion painted into background. No text or logos.",
+      "file": "mansion-approach-sky-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-a4463525-7b8c-4611-99ae-72c1fc54497a.png"
+    },
+    {
+      "name": "mansion-grounds-v1",
+      "transparent": false,
+      "refs": [],
+      "prompt": "Use case: illustration-story. Asset: wide 16:9 richly detailed 2D pixel-art game story background, no people, creatures or vehicles. A wealthy private MANSION at blue twilight in snowy mountain foothills: elegant two-story stone and timber home, broad roof, tall amber-lit windows, a welcoming but mysterious portico, iron fence, snowy pine trees and a curved private driveway with a wide open forecourt. Clearly a large private house, NOT a palace, castle or fortress; no towers, royal crests or fantasy spires. View from above the front grounds at a slight elevated angle, mansion centered RIGHT and filling middle third. Cold blue cloud banks above and forest around, warm golden window reflections on the snow. Keep lower quarter usable as clear forecourt where a descending dragon could land in a future scene. Cinematic pixel art matching a detailed modern mythological adventure, no words, no UI.",
+      "file": "mansion-grounds-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-45b64627-fb6f-4ea6-98a2-4b89ff2b3a37.png"
+    }
+  ]
+}

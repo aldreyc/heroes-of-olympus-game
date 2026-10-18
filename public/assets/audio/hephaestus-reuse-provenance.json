@@ -1,0 +1,12 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_v4",
+  "voice": "Gideon — Rugged, Gravelly and Northern",
+  "voice_id": "q1h5HGdnfVxp4TXTJRNN",
+  "generation": "1wCWHQHdKO9ySkMYjX6B",
+  "flow": "2gxXfnkJ83fRNxkRcSDy",
+  "duration": 5.44,
+  "prompt": "[gentle] No machine lasts forever. Not even the best ones. [reassuring] But everything can be reused.",
+  "textOrigin": "User's requested dialogue, lightly punctuated for speech",
+  "date": "2026-10-18"
+}

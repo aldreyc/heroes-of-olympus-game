@@ -1,0 +1,7 @@
+{
+  "tool": "Built-in image_gen",
+  "mode": "generation with style reference",
+  "reference": "public/assets/art/camp-woods-v2.png",
+  "output": "public/assets/art/chase-trees-v1.png",
+  "prompt": "Use case: illustration-story. Asset type: transparent pixel-art woodland parallax layer for a side-view nighttime running game. Match the supplied Camp Half-Blood moonlit forest's crisp detailed pixel art and teal-blue palette. Create three tall natural oak and pine trunks with branching silhouettes and a few dark needles/leaves high above, with low gnarled roots near the bottom, arranged loosely across a wide horizontal canvas, large transparent gaps between them. Trees must be textured believable organic wood, mottled dark blue-brown bark with subtle teal rim highlights, not simple flat geometric polygons. Leave most of the space between trunks completely transparent, no painted sky, no ground plane, no moon, no scenery background, no characters, no text. Roots lie at a consistent baseline along the bottom 5 percent. Canopy may reach beyond upper edge. Layer will scroll horizontally behind moving characters, so avoid dense foliage in the lower middle. True transparent alpha."
+}

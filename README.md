@@ -1,6 +1,8 @@
-# Heroes of Olympus — Rodrigo's opening chapter
+# Heroes of Olympus — Olympian Games
 
-A browser game built with Phaser, TypeScript, and Vite. Rodrigo's character lineup guides the pixel art. The chapter contains three selectable fighters, a timed prophecy, original dialogue, narrated opening and ending, a Grand Canyon battle, a mid-fight rescue, and replay/defeat paths.
+Created by **Rodrigo Cabrera**. The title and loading screens use the Olympian Games studio mark, and character-selection/completion credits identify Rodrigo as the game creator.
+
+A browser game built with Phaser, TypeScript, and Vite. Rodrigo's character lineup guides the pixel art. The chapter contains three selectable fighters, a timed prophecy, brief verified quotations and action captions, a Grand Canyon battle, a rescue sequence after victory, and replay/defeat paths.
 
 ## Run
 
@@ -40,11 +42,21 @@ The prophecy uses one continuous ElevenLabs reading with natural pauses. The ful
 
 ## Online preview
 
+The game now continues after the first battle into Camp Half-Blood: claiming signs, Drew's cabin tour, and Leo's walk through the woods to discover Festus. Completed saves can choose **Continue at camp** from the title screen; **Replay camp** is available at the end. This continuation is included in the production release. Scene details, artwork prompts and verification are in [docs/camp-revision.md](docs/camp-revision.md).
+
+To preview the story without fighting, choose **Skip battle** beside the battle settings, or from the pause menu. This continues with the rescue and journey to camp. The existing **Skip scene** button can also skip the rescue sequence to reach camp immediately.
+
+After finding Festus, play a **52-second dragon chase**: Leo runs automatically; **W / Up / Space** jumps low fire and **hold S / Down** ducks high fire. Touch controls are labeled on-screen. Escape pauses, and losing your lead offers a retry. Reach the vat of **Tabasco and motor oil** to calm Festus, mount him and fly back to camp. Completed saves can choose **Play dragon chase** from the title screen. This addition is included in production; [chase details, artwork prompts and verification](docs/dragon-chase.md) are recorded.
+
 Play at https://heroes-of-olympus-game.vercel.app. The Vercel project is `heroes-of-olympus-game` in `aldreys-projects`; login protection is disabled. This short alias points to the current preview. When publishing a new preview, move the alias to the ready deployment with `vercel alias set <deployment-url> heroes-of-olympus-game.vercel.app --scope aldreys-projects`.
 
-Quick strikes build spirit. Jump low gusts, block sweeping gusts and charges, then counterattack during recovery. Piper's special stuns; Jason has stronger heavy sword strikes; Leo has the strongest gadget burst.
+The playable hero has 3,600 health versus the wind spirit’s 3,200, making missed blocks and jumps much more forgiving.
 
-A guard started within 180ms of impact prevents chip damage and grants extra spirit. Each enemy recovery window rewards one counterattack with +5 damage and +8 spirit. A connected quick attack can flow into a heavy, and a connected heavy into a special: press J → K → L as each strike connects. Specials still cost 50 spirit. The storm intensifies after the rescue, with slightly shorter pauses between enemy attacks and the same readable warnings.
+Jason now has stronger quick, heavy and special attacks for a shorter, easier fight: a full simulated win takes approximately 102 seconds. Piper and Leo retain the earlier two-to-three-minute pacing (123 and 177 seconds in the same simulation). Actual timing depends on play.
+
+Quick strikes build spirit. Jump low gusts, block sweeping gusts and charges, then counterattack during recovery. Piper's special stuns; Jason has stronger sword and lightning attacks; Leo's gadget burst deals bonus damage.
+
+A guard started within 180ms of impact prevents chip damage and grants extra spirit. Each enemy recovery window rewards one counterattack with +5 damage and +8 spirit. A connected quick attack can flow into a heavy, and a connected heavy into a special: press J → K → L as each strike connects. Specials still cost 50 spirit. The storm intensifies in the second half of the fight, with slightly shorter pauses between enemy attacks and the same readable warnings.
 
 Combat has layered dust, paper debris, ground warnings, an illustrated wind spirit with animated wisps, distinct hero specials, impact rings, brief hit pauses, a chain indicator, and delayed damage trails. Reduced-motion preferences lower debris and disable camera shake and looping story papers. Effects and callouts freeze when paused; the final hit gets a short finish before the ending.
 
@@ -53,7 +65,9 @@ Combat has layered dust, paper debris, ground warnings, an illustrated wind spir
 - `src/main.ts`: menus, prophecy timing, chapter flow, HUD, input UI
 - `src/battle.ts`: fixed-step combat, enemy patterns, frame animation and effects
 - `src/combat-vfx.ts`: layered storm, wind warnings, spirit wisps and hero effects
-- `src/story.ts`: original dialogue and cinematic beats
+- `src/story.ts`: short verified dialogue, action captions and cinematic beats
+- `src/story-tableau.ts`: animated 2D story staging
+- `docs/story-revision.md`: sources, adaptations and local verification
 - `src/audio.ts`: narration, music, ambience and effect mixing
 - `public/assets/art`: generated art and measured sprite atlases
 - `public/assets/art/combat-v2-provenance.json`: prompts for the new spirit and isolated strike sprites
@@ -63,6 +77,18 @@ Combat has layered dust, paper debris, ground warnings, an illustrated wind spir
 The museum/skywalk arena, single opponent, and all-three-heroes selection are game adaptations. The chapter's outcome protects the trio while the wind spirit takes Hedge away. Piper uses Hedge's borrowed club; Leo uses tools and a gadget.
 
 ## Verification
+
+### New local crash and Midas chapter
+
+The mansion approach continues into the crash explosion, Leo kneeling beside the intact damaged Festus, a voiced Hephaestus visit and ascent with the dragon, and a Jason-only King Midas fight after Piper and Leo turn to gold. Each unblocked gold hit visibly spreads the curse; the tenth makes Jason fully gold. Block high shots and jump low pieces. Existing completed/mansion saves can use **Play Crash & King Midas** on the local title screen. This addition is included in the production release. See [chapter details, asset records and verification](docs/midas-chapter.md).
+
+### New local flight continuation
+
+After Coach Hedge’s rescue, the four leave on Festus, share a brief moment of relief, and are struck by a blue beam that sends them descending toward a mansion. Use **Play New Flight Scene** from the local title screen on an existing quest save. This addition is included in the production release. See [flight notes and artwork records](docs/mansion-flight.md).
+
+### Quest chapter
+
+After Leo returns on Festus, Chiron selects the trio, Rachel delivers a voiced Oracle reading, and the heroes depart together toward the horizon. They enter Medea's enchanted mall while Festus waits outside, then fight her potion and charmspeak attacks. **Q / Piper · Rally** breaks enchantment and stuns Medea. Existing camp/completed saves can use **Continue the Quest** from the title screen. This chapter is included in the production release. See [the chapter notes](docs/quest-chapter.md) for controls, sources, artwork prompts and verification limits.
 
 ```sh
 npm test

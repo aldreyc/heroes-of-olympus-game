@@ -1,7 +1,19 @@
 import Phaser from "phaser";
 import { audio, AUDIO_FILES } from "./audio";
-import { HEROES, MOVES, attackDamage, hitOutcome } from "./combat-model.mjs";
+import { HEROES, MOVES, BATTLE_RULES, attackDamage, hitOutcome } from "./combat-model.mjs";
 import { drawStorm, drawSpirit, drawMove, drawGust, HERO_INK } from "./combat-vfx";
+import { CAMP_ART } from "./camp-story";
+import { CHASE_ART } from "./chase-frames";
+import { MANSION_ART } from "./mansion-frames";
+import { QUEST_ART } from "./quest-story";
+import { drawMedeaAtmosphere, drawMedeaSpell } from "./medea-vfx";
+import { questFrames } from "./quest-frames";
+import { drawGoldenAtmosphere, drawGoldenAttack } from "./golden-dragon-vfx";
+import { midasFrames, MIDAS_ART } from "./midas-frames";
+import { MIDAS_RULES, goldVolley, advanceGoldBolts, goldenHit } from "./midas-model.mjs";
+import { ensureGoldTexture, applyGoldCurse } from "./gold-render";
+import { drawMidasAtmosphere, drawMidasBolts } from "./midas-vfx";
+import { storyFrames } from "./story-frames";
 export type BattleStats = {
   hits: number;
   blocks: number;
@@ -15,6 +27,13 @@ export type BattleStats = {
 type Mode = "scenery" | "battle" | "pause";
 export class OlympusScene extends Phaser.Scene {
   mode: Mode = "scenery";
+  encounter: "dylan" | "medea" | "golden-dragon" | "midas" = "dylan";
+  goldHits = 0;
+  goldBolts: ReturnType<typeof goldVolley> = [];
+  goldStatues: Phaser.GameObjects.Sprite[] = [];
+  charm = 0;
+  rallyCooldown = 0;
+  rallyFlash = 0;
   heroIndex = 0;
   player!: Phaser.GameObjects.Sprite;
   enemy!: Phaser.GameObjects.Container;
@@ -40,8 +59,10 @@ export class OlympusScene extends Phaser.Scene {
   y = 590;
   vy = 0;
   ex = 950;
-  health = 100;
-  enemyHealth = 160;
+  heroMaxHealth = BATTLE_RULES.heroHealth;
+  health = this.heroMaxHealth;
+  enemyMaxHealth = BATTLE_RULES.spiritHealth;
+  enemyHealth = this.enemyMaxHealth;
   meter = 35;
   facing = 1;
   elapsed = 0;
@@ -87,7 +108,6 @@ export class OlympusScene extends Phaser.Scene {
     perfectBlocks: 0,
   };
   onUpdate: () => void = () => {};
-  onStory: () => void = () => {};
   onEnd: (won: boolean) => void = () => {};
   label!: Phaser.GameObjects.Text;
   warning!: Phaser.GameObjects.Text;
@@ -107,6 +127,8 @@ export class OlympusScene extends Phaser.Scene {
     this.load.image("title", "/assets/art/title.png");
     this.load.image("bus", "/assets/art/bus.png");
     this.load.image("rescue", "/assets/art/rescue.png");
+    for (const name of [...MIDAS_ART, ...MANSION_ART, ...QUEST_ART, ...CHASE_ART, ...CAMP_ART, "story-cast-v1", "story-heroes-v1", "story-chariot-v1", "story-ledge-v2", "story-cliff-rescue-v2", "story-flight-embrace-v2", "story-chariot-arrival-v2", "story-chariot-landed-v2", "story-chariot-departure-v2"])
+      this.load.image(name, `/assets/art/${name}.png`);
     this.load.image("heroes", "/assets/art/heroes.png");
     this.load.atlas("jason-idle", "/assets/art/jason-idle-v2.png", "/assets/art/jason-idle-v2-atlas.json");
     this.load.image("wind-spirit", "/assets/art/wind-spirit-v2.png");
@@ -128,6 +150,9 @@ export class OlympusScene extends Phaser.Scene {
     this.ground = this.add.ellipse(300, 593, 150, 24, 0x050b12, 0.48);
     this.shadow = this.add.ellipse(950, 597, 155, 24, 0x050b12, 0.5);
     this.atlas = this.cache.json.get("frames");
+    midasFrames.king.frames.forEach((r,i)=>this.textures.get("king-midas-combat-v1").add(String(i),0,r[0],r[1],r[2],r[3]));
+    questFrames.golden.frames.forEach((r, i) => this.textures.get("golden-dragon-v2").add(String(i), 0, r[0], r[1], r[2], r[3]));
+    questFrames.medea.frames.forEach((r, i) => this.textures.get("medea-combat-v1").add(String(i), 0, r[0], r[1], r[2], r[3]));
     const tex = this.textures.get("heroes");
     const img = tex.getSourceImage() as HTMLImageElement;
     for (let r = 0; r < 3; r++)
@@ -188,6 +213,7 @@ export class OlympusScene extends Phaser.Scene {
       if (k === "j") this.queue("quick");
       if (k === "k") this.queue("strong");
       if (k === "l") this.queue("special");
+      if (k === "q") this.rally();
       if (k === "w" || k === "arrowup" || k === " ") this.queue("jump");
     }
     this.keys.add(k);
@@ -211,6 +237,8 @@ export class OlympusScene extends Phaser.Scene {
   scenery() {
     this.mode = "scenery";
     this.player?.setVisible(false);
+    this.goldStatues.forEach(s=>s.setVisible(false));
+    this.goldBolts=[];
     this.enemy?.setVisible(false);
     this.shadow?.setVisible(false);
     this.ground?.setVisible(false);
@@ -226,15 +254,23 @@ export class OlympusScene extends Phaser.Scene {
     if (this.textures.exists("title"))
       this.backdrop?.setTexture("title").setDisplaySize(1280, 720);
   }
-  startFight(hero: number) {
-    this.heroIndex = hero;
+  startFight(hero: number, encounter: "dylan" | "medea" | "golden-dragon" | "midas" = "dylan") {
+    this.encounter = encounter;
+    this.charm = 0;
+    this.rallyCooldown = 0;
+    this.rallyFlash = 0;
+    this.goldHits=0;
+    this.goldBolts=[];
+    this.heroIndex = encounter === "midas" ? 0 : hero;
     this.mode = "battle";
     this.x = 300;
     this.y = 590;
     this.vy = 0;
     this.ex = 950;
-    this.health = 100;
-    this.enemyHealth = 160;
+    this.heroMaxHealth = encounter === "midas" ? MIDAS_RULES.hitLimit : BATTLE_RULES.heroHealth;
+    this.health = this.heroMaxHealth;
+    this.enemyMaxHealth = encounter === "midas" ? MIDAS_RULES.health : encounter === "golden-dragon" ? 1800 : encounter === "medea" ? 1900 : BATTLE_RULES.spiritHealth;
+    this.enemyHealth = this.enemyMaxHealth;
     this.meter = 35;
     this.move = "";
     this.moveTime = 0;
@@ -281,20 +317,73 @@ export class OlympusScene extends Phaser.Scene {
     this.enemy.setVisible(true).setPosition(this.ex, 450);
     this.ground.setVisible(true).setPosition(this.x, 594).setScale(1);
     this.shadow.setVisible(true).setX(this.ex);
-    this.backdrop.setTexture("arena").setDisplaySize(1280, 720);
-    this.label.setText("STAND TOGETHER");
+    this.backdrop.setTexture(encounter === "midas" ? "midas-mansion-arena-v1" : encounter !== "dylan" ? "medea-mall-arena-v1" : "arena").setDisplaySize(1280, 720);
+    this.spirit.setTexture(encounter === "midas" ? "king-midas-combat-v1" : encounter === "golden-dragon" ? "golden-dragon-v2" : encounter === "medea" ? "medea-combat-v1" : "wind-spirit", encounter !== "dylan" ? "0" : undefined).setAlpha(1);
+    this.label.setText(encounter === "midas" ? "JASON · RESIST THE GOLD" : encounter === "golden-dragon" ? "THE GOLDEN GUARDIAN" : encounter === "medea" ? "BREAK THE ENCHANTMENT" : "STAND TOGETHER");
+    if(encounter==="midas")this.prepareGoldStatues();
+    this.goldStatues.forEach(s=>s.setVisible(encounter==="midas"));
     this.flashTimer = 1.6;
     this.warning.setVisible(true).setText("");
     audio.playMusic("combat");
     audio.setStorm(0);
-    audio.wind();
+    audio.wind(encounter === "dylan");
     this.renderHero(0);
     this.onUpdate();
   }
+  prepareGoldStatues() {
+    if(this.goldStatues.length)return;
+    const texture=this.textures.get("story-heroes-v1");
+    for(const [i,name]of (["piper","leo"] as const).entries()) {
+      const r=storyFrames[name].rect;texture.add(`statue-${name}`,0,r[0],r[1],r[2],r[3]);
+      const key=ensureGoldTexture(this,"story-heroes-v1");
+      // A second added frame also needs registering on an already generated gold sheet.
+      if(!this.textures.get(key).getFrameNames().includes(`statue-${name}`))this.textures.get(key).add(`statue-${name}`,0,r[0],r[1],r[2],r[3]);
+      const statue=this.add.sprite(i?510:95,560,key,`statue-${name}`).setOrigin(.5,1).setScale(220/r[3]);
+      this.children.moveBelow(statue,this.ground);this.goldStatues.push(statue);
+    }
+  }
+  stepGoldBolts(dt: number) {
+    const result=advanceGoldBolts(this.goldBolts,dt,{x:this.x,y:this.y,blocking:this.guarding,invulnerable:this.hurt>0});
+    this.goldBolts=result.bolts;
+    for(const event of result.events) {
+      if(event.type==="block") {
+        const perfect=this.guardAge<=.18;this.stats.blocks++;if(perfect)this.stats.perfectBlocks++;
+        this.meter=Math.min(100,this.meter+(perfect?20:12));this.guardFlash=.3;
+        this.impact(this.x,450,0xffe8a1,1);audio.sfx("block");
+        this.floating(perfect?"PERFECT GUARD":"GOLD DEFLECTED",this.x,305,"#ffe9ae");
+      } else if(event.type==="hit") {
+        this.goldHits=goldenHit(this.goldHits);this.health=MIDAS_RULES.hitLimit-this.goldHits;
+        this.hurt=MIDAS_RULES.invulnerability;this.streak=0;
+        this.burst(this.x,460,0xffdc68,26);this.impact(this.x,460,0xffdc68,1.3);audio.sfx("coin");
+        this.floating(`GOLD · ${this.goldHits} / 10`,this.x,305,"#ffde75");
+        if(this.goldHits===MIDAS_RULES.hitLimit) {
+          this.resolveBattle(false);this.renderHero(0);this.onUpdate();return true;
+        }
+      }
+    }
+    return false;
+  }
   queue(move: string) {
     if (this.mode !== "battle" || this.pendingResult !== null) return;
+    if (move === "rally") { this.rally(); return; }
     this.buffer = move;
     this.bufferAge = 0.22;
+  }
+  rally() {
+    if (this.encounter !== "medea" || this.mode !== "battle" || this.pendingResult !== null || this.rallyCooldown > 0) return;
+    this.charm = 0;
+    this.rallyCooldown = 8;
+    this.rallyFlash = .8;
+    this.enemyPhase = "stunned";
+    this.enemyTimer = 3;
+    this.meter = Math.min(100, this.meter + 15);
+    this.health = Math.min(this.heroMaxHealth, this.health + 60);
+    this.label.setText("PIPER BREAKS THE SPELL");
+    this.flashTimer = 1.5;
+    this.warning.setText("TOGETHER · STRIKE NOW");
+    this.burst(this.x, 440, 0xffc9ec, 40);
+    audio.sfx("charm");
+    this.onUpdate();
   }
   pause() {
     if (this.mode === "battle") {
@@ -309,7 +398,7 @@ export class OlympusScene extends Phaser.Scene {
       this.mode = "battle";
       this.keys.clear();
       this.reveal = false;
-      if (this.storyTriggered && this.pendingResult === null) {
+      if (this.storyTriggered && this.pendingResult === null && this.encounter === "dylan") {
         audio.setStorm(1);
         this.label.setText("HOLD THE LINE");
         this.flashTimer = 1.4;
@@ -357,12 +446,13 @@ export class OlympusScene extends Phaser.Scene {
   }
   resolveBattle(won: boolean) {
     this.pendingResult = won;
-    this.finishTimer = won ? 0.72 : 0.45;
+    this.finishTimer = won ? 0.72 : this.encounter==="midas" ? 1.8 : 0.45;
+    this.goldBolts=[];
     this.keys.clear();
     this.buffer = "";
     this.move = "";
     this.warning.setText("");
-    this.label.setText(won ? "THE STORM BREAKS" : "STAND AGAIN, HERO");
+    this.label.setText(this.encounter==="midas" ? won?"KING MIDAS YIELDS":"JASON HAS TURNED TO GOLD" : won ? (this.encounter === "golden-dragon" ? "FESTUS IS COMING" : this.encounter === "medea" ? "THE ENCHANTMENT SHATTERS" : "THE WIND RECOILS") : "STAND AGAIN, HERO");
     audio.sfx(won ? "victory" : "defeat");
   }
   update(_time: number, delta: number) {
@@ -378,7 +468,12 @@ export class OlympusScene extends Phaser.Scene {
     }
     this.drawEnemy();
     this.drawEffects(dt);
-    if (this.mode !== "scenery") drawStorm(this.weather, this.floorFX, this);
+    if (this.mode !== "scenery") {
+      if (this.encounter === "midas") drawMidasAtmosphere(this.weather,this.floorFX,this);
+      else if (this.encounter === "golden-dragon") drawGoldenAtmosphere(this.weather, this.floorFX, this);
+      else if (this.encounter === "medea") drawMedeaAtmosphere(this.weather, this.floorFX, this);
+      else drawStorm(this.weather, this.floorFX, this);
+    }
     if (this.mode === "scenery") {
       this.backdrop
         .setX(640 + Math.sin(this.clock * 0.12) * 8)
@@ -401,6 +496,11 @@ export class OlympusScene extends Phaser.Scene {
       return;
     }
     this.elapsed += dt;
+    if (this.encounter === "medea") {
+      this.rallyCooldown = Math.max(0, this.rallyCooldown - dt);
+      this.rallyFlash = Math.max(0, this.rallyFlash - dt);
+      this.charm = Math.max(0, this.charm - dt * 2);
+    }
     this.storm += ((this.storyTriggered ? 1.8 : 1) - this.storm) * dt * 0.9;
     this.stats.time = Math.floor(this.elapsed);
     this.hurt = Math.max(0, this.hurt - dt);
@@ -485,12 +585,18 @@ export class OlympusScene extends Phaser.Scene {
         if ((this.ex - this.x) * this.facing > 0 && Math.abs(this.ex - this.x) < m.range && this.y > 370) {
           this.connected = true;
           const counter = this.enemyPhase === "recover" && !this.counterClaimed;
-          const damage = attackDamage(
+          let damage = attackDamage(
             HEROES[this.heroIndex].id,
             this.move,
             this.streak,
             counter,
           );
+          if (this.encounter === "medea") {
+            // The ward is weakest after a spell or Piper's rally. It never blocks all damage.
+            if (this.enemyPhase === "tell") damage = Math.max(1, Math.round(damage * .65));
+            if (this.charm >= 60) damage = Math.max(1, Math.round(damage * .7));
+          }
+          if (this.encounter === "golden-dragon") damage = Math.min(damage, Math.max(0, this.enemyHealth - this.enemyMaxHealth / 3));
           this.enemyHealth = Math.max(0, this.enemyHealth - damage);
           this.meter = Math.min(100, this.meter + m.meter + (counter ? 8 : 0));
           if (counter) {
@@ -507,8 +613,8 @@ export class OlympusScene extends Phaser.Scene {
           this.enemyRecoil = 0.22;
           this.ex = Phaser.Math.Clamp(
             this.ex + this.facing * (this.move === "strong" ? 45 : 20),
-            110,
-            1170,
+            this.encounter === "golden-dragon" ? 300 : 110,
+            this.encounter === "golden-dragon" ? 980 : 1170,
           );
           this.impact(this.ex, this.y - 150, HERO_INK[this.heroIndex], this.move === "special" ? 2 : this.move === "strong" ? 1.4 : 1);
           this.burst(
@@ -530,20 +636,18 @@ export class OlympusScene extends Phaser.Scene {
           if (this.heroIndex === 1 && this.move === "special") {
             this.enemyPhase = "stunned";
             this.enemyTimer = 2.5;
-            this.warning.setText("THE WIND HESITATES");
+            this.warning.setText(this.encounter === "golden-dragon" ? "THE GEARS FALTER" : this.encounter === "medea" ? "MEDEA'S VOICE FALTERS" : "THE WIND HESITATES");
+            if (this.encounter === "medea") this.charm = 0;
           }
           if (
-            this.enemyHealth <= 80 &&
+            this.enemyHealth <= this.enemyMaxHealth / 2 &&
             !this.storyTriggered &&
             this.enemyHealth > 0
           ) {
             this.storyTriggered = true;
-            this.mode = "pause";
-            this.keys.clear();
-            this.onStory();
-            return;
+            // Escalate the fight here; the rescue plays only after victory.
           }
-          if (this.enemyHealth <= 0) {
+          if (this.enemyHealth <= 0 || (this.encounter === "golden-dragon" && this.enemyHealth <= this.enemyMaxHealth / 3)) {
             this.resolveBattle(true);
             this.onUpdate();
             return;
@@ -553,44 +657,52 @@ export class OlympusScene extends Phaser.Scene {
       if (this.moveTime >= m.windup + m.active + m.recovery) this.move = "";
     }
     this.guarding = block && !this.move && this.y >= 580;
+    if(this.encounter==="midas"&&this.stepGoldBolts(dt))return;
     this.enemyTimer -= dt;
     if (this.enemyPhase === "wait") {
       this.warning.setText("");
       if (this.enemyTimer < 0.9) {
-        const goal = this.x + this.facing * 260;
+        const goal = this.x + this.facing * (this.encounter==="midas"?420:260);
         this.ex += Phaser.Math.Clamp(goal - this.ex, -90 * dt, 90 * dt);
       }
       if (this.enemyTimer <= 0) {
         this.enemyMove = ["low", "sweep", "charge"][this.enemyCycle++ % 3];
         this.enemyPhase = "tell";
-        this.enemyTimer = this.enemyMove === "charge" ? 1.05 : 0.85;
+        this.enemyTimer = this.encounter==="midas" ? 1.25 : this.encounter === "golden-dragon" ? 1.1 : this.encounter === "medea" ? 1.2 : this.enemyMove === "charge" ? 1.05 : 0.85;
         this.enemyHit = false;
         this.counterClaimed = false;
-        this.warning.setText(
+        this.warning.setText(this.encounter==="midas" ? (this.enemyMove==="low"?"LOW GOLD · JUMP":this.enemyMove==="sweep"?"GOLDEN SHARD · BLOCK":"DOUBLE GOLD · GUARD BOTH SHOTS") : this.encounter === "golden-dragon" ?
+          (this.enemyMove === "low" ? "FLOOR FIRE · JUMP" : this.enemyMove === "sweep" ? "GOLDEN CLAWS · HOLD BLOCK" : "GEAR CHARGE · BLOCK, THEN COUNTER") : this.encounter === "medea" ?
+          (this.enemyMove === "low" ? "ROLLING POTION · JUMP" : this.enemyMove === "sweep" ? "CRYSTAL FAN · HOLD BLOCK" : "CHARMSPEAK · BLOCK OR Q TO RALLY") :
           this.enemyMove === "low"
             ? "LOW GUST · JUMP"
             : this.enemyMove === "sweep"
               ? "WIND SWEEP · HOLD BLOCK"
               : "CHARGE · BLOCK, THEN COUNTER",
         );
-        audio.sfx("gust");
+        audio.sfx(this.encounter==="midas" ? "coin" : this.encounter === "golden-dragon" ? this.enemyMove === "low" ? "fire" : "heavy" : this.encounter === "medea" ? "charm" : "gust");
       }
     } else if (this.enemyPhase === "tell" && this.enemyTimer <= 0) {
       this.enemyPhase = "attack";
-      this.enemyTimer = this.enemyMove === "charge" ? 0.4 : 0.28;
+      if(this.encounter==="midas")this.goldBolts.push(...goldVolley(this.enemyMove,this.ex,this.x));
+      this.enemyTimer = this.encounter === "golden-dragon" ? .55 : this.encounter === "medea" ? .6 : this.enemyMove === "charge" ? 0.4 : 0.28;
     } else if (this.enemyPhase === "attack") {
-      if (this.enemyMove === "charge")
+      if(this.encounter!=="midas") {
+      if (this.encounter !== "dylan" && this.enemyMove === "low" && this.enemyTimer > .3)
+        this.warning.setText(this.encounter === "golden-dragon" ? "FIRE INCOMING · JUMP NOW" : "POTION INCOMING · JUMP NOW");
+      if (this.enemyMove === "charge" && this.encounter !== "medea")
         this.ex += (this.x - this.ex) * Math.min(1, dt * 8);
       if (
         !this.enemyHit &&
-        (this.enemyMove !== "charge" || Math.abs(this.ex - this.x) < 205)
+        (this.encounter === "medea" || (this.encounter === "golden-dragon" && this.enemyMove !== "charge") ? this.enemyTimer <= .3 : (this.enemyMove !== "charge" || Math.abs(this.ex - this.x) < 205))
       ) {
         this.enemyHit = true;
-        const outcome = hitOutcome({
+        const fireproof = this.encounter === "golden-dragon" && this.enemyMove === "low" && this.heroIndex === 2;
+        const outcome = fireproof ? "evade" : hitOutcome({
           attack: this.enemyMove,
           blocking: this.guarding,
           jumping: this.y < 520,
-          distance: Math.abs(this.ex - this.x),
+          distance: this.encounter === "medea" && this.enemyMove === "charge" ? 100 : Math.abs(this.ex - this.x),
         });
         if (outcome === "block") {
           const perfect = this.guardAge <= 0.18;
@@ -610,8 +722,9 @@ export class OlympusScene extends Phaser.Scene {
           this.burst(this.x + this.facing * 45, 460, 0x9edbfa, 12);
           this.floating(perfect ? "PERFECT GUARD" : "BLOCK", this.x, 305, "#b0e4fa");
         } else if (outcome === "hit") {
-          const dmg = this.enemyMove === "charge" ? 13 : 9;
+          const dmg = this.encounter === "golden-dragon" ? (this.enemyMove === "charge" ? 36 : 24) : this.enemyMove === "charge" ? 13 : 9;
           this.health = Math.max(0, this.health - dmg);
+          if (this.encounter === "medea") this.charm = Math.min(100, this.charm + (this.enemyMove === "charge" ? 75 : 18));
           this.hurt = 0.28;
           this.streak = 0;
           this.x = Phaser.Math.Clamp(this.x - this.facing * 28, 65, 1210);
@@ -626,8 +739,9 @@ export class OlympusScene extends Phaser.Scene {
           }
         } else if (outcome === "evade") {
           this.meter = Math.min(100, this.meter + 8);
-          this.floating("EVADED", this.x, 330, "#b0e4fa");
+          this.floating(fireproof ? "LEO · FIREPROOF" : "EVADED", this.x, 330, "#b0e4fa");
         }
+      }
       }
       if (this.enemyTimer <= 0) {
         this.enemyPhase = "recover";
@@ -641,7 +755,7 @@ export class OlympusScene extends Phaser.Scene {
       this.enemyPhase = "wait";
       this.enemyTimer = 0.9;
     }
-    this.ex = Phaser.Math.Clamp(this.ex, 110, 1170);
+    this.ex = Phaser.Math.Clamp(this.ex, this.encounter === "midas" ? 240 : this.encounter === "golden-dragon" ? 300 : 110, this.encounter === "midas" ? 1040 : this.encounter === "golden-dragon" ? 980 : 1170);
     let pose = walk ? 1 : 0;
     if (this.y < 580) pose = 2;
     else if (block && !this.move) pose = 3;
@@ -652,7 +766,7 @@ export class OlympusScene extends Phaser.Scene {
     this.renderHero(pose);
     this.ground.setPosition(this.x, 594).setScale(1 - (590 - this.y) / 700);
     this.shadow.setX(this.ex);
-    this.enemy.setPosition(this.ex, 450 + Math.sin(this.clock * 3) * 6);
+    this.enemy.setPosition(this.ex, 450 + (this.encounter !== "dylan" ? 0 : Math.sin(this.clock * 3) * 6));
     this.onUpdate();
   }
   renderHero(pose: number) {
@@ -685,12 +799,7 @@ export class OlympusScene extends Phaser.Scene {
     const lunge = !m ? 0 : this.moveTime < m.windup ? -5 * swing : 14 * followThrough;
     this.player.setPosition(
       this.x + lunge * this.facing,
-      this.y +
-        (pose === 0
-          ? Math.sin(this.clock * 3) * 2
-          : pose === 1
-            ? Math.sin(this.clock * 16) * 5
-            : 0),
+      this.y,
     );
     this.player.setAngle(
       this.move
@@ -698,13 +807,34 @@ export class OlympusScene extends Phaser.Scene {
         : this.hurt > 0 ? -6 * this.facing : 0,
     );
     this.player.setTint(this.hurt > 0 ? 0xffaaa4 : 0xffffff);
+    if(this.encounter==="midas")applyGoldCurse(this);
   }
   drawEnemy() {
+    if(this.encounter==="midas") {
+      this.smoke.clear();
+      const pose=this.enemyRecoil>0?3:["tell","attack"].includes(this.enemyPhase)?this.enemyMove==="low"?2:1:0;
+      const anchor=midasFrames.king.anchors[pose];
+      this.spirit.setTexture("king-midas-combat-v1",String(pose)).setScale(.6).setOrigin(this.ex<this.x?1-anchor:anchor,1).setPosition(0,140).setFlipX(this.ex<this.x).setAlpha(1).setTint(this.enemyRecoil>0?0xffe5a1:0xffffff);
+      return;
+    }
+    if (this.encounter === "golden-dragon") {
+      this.smoke.clear();
+      const pose = this.enemyRecoil > 0 || this.enemyPhase === "stunned" || this.pendingResult === true ? 3 : ["tell", "attack"].includes(this.enemyPhase) ? this.enemyMove === "low" ? 2 : 1 : this.enemyTimer < .9 ? Math.floor(this.clock * 6) % 2 : 0;
+      this.spirit.setTexture("golden-dragon-v2", String(pose)).setScale(.5).setOrigin(this.ex > this.x ? .23 : .77, 1).setPosition(this.enemyRecoil > 0 ? Math.sin(this.enemyRecoil * 42) * 7 : 0, 140).setFlipX(this.ex < this.x).setAlpha(1).setTint(this.enemyRecoil > 0 ? 0xffefb6 : 0xffffff);
+      return;
+    }
+    if (this.encounter === "medea") {
+      this.smoke.clear();
+      const pose = this.enemyRecoil > 0 || this.enemyPhase === "stunned" ? 3 : ["tell", "attack"].includes(this.enemyPhase) ? this.enemyMove === "charge" ? 2 : 1 : 0;
+      const anchor = pose === 0 ? .42 : pose === 1 ? .38 : .5;
+      this.spirit.setTexture("medea-combat-v1", String(pose)).setScale(.43).setOrigin(this.ex > this.x ? 1-anchor : anchor, 1).setPosition(this.enemyRecoil > 0 ? Math.sin(this.enemyRecoil * 42) * 8 : 0, 140).setFlipX(this.ex > this.x).setAlpha(this.pendingResult === true ? Math.max(0, this.finishTimer / .72) : 1).setTint(this.enemyRecoil > 0 ? 0xffe4fa : 0xffffff);
+      return;
+    }
     drawSpirit(this.smoke, this);
     const disperse = this.pendingResult === true ? Math.min(1, Math.max(0, 1 - this.finishTimer / 0.72)) : 0;
     const breath = this.reduced ? 1 : 1 + Math.sin(this.clock * 3) * 0.018;
     const coil = this.enemyPhase === "tell" ? 0.94 : 1;
-    this.spirit.setDisplaySize(272 * breath / coil * (1 + disperse * 0.4), 408 * coil);
+    this.spirit.setOrigin(.5, 1).setDisplaySize(272 * breath / coil * (1 + disperse * 0.4), 408 * coil);
     this.spirit.setPosition(this.enemyRecoil > 0 ? -this.facing * Math.sin(this.enemyRecoil * 42) * 8 : 0, 150 - disperse * 140);
     this.spirit.setFlipX(this.ex < this.x).setAlpha(1 - disperse);
     this.spirit.setTint(this.enemyRecoil > 0 ? 0xe3dbbc : this.enemyPhase === "stunned" ? 0xe7bde7 : 0xffffff);
@@ -755,6 +885,11 @@ export class OlympusScene extends Phaser.Scene {
     if (this.mode === "scenery") return;
     const m = MOVES[this.move as keyof typeof MOVES];
     drawMove(g, this, m?.windup ?? 0, m?.active ?? 1);
-    if (this.pendingResult === null) drawGust(g, this);
+    if (this.pendingResult === null) {
+      if (this.encounter === "midas") drawMidasBolts(g,this);
+      else if (this.encounter === "golden-dragon") drawGoldenAttack(g, this);
+      else if (this.encounter === "medea") drawMedeaSpell(g, this);
+      else drawGust(g, this);
+    }
   }
 }

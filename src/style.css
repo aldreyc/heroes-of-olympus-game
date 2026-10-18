@@ -181,19 +181,22 @@ h2 {
   letter-spacing: 0.13em;
   color: #a9adb5;
 }
-.made-for {
+/* A studio signature with an explicit creator credit, rather than a dedication. */
+.studio-brand {
   position: absolute;
   left: 54px;
-  top: 43px;
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: #ccd0d2;
+  top: 40px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-align: left;
 }
-.seal {
-  font-size: 18px;
-  color: var(--gold);
-  margin-right: 10px;
-}
+.studio-mark {width: 56px; height: 56px; flex: none; image-rendering: pixelated}
+.studio-wordmark {display: grid; gap: 5px}
+.studio-kicker {font-size: 8px; letter-spacing: .24em; color: #b8a98c}
+.studio-wordmark strong {font-family: "Cinzel", Georgia, serif; font-size: 17px; font-weight: 600; letter-spacing: .09em; color: #efd5a0; line-height: 1.15}
+.studio-founder {font-size: 10px; letter-spacing: .055em; color: #d5d8dc}
+.loading .studio-brand {position: static; margin: 0 auto 36px}
 .screen-heading {
   text-align: center;
   margin-bottom: 28px;
@@ -228,26 +231,20 @@ h2 {
   background: #0d1725d9;
 }
 .book-art {
-  height: 290px;
-  background:
-    linear-gradient(0deg, #0d1725, transparent),
-    url("/assets/art/arena.png") center/cover;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 2 / 3;
+  margin-inline: auto;
   border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  background: #07313a;
+  overflow: hidden;
 }
-.book-art b {
-  font-size: 80px;
-  color: var(--gold);
-  text-shadow: 0 0 40px #ffeac4;
-}
-.book-art span {
-  font-family: "Cinzel", Georgia, serif;
-  font-size: 25px;
-  text-align: center;
-  line-height: 1.5;
+.book-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 .book p {
   font-size: 14px;
@@ -450,6 +447,9 @@ kbd {
 .sound-toggle:hover { background: #253447; }
 .sound-toggle kbd { padding: 2px 4px; font-size: 9px; }
 .battle-toolbar { top: auto; bottom: 96px; right: 3%; }
+.battle-skip {min-height:36px;padding:0 12px;border:1px solid #d4b26c88;border-radius:7px;background:#0c1423ed;color:#f1d79e;font-size:10px;letter-spacing:.06em;white-space:nowrap}
+.battle-skip:hover {background:#344051;border-color:#efd18c}
+@media (max-width:600px) { .battle-toolbar {flex-wrap:wrap;justify-content:flex-end;max-width:94vw} }
 .prophecy {
   position: absolute;
   inset: 0;
@@ -973,7 +973,7 @@ kbd {
   text-align: center;
   background: #080f19;
 }
-.loading span {
+.loading > span {
   font: 13px "Cinzel";
   letter-spacing: 0.3em;
   color: var(--gold);
@@ -1031,11 +1031,10 @@ kbd {
     max-width: 290px;
     font-size: 12px;
   }
-  .made-for {
-    left: 24px;
-    top: 26px;
-    font-size: 8px;
-  }
+  .studio-brand {left: 8%; top: 27px; gap: 10px}
+  .studio-mark {width: 46px; height: 46px}
+  .studio-wordmark strong {font-size: 14px}
+  .studio-founder {font-size: 9px}
   .title-footer {
     bottom: 26px;
     left: 8%;
@@ -1089,12 +1088,6 @@ kbd {
     grid-template-columns: 130px 1fr;
     gap: 16px;
     padding: 15px;
-  }
-  .book-art {
-    height: 240px;
-  }
-  .book-art span {
-    font-size: 20px;
   }
   .book h3 {
     font-size: 21px;
@@ -1226,9 +1219,6 @@ kbd {
   .screen {
     padding: 25px;
   }
-  .book-art {
-    height: 210px;
-  }
   .combat-help {
     bottom: 12px;
   }
@@ -1327,13 +1317,7 @@ kbd {
     max-width: 330px;
   }
   .book-art {
-    height: 150px;
-  }
-  .book-art b {
-    font-size: 45px;
-  }
-  .book-art span {
-    font-size: 19px;
+    width: 120px;
   }
   .book p {
     margin: 12px 0;
@@ -1388,11 +1372,7 @@ kbd {
   .toolbar {
     z-index: 40;
   }
-  .made-for {
-    right: auto;
-    left: 8%;
-    top: 85px;
-  }
+  .title-screen .studio-brand {top: 85px}
   .title-footer {
     font-size: 7px;
   }
@@ -1432,4 +1412,330 @@ kbd {
   .speaker-portrait {
     display: none;
   }
+}
+
+/* A shared 16:9 stage keeps art, soles and ground aligned on every screen. */
+.action-caption { font-style:italic; }
+.story-stage.has-tableau { background:#07101b !important; }
+.story-shot { position:absolute; width:min(100vw,177.7778vh); height:min(100vh,56.25vw); left:50%; top:50%; transform:translate(-50%,-50%); overflow:hidden; pointer-events:none; --ground:24%; }
+.story-shot.grounded { background:url('/assets/art/arena.png') center/100% 100% no-repeat; }
+.story-shot.aerial { background:url('/assets/art/title.png') center/100% 100% no-repeat; }
+.story-actor { position:absolute; left:20%; bottom:var(--ground); width:13%; height:42%; transform-origin:50% 100%; filter:drop-shadow(0 3px 2px #050b14a0); }
+.story-actor svg { display:block; width:100%; height:100%; overflow:hidden; image-rendering:pixelated; }
+.story-shot > .piper {left:35%}.story-shot > .leo {left:49%}.story-shot > .dylan {left:73%;z-index:2}.story-shot > .hedge {left:63%;height:36%}
+.story-spirit {position:absolute;left:73%;bottom:22%;width:20%;height:53%;object-fit:contain;image-rendering:pixelated}
+.entrance .story-actor:not(.dylan), .passes .story-actor:not(.dylan) {animation:story-walk-in 6s ease-out both}
+.entrance > .dylan {animation:dylan-cross 6s ease-in-out both}
+.passes > .dylan {left:30%}.passes > .leo {left:17%;transform:rotate(-9deg)}
+.entrance .story-spirit,.passes .story-spirit,.confront .story-spirit {display:none}
+.transform > .dylan {animation:human-dissolve 6s ease-in both}
+.transform > .story-spirit {animation:spirit-reveal 6s ease-out both}
+.transform:after {content:"";position:absolute;left:66%;top:15%;width:30%;height:60%;background:radial-gradient(ellipse,#8d9ea455,#0c182bab 35%,transparent 68%);animation:reveal-vortex 6s both}
+.piper-fall > .piper {animation:piper-over-edge 4.3s cubic-bezier(.45,0,.9,.55) both}
+.jason-dive > .jason {animation:jason-over-edge 4s cubic-bezier(.35,0,.9,.6) both}
+.jason-dive > .piper {transform:translate(15vw,55vh) rotate(30deg)}
+.canyon-shot {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.rescue-embrace {position:absolute;left:37%;bottom:24%;height:65%;width:30%;object-fit:contain;object-position:center bottom;image-rendering:pixelated;animation:return-flight 6s ease-out both;filter:drop-shadow(0 0 22px #b8d9ed44)}
+.abduction {position:absolute;left:72%;bottom:23%;width:24%;height:57%}
+.abduction > .story-spirit {left:0;bottom:0;width:100%;height:100%}
+.abduction > .hedge {left:4%;bottom:12%;width:58%;height:59%;transform:rotate(-20deg)}
+.seized .abduction {animation:captive-hover 2.5s ease-in-out infinite alternate}
+.cloud-bank {position:absolute;inset:0 0 auto 40%;height:22%;background:radial-gradient(ellipse at 50% 25%,#929ca3ef 0,#354453ee 36%,transparent 70%);opacity:.7}
+.departure .abduction {animation:carried-into-clouds 8s cubic-bezier(.55,.05,.78,.65) both}
+.departure .cloud-bank {animation:cloud-closes 8s ease-in both}
+/* Riders are drawn inside the basket, rather than laid over the outside of it. */
+.flying-chariot {position:absolute;width:62%;left:35%;bottom:var(--ground);transform-origin:center bottom}
+.flying-chariot > img {display:block;width:100%;height:auto;image-rendering:pixelated}
+.chariot-arrival .flying-chariot {animation:chariot-descends 6s ease-out both}
+.annabeth > .flying-chariot {width:62%;left:35%;bottom:var(--ground)}
+.annabeth > .annabeth {left:68%;height:25%}.annabeth > .butch {left:81%;height:25%}
+.annabeth > .jason {left:7%}.annabeth > .piper {left:19%}.annabeth > .leo {left:31%}
+.chariot-leave .flying-chariot {animation:chariot-departs 13.5s cubic-bezier(.25,.1,.55,1) both}
+.story-stage.has-tableau .dialogue {bottom:7%;padding-top:5px;padding-bottom:5px}
+.story-stage.has-tableau .dialogue p {font-size:clamp(14px,1.6vw,21px);line-height:1.45;min-height:0}
+.story-stage.has-tableau .dialogue-footer {margin-top:9px}
+@keyframes story-walk-in {from {translate:-32vw 0}to {translate:0 0}}
+@keyframes dylan-cross {from {translate:32vw 0}to {translate:-43vw 0}}
+@keyframes human-dissolve {0%,20% {opacity:1;filter:none}70%,100% {opacity:0;filter:blur(12px);translate:0 -3vh}}
+@keyframes spirit-reveal {0%,20% {opacity:0;scale:.6}100% {opacity:1;scale:1}}
+@keyframes reveal-vortex {0%,100% {opacity:0}50% {opacity:1;transform:rotate(18deg)}}
+@keyframes piper-over-edge {0%,20% {translate:0 0;rotate:0deg}100% {translate:22vw 85vh;rotate:80deg}}
+@keyframes jason-over-edge {0%,10% {translate:0 0;rotate:0deg}35% {translate:14vw -8vh;rotate:65deg}100% {translate:35vw 80vh;rotate:130deg}}
+@keyframes return-flight {from {translate:0 65vh}to {translate:0 0}}
+@keyframes captive-hover {from {translate:0 0}to {translate:0 -1vh}}
+@keyframes carried-into-clouds {0% {translate:0 0;scale:1;opacity:1}35% {translate:-2vw -8vh;scale:.9;opacity:1}80% {translate:4vw -50vh;scale:.5;opacity:.7}100% {translate:6vw -70vh;scale:.25;opacity:0}}
+@keyframes cloud-closes {from {opacity:.4}to {opacity:1}}
+@keyframes chariot-descends {from {translate:28vw -60vh;scale:.3}to {translate:0 0;scale:1}}
+@keyframes chariot-departs {0% {translate:0 0;scale:1;opacity:1}30% {translate:-4vw -8vh;scale:.8;opacity:1}75% {translate:-12vw -30vh;scale:.2;opacity:.7}100% {translate:-16vw -40vh;scale:.025;opacity:0}}
+@media (prefers-reduced-motion:reduce) {
+ .story-shot *, .story-shot:after {animation-duration:.01ms !important;animation-iteration-count:1 !important}
+}
+@media (max-width:600px) and (orientation:portrait) {
+ .story-stage.has-tableau .scene-tag {top:13%}
+ .story-stage.has-tableau .dialogue {bottom:9%}
+}
+.annabeth > .annabeth {left:60%;height:42%;z-index:2}
+.annabeth > .butch {left:75%;height:42%;z-index:2}
+.disembark > .annabeth {animation:step-off-chariot 1.8s ease-out both}
+.disembark > .butch {animation:step-off-chariot 2.3s ease-out both}
+@keyframes step-off-chariot {0% {translate:15vw -10vh}45% {translate:8vw -5vh}100% {translate:0 0}}
+.chariot-sprite {display:block;width:100%;height:auto;overflow:hidden;image-rendering:pixelated}
+.rescue-embrace {display:block;overflow:hidden}
+.story-shot > .story-actor {z-index:1}
+.story-shot > .dylan {z-index:2}
+.flying-chariot {z-index:0}
+
+/* Camp keeps the same sole baseline, with its own art and frame-based walking. */
+.continue-camp {margin-top:18px;display:block;color:var(--gold)}
+.story-shot.camp-stage {background:url('/assets/art/camp-half-blood-v1.png') center/100% 100% no-repeat}
+.story-shot.forest-stage {background:url('/assets/art/camp-woods-v2.png') center/100% 100% no-repeat}
+.camp-sequence .story-walker {position:absolute;bottom:24%;width:17%;height:36%;transform-origin:50% 100%;z-index:3;filter:drop-shadow(0 3px 1px #07111c80)}
+.story-walker svg {display:block;width:100%;height:100%;overflow:hidden;image-rendering:pixelated}
+.camp-touchdown .flying-chariot {width:69%;left:21%;animation:camp-touchdown 6s ease-out both}
+.claim-hero {position:absolute;width:15%;height:38%;bottom:24%;z-index:2}
+.claim-jason {left:23%}.claim-piper {left:43%}.claim-leo {left:63%}
+.claim-hero > .story-actor {left:0;bottom:0;width:100%;height:100%;z-index:2}
+.claim-sign {position:absolute;bottom:105%;left:50%;translate:-50% 0;width:95%;text-align:center;color:var(--claim-color);animation:claim-appear 1s var(--claim-delay) ease-out both;filter:drop-shadow(0 0 11px currentColor)}
+.claim-sign svg {width:60%;display:block;margin:0 auto 8px}
+.claim-sign span {font-size:clamp(8px,.9vw,14px);letter-spacing:.16em;color:var(--claim-color);font-weight:700;text-shadow:0 2px 5px #000}
+.claim-aura {position:absolute;inset:-10% -10% -2%;background:radial-gradient(ellipse at 50% 95%,var(--claim-color),transparent 65%);opacity:0;animation:claim-aura 2.5s var(--claim-delay) ease-out both}
+.cabin-destination {position:absolute;left:50%;top:27%;translate:-50% 0;color:#ffe4aa;background:#091627cc;border:1px solid #c99c5c66;padding:9px 18px;font-size:clamp(8px,1vw,15px);letter-spacing:.12em;z-index:5}
+.forest-stage > .story-actor.leo {left:49%;width:17%;height:36%;bottom:24%}
+.dragon-discovery > .story-actor.leo {left:34%}
+.forest-dragon {position:absolute;left:53%;bottom:24%;width:45%;height:auto;z-index:2;overflow:visible;image-rendering:pixelated;filter:drop-shadow(0 0 12px #e0a94225)}
+.dragon-calm-pose {position:absolute;left:9%;bottom:24%;width:82%;height:auto;image-rendering:pixelated;z-index:2}
+.dragon-mount-pose,.dragon-flight-pose {position:absolute;left:15%;bottom:24%;width:70%;height:auto;image-rendering:pixelated;z-index:2;transform-origin:center bottom}
+.dragon-takeoff .dragon-flight-pose {animation:festus-takeoff 8s cubic-bezier(.35,.1,.65,1) both}
+.dragon-return-pose {position:absolute;left:31%;bottom:24%;width:65%;height:auto;image-rendering:pixelated;z-index:2;transform-origin:center bottom;animation:festus-arrives 6s ease-out both}
+.camp-dragon-return > .jason {left:7%}.camp-dragon-return > .piper {left:19%}
+@keyframes festus-takeoff {0%,15% {translate:0 0;scale:1;opacity:1}55% {translate:12vw -20vh;scale:.8;opacity:1}100% {translate:48vw -70vh;scale:.25;opacity:0}}
+@keyframes festus-arrives {from {translate:-60vw -65vh;scale:.4}to {translate:0 0;scale:1}}
+
+.dragon-chase {position:absolute;inset:0;background:#06101c;overflow:hidden}
+.chase-stage {position:absolute;width:min(100vw,177.7778vh);height:min(100vh,56.25vw);left:50%;top:50%;translate:-50% -50%}
+.chase-stage canvas {width:100%;height:100%;display:block;image-rendering:pixelated;outline:none}
+.chase-hud {position:absolute;top:7%;left:5%;right:5%;display:flex;justify-content:space-between;gap:24px;pointer-events:none;z-index:3}
+.chase-hud .eyebrow {font-size:10px;display:block;margin-bottom:12px;text-shadow:0 2px 6px #000}
+.chase-hud strong {font-size:18px;letter-spacing:.12em;color:#ffe1a3;background:#071424d9;padding:9px 14px;border:1px solid #d5ac6955;display:inline-block}
+.chase-goal {width:min(33vw,360px);font-size:11px;color:#fff1d1;letter-spacing:.09em;text-shadow:0 2px 6px #000}
+.chase-goal progress {display:block;width:100%;height:11px;margin-top:12px;accent-color:#e7bd70}
+.chase-callout {position:absolute;top:25%;left:20%;right:20%;text-align:center;color:#ffdf96;font-size:clamp(14px,2vw,25px);font-weight:700;letter-spacing:.06em;text-shadow:0 2px 8px #000;pointer-events:none;z-index:3}
+.chase-callout.warning-live {width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.chase-controls {position:absolute;bottom:7%;left:5%;display:flex;gap:12px;z-index:5}
+.chase-control {min-height:48px;padding:12px 20px;background:#081728e8;color:#f3dcac;border:1px solid #ac986a99;border-radius:6px;letter-spacing:.06em;font-size:11px;touch-action:none;user-select:none}
+.chase-control kbd {margin-left:10px;font-size:10px}
+.chase-control.held,.chase-control:active {background:#795632;color:#fff}
+.chase-overlay {position:absolute;inset:0;display:grid;place-items:center;background:#030b16b8;z-index:10;padding:22px}
+.chase-overlay[hidden] {display:none}
+.chase-card {max-width:650px;padding:30px 40px;background:linear-gradient(140deg,#102336ef,#09121df5);border:1px solid #c9a86780;box-shadow:0 22px 80px #0008;text-align:center}
+.chase-card h2 {margin:12px 0 18px;font-size:clamp(28px,4vw,48px)}
+.chase-card p {line-height:1.65;color:#c5cbd2;font-size:14px;margin:15px 0}
+.chase-instructions {display:flex;justify-content:center;gap:18px;margin:22px 0}
+.chase-instructions span {background:#192d4080;border:1px solid #b6c7d733;padding:16px;font-size:12px;line-height:1.8;color:#e5d9c0}
+.chase-instructions b {color:#f4d293}
+.chase-card p.chase-note {font-size:12px;color:#a8b4c5}
+@media (max-height:600px) and (orientation:landscape) {
+ .chase-card {padding:16px 24px;max-width:580px}.chase-card h2 {margin:4px 0;font-size:27px}.chase-card p {margin:8px 0;font-size:12px}.chase-instructions {margin:10px 0}.chase-instructions span {padding:8px}.chase-card .primary {padding:12px 22px}
+ .chase-controls {bottom:4%}.chase-hud {top:5%}.chase-hud .eyebrow {font-size:8px}
+}
+@media (max-width:600px) and (orientation:portrait) {
+ .chase-hud {top:17%;gap:12px}.chase-hud .eyebrow {font-size:7px}.chase-hud strong {font-size:12px}.chase-goal {font-size:8px;width:40vw}
+ .chase-callout {top:30%;left:5%;right:5%;font-size:14px}.chase-controls {bottom:13%;left:4%;right:4%;justify-content:center}.chase-control {padding:14px 12px;flex:1}.chase-control kbd {display:block;margin:7px 0 0}
+ .chase-card {padding:22px 17px}.chase-card .primary {min-width:0;font-size:12px}.chase-instructions {gap:8px}.chase-instructions span {padding:10px;font-size:10px}
+}
+.dragon-approach .forest-dragon {animation:dragon-emerges 5s ease-out both}
+.dragon-discovery .forest-dragon {filter:drop-shadow(0 0 17px #e0a94238)}
+.forest-listen:after {content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,#02091088);pointer-events:none}
+.camp-motes {position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:4}
+.camp-motes i {position:absolute;left:calc(4% + var(--n) * 6.5%);top:var(--mote-y);width:3px;height:3px;background:#ffd58a;box-shadow:0 0 8px #ffbf57;border-radius:50%;animation:camp-firefly 4s calc(var(--n) * -.47s) ease-in-out infinite alternate;opacity:.6}
+.camp-stage .camp-motes i {opacity:.3}
+@keyframes camp-touchdown {from {translate:-25vw -50vh;scale:.45}to {translate:0 0;scale:1}}
+@keyframes claim-appear {from {opacity:0;scale:.2;filter:blur(6px)}to {opacity:1;scale:1}}
+@keyframes claim-aura {0% {opacity:0}35% {opacity:.32}100% {opacity:.08}}
+@keyframes dragon-emerges {from {opacity:.06;filter:brightness(.3)}to {opacity:1;filter:brightness(1)}}
+@keyframes camp-firefly {from {translate:0 0;opacity:.15}to {translate:12px -18px;opacity:.85}}
+@media (prefers-reduced-motion:reduce) {
+ .claim-sign,.claim-aura {animation-delay:0s}
+ .camp-motes i {animation:none;opacity:.35}
+}
+
+/* The quest: one shared ground line, isolated actors, and a separate mall arena. */
+.quest-tableau {--ground:24%}
+.quest-tableau.quest-camp {background:linear-gradient(#0a122b55,#06152533),url('/assets/art/camp-half-blood-v1.png') center/100% 100% no-repeat}
+.quest-actor {position:absolute;bottom:var(--ground);width:12%;height:33%;left:14%;z-index:3;transform-origin:50% 100%;filter:drop-shadow(0 3px 1px #040a1499)}
+.quest-actor svg {display:block;width:100%;height:100%;overflow:hidden;image-rendering:pixelated}
+.quest-actor.piper {left:29%}.quest-actor.leo {left:44%}
+.quest-actor.chiron {left:63%;width:28%;height:46%}
+.quest-actor.rachel {left:64%;width:26%;height:45%}
+.quest-rachel:before,.quest-oracle:before {content:"";position:absolute;inset:0;background:linear-gradient(#020819aa,transparent 70%)}
+.oracle-mist {position:absolute;left:61%;bottom:27%;width:31%;height:45%;z-index:2;background:radial-gradient(ellipse,#5af5a521,transparent 65%);filter:blur(6px);animation:oracle-breath 3s ease-in-out infinite alternate}
+.quest-oracle .quest-actor.rachel {height:53%;width:32%;left:60%;filter:drop-shadow(0 0 16px #65efb040)}
+.quest-oracle .quest-actor:not(.rachel) {display:none}
+.story-stage.has-tableau .oracle-dialogue {bottom:23%;left:9%;right:42%;background:linear-gradient(90deg,#06131be8,#06131b99);padding:18px 22px}
+.story-stage.has-tableau .oracle-dialogue p {white-space:pre-line;font-family:Georgia,serif;font-size:clamp(14px,1.55vw,22px);line-height:1.75;color:#d5ffe7}
+.oracle-dialogue .speaker {color:#9cdbaf;font-size:10px;line-height:1.5}
+.oracle-dialogue .dialogue-footer {gap:12px}.oracle-dialogue .dialogue-footer>span{font-size:8px}
+.quest-objectives {position:absolute;left:8%;top:28%;width:43%;padding:25px 30px;border:1px solid #d5b26b77;background:#071221eb;z-index:5;box-shadow:0 12px 50px #0006}
+.quest-objectives span,.quest-objectives small {display:block;color:#dab578;font-size:11px;letter-spacing:.15em}
+.quest-objectives strong {display:block;font-family:Georgia,serif;font-size:clamp(18px,2.5vw,34px);font-weight:400;color:#f5eddb;margin:12px 0}
+.quest-revealed .quest-actor:not(.chiron) {display:none}
+.quest-flight {position:absolute;width:64%;height:60%;left:17%;top:11%;z-index:4;transform-origin:50% 50%}
+.quest-flight svg {display:block;width:100%;height:100%;overflow:hidden;image-rendering:pixelated}
+.quest-takeoff .quest-flight {animation:quest-takeoff 8s ease-in-out both}
+.quest-horizon {background:linear-gradient(#e4d3be44,#96c0dd15),url('/assets/art/camp-half-blood-v1.png') center/100% 100% no-repeat !important}
+.quest-horizon:before {content:"";position:absolute;inset:0;background:linear-gradient(#819cce,#dfccbd 40%,#f4d2a9 51%,transparent 69%);opacity:.94}
+.quest-horizon .quest-flight {animation:quest-horizon 12s ease-in both}
+.journey-cloud {position:absolute;width:70%;height:18%;left:-30%;top:27%;opacity:.36;z-index:5;background:radial-gradient(ellipse at 40% 70%,#f2e2cf,transparent 66%);animation:quest-clouds 16s linear infinite}
+.journey-cloud.cloud-two {top:46%;left:36%;animation-duration:22s;opacity:.25}
+.quest-tableau.mall-outside {background:url('/assets/art/medea-mall-exterior-v1.png') center/100% 100% no-repeat}
+.quest-tableau.mall-inside {background:url('/assets/art/medea-mall-arena-v1.png') center/100% 100% no-repeat;--ground:24%}
+.mall-landing .quest-flight {animation:mall-landing 8s ease-out both}
+.parked-festus {position:absolute;left:0%;bottom:22%;width:40%;height:40%;object-fit:contain;object-position:bottom;image-rendering:pixelated;z-index:2;filter:drop-shadow(0 4px 2px #050c1b99)}
+.quest-tableau .story-walker {position:absolute;bottom:24%;width:15%;height:33%;z-index:3;transform-origin:50% 100%;filter:drop-shadow(0 3px 1px #050d1999)}
+.quest-actor.medea {left:73%;width:16%;height:41%;transform:scaleX(-1)}
+.mall-spell .quest-actor.jason,.mall-spell .quest-actor.leo {filter:drop-shadow(0 0 12px #fa6beaaa) sepia(.3) hue-rotate(275deg);animation:enchantment-sway 2.4s ease-in-out infinite alternate}
+.spell-link {position:absolute;left:12%;right:11%;height:25%;top:37%;background:radial-gradient(ellipse,#dd71de40,transparent 70%);animation:oracle-breath 1.6s ease-in-out infinite alternate;z-index:4}
+.mall-victory .quest-actor.medea {animation:medea-retreat 6s ease-in forwards}
+.mall-hedge .quest-actor.hedge {left:69%;height:36%;width:17%}
+.mall-regroup .quest-actor.jason {left:44%}.mall-regroup .quest-actor.piper {left:56%}.mall-regroup .quest-actor.leo {left:68%}.mall-regroup .quest-actor.hedge {left:81%;height:34%;width:15%}
+.enchantment-status {position:absolute;left:50%;top:25%;transform:translateX(-50%);display:grid;grid-template-columns:auto auto;align-items:center;gap:5px 14px;z-index:8;background:#10101fe6;border:1px solid #c290ce66;padding:10px 14px;border-radius:3px;min-width:290px}
+.enchantment-status>span {font-size:10px;letter-spacing:.1em;color:#efc6f1;grid-column:1/-1}
+.enchantment-status>i {width:115px;height:5px;background:#432a4e;overflow:hidden}
+.enchantment-status>i>b {display:block;height:100%;width:0;background:#e29ddd;transition:width .15s}
+.enchantment-status button {grid-row:2/4;grid-column:2;background:#442a4f;border:1px solid #e3b3dc99;padding:9px 12px;font-size:10px;color:#fff1f8;cursor:pointer}
+.enchantment-status button.ready {box-shadow:0 0 15px #d584c933}
+.enchantment-status button:disabled {opacity:.5;cursor:default}
+.enchantment-status small {font-size:8px;letter-spacing:.06em;color:#cdb3d4}
+@keyframes oracle-breath {to{opacity:.45;transform:translateY(-10px) scale(1.08)}}
+@keyframes quest-takeoff {from{transform:translate(-130px,170px) scale(.85)}to{transform:translate(70px,-45px) scale(.8)}}
+@keyframes quest-horizon {0%,8%{transform:translate(-80px,60px) scale(1);opacity:1}80%{opacity:1}100%{transform:translate(420px,-120px) scale(.025);opacity:0}}
+@keyframes quest-clouds {to{transform:translateX(160vw)}}
+@keyframes mall-landing {from{transform:translate(170px,-300px) scale(.15)}to{transform:translate(-110px,130px) scale(.85)}}
+@keyframes enchantment-sway {to{transform:rotate(3deg)}}
+@keyframes medea-retreat {0%{opacity:1;transform:scaleX(-1)}100%{opacity:0;transform:translateX(100px) scaleX(-1)}}
+@media(max-width:700px){.enchantment-status{top:27%;min-width:245px;padding:7px 10px}.story-stage.has-tableau .oracle-dialogue{left:6%;right:38%;padding:12px}.oracle-dialogue .dialogue-footer>span{display:none}.quest-objectives{padding:12px 18px}}
+@media(prefers-reduced-motion:reduce){.quest-tableau *{animation:none!important}.quest-horizon .quest-flight{transform:translate(200px,-30px) scale(.45)}.mall-landing .quest-flight{transform:translate(-110px,130px) scale(.85)}.mall-victory .quest-actor.medea{opacity:0}}
+.title-checkpoints {display:flex;flex-wrap:wrap;justify-content:center;gap:9px;max-width:660px;margin-top:18px}
+.title-checkpoints:empty {display:none}
+.title-checkpoints .continue-camp {margin:0}
+
+/* The smaller gold automaton and Festus's window rescue. */
+.festus-health-mark {position:absolute;right:33.3333%;top:-5px;bottom:-5px;width:2px;background:#fff0a7;z-index:3;box-shadow:0 0 7px #ffe5a0}
+.golden-guardian {position:absolute;left:65%;bottom:24%;width:33%;height:34%;z-index:4;transform-origin:50% 100%;filter:drop-shadow(0 4px 2px #070b16bb)}
+.golden-guardian svg,.rescue-festus svg {display:block;width:100%;height:100%;overflow:hidden;image-rendering:pixelated}
+.mall-golden-dragon .golden-guardian {animation:golden-entrance 6s ease-out both}
+.rescue-window {position:absolute;left:-2%;top:1%;width:27%;height:59%;z-index:1;filter:drop-shadow(0 0 20px #6ca9ee22)}
+.rescue-festus {position:absolute;left:-3%;top:3%;width:61%;height:65%;z-index:5;filter:drop-shadow(0 8px 5px #090d1a99);transform-origin:80% 55%}
+.mall-festus-window .rescue-festus {animation:festus-through-window 3.5s cubic-bezier(.15,.7,.2,1) both}
+.mall-festus-fire .rescue-festus {animation:festus-fire-brace 1.2s ease-in-out infinite alternate}
+.mall-festus-window .quest-actor,.mall-festus-fire .quest-actor,.mall-dragon-fallen .quest-actor {height:25%;width:9%;z-index:7}
+.mall-festus-window .quest-actor.jason,.mall-festus-fire .quest-actor.jason,.mall-dragon-fallen .quest-actor.jason {left:4%}
+.mall-festus-window .quest-actor.piper,.mall-festus-fire .quest-actor.piper,.mall-dragon-fallen .quest-actor.piper {left:15%}
+.mall-festus-window .quest-actor.leo,.mall-festus-fire .quest-actor.leo,.mall-dragon-fallen .quest-actor.leo {left:27%}
+.window-shards {position:absolute;inset:0;z-index:6}
+.window-shards i {position:absolute;left:var(--sx);top:var(--sy);width:var(--sw);height:var(--sh);background:#b5e7f6aa;clip-path:polygon(0 10%,100% 0,64% 100%);transform:rotate(calc(var(--i)*37deg));opacity:0}
+.mall-festus-window .window-shards i {animation:window-glass 2s calc(1s + var(--i)*.018s) ease-out both}
+.festus-rescue-fire {position:absolute;inset:0;width:100%;height:100%;z-index:6;overflow:visible;transform-origin:54% 43%;animation:festus-fire-burst 5.8s .45s linear both;filter:drop-shadow(0 0 13px #ff8b28bb)}
+.festus-rescue-fire .fire-outer {animation:rescue-fire-flicker .18s steps(2,end) infinite alternate}
+.festus-rescue-fire .fire-mid {animation:rescue-fire-flicker .13s steps(2,end) infinite alternate-reverse}
+.mall-festus-fire .golden-guardian {animation:golden-overwhelmed 6s linear both}
+.rescue-embers {position:absolute;inset:0;z-index:8;overflow:hidden}
+.rescue-embers i {position:absolute;left:var(--sx);top:var(--sy);width:4px;height:4px;background:#fff0a0;box-shadow:0 0 8px #ff7519;animation:rescue-ember 1.7s calc(1.4s + var(--i)*.055s) ease-out infinite;opacity:0}
+.golden-guardian.fallen {height:28%;filter:grayscale(.8) brightness(.5) drop-shadow(0 4px 2px #020710);transform:rotate(-5deg)}
+@keyframes golden-entrance {from{transform:translateX(250px);opacity:0}25%{opacity:1}to{transform:translateX(0);opacity:1}}
+@keyframes festus-through-window {from{transform:translate(-820px,-130px) rotate(8deg)}to{transform:translate(0,0) rotate(0)}}
+@keyframes window-glass {0%{opacity:0;transform:translate(0,0) rotate(0)}8%{opacity:1}to{opacity:0;transform:translate(calc(70px + var(--i)*9px),240px) rotate(calc(var(--i)*73deg))}}
+@keyframes festus-fire-brace {to{transform:translate(-4px,3px) rotate(-.5deg)}}
+@keyframes festus-fire-burst {0%{opacity:0;transform:scale(.03,.2)}12%{opacity:1;transform:scale(.8,.7)}22%,78%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.95,.8)}}
+@keyframes rescue-fire-flicker {to{opacity:.82;transform:translateY(3px)}}
+@keyframes golden-overwhelmed {0%,22%{filter:drop-shadow(0 4px 2px #070b16bb);transform:translateX(0)}30%,50%{filter:brightness(1.8) sepia(.4) drop-shadow(0 0 12px #ffc452);transform:translateX(12px)}80%,100%{filter:brightness(.42) grayscale(.8);transform:translate(22px,12px) rotate(-7deg)}}
+@keyframes rescue-ember {15%{opacity:1}to{opacity:0;transform:translate(-35px,-130px)}}
+@media(prefers-reduced-motion:reduce){.mall-festus-window .rescue-festus,.mall-golden-dragon .golden-guardian{transform:none}.window-shards i,.rescue-embers{display:none}.festus-rescue-fire{opacity:1;transform:none;filter:none}.mall-festus-fire .golden-guardian{filter:brightness(.6)}}
+
+/* Relief after the mall gives way to a blue strike and the mansion descent. */
+.mansion-sequence {background:#102747;isolation:isolate}
+.mansion-sky {position:absolute;inset:0;background:url('/assets/art/mansion-approach-sky-v1.png') center/100% 100% no-repeat;z-index:0}
+.mansion-departure .mansion-sky {background-image:url('/assets/art/medea-mall-exterior-v1.png')}
+.mansion-reveal .mansion-sky {background-image:url('/assets/art/mansion-grounds-v1.png')}
+.mansion-party {position:absolute;left:7%;top:-5%;width:74%;height:66%;transform-origin:50% 50%;z-index:3;will-change:transform;filter:drop-shadow(0 5px 5px #07132477)}
+.mansion-party>svg {display:block;width:100%;height:100%;overflow:hidden;image-rendering:pixelated}
+.mansion-blue-beam,.mansion-wing-impact {position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+.mansion-blue-beam {filter:drop-shadow(0 0 12px #24a7ff)}
+.mansion-wing-impact {filter:drop-shadow(0 0 8px #8edcff)}
+.mansion-flight-cloud {position:absolute;left:-10%;top:48%;width:75%;height:25%;background:radial-gradient(ellipse,#b6c8df99,transparent 68%);opacity:.4;z-index:1;animation:mansion-cloud-drift 14s linear infinite;pointer-events:none}
+.mansion-flight-cloud.near {top:55%;left:35%;z-index:5;width:90%;height:30%;opacity:.25;animation-duration:9s}
+.mansion-departure .mansion-flight-cloud {display:none}
+.mansion-descent .mansion-flight-cloud,.mansion-reveal .mansion-flight-cloud {animation-duration:3.5s;opacity:.55}
+.mansion-fall-streaks {position:absolute;inset:0;z-index:2;opacity:0;pointer-events:none}
+.mansion-descent .mansion-fall-streaks {opacity:.35}
+.mansion-fall-streaks i {position:absolute;left:calc(9% + var(--i)*12%);top:80%;width:2px;height:75px;background:linear-gradient(transparent,#c9e7f8);transform:rotate(-14deg);animation:mansion-fall-air 1s calc(var(--i)*-.14s) linear infinite}
+@keyframes mansion-cloud-drift {from{transform:translate(12vw,0)}to{transform:translate(-60vw,-14vh)}}
+@keyframes mansion-fall-air {to{transform:translate(-60px,-100vh) rotate(-14deg)}}
+@media(prefers-reduced-motion:reduce){.mansion-flight-cloud{animation:none!important;opacity:.2!important}.mansion-fall-streaks{display:none}.mansion-blue-beam,.mansion-wing-impact{filter:none}.mansion-party{will-change:auto}}
+.mansion-departure:after {content:"";position:absolute;left:19%;bottom:24%;width:32%;height:2%;border-radius:50%;background:#05142366;filter:blur(3px);z-index:1;animation:mansion-launch-shadow 1.4s 1.8s linear both}
+@keyframes mansion-launch-shadow {from{opacity:1}to{opacity:0;transform:scale(.65)}}
+@media(prefers-reduced-motion:reduce){.mansion-departure:after{animation:none!important;opacity:.5}}
+
+/* Festus remains intact; the forge god carries the whole body away. */
+.midas-outside {background:url('/assets/art/mansion-grounds-v1.png') center/100% 100% no-repeat}
+.midas-inside {background:url('/assets/art/midas-mansion-arena-v1.png') center/100% 100% no-repeat}
+.midas-actor {position:absolute;left:10%;bottom:24%;width:12%;height:31%;z-index:3;transform-origin:50% 100%;filter:drop-shadow(0 3px 1px #05112099)}
+.midas-actor svg,.festus-wreck svg {display:block;width:100%;height:100%;overflow:hidden;image-rendering:pixelated}
+.midas-actor.piper {left:22%}.midas-actor.hedge {left:34%;height:29%}.midas-actor.leo {left:46%}
+.festus-wreck {position:absolute;left:47%;bottom:24%;width:50%;height:35%;z-index:2;filter:drop-shadow(0 4px 2px #050e22a0)}
+.midas-actor.kneeling {left:60%;width:24%;height:23%;z-index:4}
+.midas-actor.hephaestus {left:42%;width:17%;height:43%;z-index:5;filter:drop-shadow(0 0 12px #ffa74a55)}
+.forge-glow {position:absolute;left:38%;bottom:21%;width:28%;height:50%;z-index:1;background:radial-gradient(ellipse,#ffd47d44,transparent 65%);animation:forge-warmth 3s ease-in-out infinite alternate}
+.midas-hephaestus .hephaestus {animation:forge-arrival 3s ease-out both}
+.midas-crash .festus-wreck {animation:wreck-reveal 3s ease-out both}
+.midas-crash>.midas-actor {animation:crash-survivors 3s ease-out both}
+.midas-crash>.midas-actor.leo {left:42%;height:29%}
+.landing-explosion {position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none}
+.blast-cloud {transform-origin:68% 72%;animation:landing-fire 4s .35s ease-out both;filter:drop-shadow(0 0 15px #ffb348aa)}
+.blast-snow {transform-origin:68% 72%;animation:landing-snow 4.3s .45s ease-out both}
+.forge-ascension {position:absolute;inset:0;z-index:5;transform-origin:62% 60%;animation:forge-ascent 11s ease-in both}
+.midas-enter>.midas-actor.hedge {left:73%;bottom:39%;height:25%}
+.midas-sequence .story-walker {position:absolute;bottom:24%;width:15%;height:33%;transform-origin:50% 100%;z-index:4;filter:drop-shadow(0 3px 1px #07112099)}
+.midas-inside>.midas-actor.jason {left:18%;width:13%;height:37%}
+.midas-inside>.midas-actor.piper {left:36%;width:13%;height:37%}
+.midas-inside>.midas-actor.leo {left:51%;width:13%;height:37%}
+.midas-actor.king {left:78%;height:43%;width:18%}
+.gold-friend {position:absolute;bottom:24%;width:13%;height:37%;z-index:3}
+.gold-friend.piper {left:36%}.gold-friend.leo {left:51%}
+.living-friend,.golden-friend {position:absolute;inset:0}
+.gold-friend .midas-actor {inset:0;width:100%;height:100%}
+.living-friend {animation:friend-living .3s var(--gold-delay) steps(1,end) both}
+.golden-friend {animation:friend-golden .3s var(--gold-delay) steps(1,end) both;filter:drop-shadow(0 0 5px #f4cc6355)}
+.friends-gold-blasts {position:absolute;inset:0;width:100%;height:100%;z-index:5;filter:drop-shadow(0 0 8px #ffd35e)}
+.piper-gold-blast {animation:small-gold-blast .32s 1.36s ease-out both}.leo-gold-blast {animation:small-gold-blast .32s 2.16s ease-out both}
+.midas-reveal .king {animation:king-arrives 5s ease-out both}
+.midas-victory .king {animation:king-retreats 6s ease-in both}
+.gold-curse-hud {position:absolute;left:50%;top:26%;transform:translateX(-50%);z-index:8;border:1px solid #d9b66377;background:#161322eb;padding:10px 18px;min-width:290px;text-align:center}
+.gold-curse-hud strong {font-size:12px;letter-spacing:.12em;color:#ffe29b}
+.gold-curse-hud small {display:block;font-size:9px;letter-spacing:.08em;color:#cbbb95}
+.gold-curse-pips {display:flex;justify-content:center;gap:5px;margin:10px 0}
+.gold-curse-pips i {width:16px;height:10px;border:1px solid #9e845143;background:#263340}
+.gold-curse-pips i.filled {background:linear-gradient(#fff1ae,#ba8229);box-shadow:0 0 5px #e9c66666;border-color:#ffe49c}
+@keyframes landing-fire {0%{opacity:0;transform:scale(.07)}12%{opacity:1;transform:scale(1.1)}40%{opacity:.9;transform:scale(1.2)}100%{opacity:0;transform:scale(1.45) translateY(-50px)}}
+@keyframes landing-snow {0%{opacity:0;transform:scale(.1)}18%{opacity:1}100%{opacity:0;transform:scale(1.5) translateY(-80px)}}
+@keyframes wreck-reveal {from{opacity:0;transform:translateY(-30px)}55%{opacity:.3}to{opacity:1;transform:none}}
+@keyframes crash-survivors {0%,35%{opacity:0;transform:translateX(45px)}to{opacity:1;transform:none}}
+@keyframes forge-arrival {from{opacity:0;filter:brightness(2) drop-shadow(0 0 30px #ffd777)}to{opacity:1;filter:drop-shadow(0 0 12px #ffa74a55)}}
+@keyframes forge-warmth {to{opacity:.4;transform:scale(1.08)}}
+@keyframes forge-ascent {0%,10%{transform:translate(0,0) scale(1);opacity:1}75%{opacity:1}100%{transform:translate(140px,-820px) scale(.08);opacity:0}}
+@keyframes friend-living {from{opacity:1}to{opacity:0}}@keyframes friend-golden {from{opacity:0}to{opacity:1}}
+@keyframes small-gold-blast {0%{opacity:0;stroke-width:2}25%,70%{opacity:1;stroke-width:8}100%{opacity:0;stroke-width:3}}
+@keyframes king-arrives {from{opacity:0;transform:translateX(140px)}to{opacity:1;transform:none}}
+@keyframes king-retreats {to{opacity:0;transform:translateX(140px)}}
+@media(max-width:700px){.gold-curse-hud{min-width:240px;padding:8px 10px}.gold-curse-pips{gap:4px}.gold-curse-pips i{width:14px}}
+@media(prefers-reduced-motion:reduce){.landing-explosion{display:none}.midas-hephaestus .hephaestus,.midas-crash .festus-wreck,.midas-crash>.midas-actor{animation:none!important;opacity:1;transform:none}.forge-ascension{animation:none!important;opacity:1;transform:translate(0,-60px) scale(.8)}.forge-glow{animation:none!important}.living-friend{animation:none!important;opacity:0}.golden-friend{animation:none!important;opacity:1}.friends-gold-blasts{display:none}.midas-reveal .king{animation:none!important;opacity:1}.midas-victory .king{animation:none!important;opacity:0}}
+
+/* Give the taller studio credit room when the title menu needs to scroll. */
+@media (max-height: 700px) {
+  .title-screen {justify-content: flex-start; padding: 28px 8% 35px; overflow-y: auto}
+  .title-screen .studio-brand {position: static; align-self: flex-start; margin-bottom: 25px}
+  .title-screen .title-footer {position: static; width: 100%; margin-top: 32px; gap: 16px}
+}
+@media (max-height: 700px) and (max-width: 550px) {
+  .title-screen .studio-brand {margin-top: 58px}
 }

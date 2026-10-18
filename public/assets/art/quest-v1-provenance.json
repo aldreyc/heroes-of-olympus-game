@@ -1,0 +1,48 @@
+{
+  "mode": "built-in image_gen",
+  "created": "2026-10-18",
+  "assets": [
+    {
+      "file": "quest-cast-v1.png",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Asset: transparent pixel-art character sheet for 2D story game. Two fully separate figures, with generous empty margin and no overlap: LEFT Chiron, wise middle-aged brown-bearded centaur, human torso in cream camp polo, full chestnut horse body, all four hooves touching a shared baseline. RIGHT Rachel Elizabeth Dare, red-haired teenage girl with long curly copper hair, green eyes, paint-spattered white T-shirt, jeans, barefoot, hands lifted gently as emerald Oracle mist curls above hands. Detailed hand-placed pixel-art look, warm expressive faces, clean dark outlines matching the reference heroes. Full bodies, no cropped hooves/feet, no labels/text/shadows/background. Each figure in its own half. Reference image only supplies sprite style, not the subjects.",
+      "references": [
+        "story-heroes-v1.png"
+      ],
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-1a3b1bae-4e62-4bb6-9e1d-0e99cd704c9f.png"
+    },
+    {
+      "file": "medea-combat-v1.png",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Asset: four-frame transparent pixel-art sprite sheet, clean 2 by 2 grid, exactly one fully separate full-body character per quadrant, empty gutters. Medea sorceress disguised as elegant department-store owner, mature woman with long dark hair, regal deep-violet modern long dress, gold belt, turquoise jewelry, emerald and violet potion vials. Faces LEFT in all frames. Top-left calm poised hands, top-right casting with one arm extended and glowing green vial, bottom-left powerful charm spell both hands lifted with pink magical wisps, bottom-right recoiling/staggering with empty lowered hands. Same scale, feet on same baseline inside each cell, no giant spell effects, no text, no background, no shadow. Detailed expressive 2D pixel art matching reference character rendering.",
+      "references": [
+        "story-heroes-v1.png"
+      ],
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-95e6c756-a83f-448f-8aff-c37387ec4547.png"
+    },
+    {
+      "file": "festus-trio-flight-v1.png",
+      "transparent": true,
+      "prompt": "Use case: illustration-story. Asset: transparent pixel-art four-frame side-view flight sprite sheet, 2 by 2 grid with large empty gutters. Reference 1 gives Festus bronze mechanical dragon design and flying style. Replace the lone rider with THREE clearly visible teenage riders seated securely in a line on his back: Leo at front steering (curly dark hair goggles olive jacket), Piper behind Leo (long dark hair purple jacket), blond Jason behind Piper (purple shirt). Reference 2 supplies accurate character identities. All three visible, sitting astride the dragon, holding the bronze ridges or each other, no one floating outside. Dragon faces right, all four wingbeat phases from raised wings to lowered wings. Identical design and rider count in every cell. Complete long segmented tail and wing tips within each cell, no cutoff. Warm bronze, amber eyes, clean readable silhouettes, detailed 2D pixel art, true transparent background, no captions.",
+      "references": [
+        "festus-flight-v1.png",
+        "story-heroes-v1.png"
+      ],
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-15e68939-ec8d-4ea9-8e1a-8e753a4b1b32.png"
+    },
+    {
+      "file": "medea-mall-exterior-v1.png",
+      "transparent": false,
+      "prompt": "Use case: illustration-story. Asset: 16:9 detailed 2D pixel-art game story background, no characters. Enchanted upscale shopping mall in Chicago on a winter dusk, fantastical stylish department store entrance centered right, huge inviting brass-framed glass doors glowing warmly, burgundy awnings, city skyline behind, snow dusting roof, amber streetlamps, planters. Foreground wide unobstructed plaza covers bottom 35 percent, walkable horizontal baseline at 76 percent image height. Large clear parking/plaza area LEFT where a bronze dragon sprite can wait outside without blocking entrance. Rich atmospheric indigo sky and teal shadows contrasted with warm storefront. Side-on story camera, detailed crisp pixel clusters, no text, no logos, no people or creatures.",
+      "references": [],
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-83c05d1f-b11e-4750-9299-baf16ea463cc.png"
+    },
+    {
+      "file": "medea-mall-arena-v1.png",
+      "transparent": false,
+      "prompt": "Use case: illustration-story. Asset: 16:9 2D pixel-art fighting game arena background inside an enchanted luxurious department store. Medea's potion boutique in a Chicago mall: crystal chandeliers, brass columns, tiered balconies, burgundy drapes, glowing emerald and amethyst perfume/potion displays, gilded mirrors, grand marble stairs behind center. Perspective level with fighters. Wide entirely empty polished dark marble fighting floor across bottom quarter, horizontal ground contact at 82 percent image height (590 in 720), distant shelves and counters must remain above floor and not block characters. Enchanting but ominous violet/teal/gold lighting. Crisp richly detailed pixel art, no characters, no dragon, no writing, no interface.",
+      "references": [],
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-7a966d50-3aaa-48e0-ab9d-2ba95f7b46cd.png"
+    }
+  ]
+}

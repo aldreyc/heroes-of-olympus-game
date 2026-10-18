@@ -35,33 +35,9 @@ The following details are checked against the opening two chapters reproduced as
 - The four prophecy lines and their timing are user-supplied requirements. Use that text exactly as requested; presenting it before the bus is deliberate foreshadowing rather than the novel's scene order.
 - Avoid later-series revelations in dialogue, including explaining the memory swap or naming the hidden enemy too early.
 
-## Suggested original dialogue
+## Current dialogue and staging
 
-These lines are newly written for this game; none should be labeled quotations from the book.
+The 18 October revision supersedes the earlier invented dialogue and half-health rescue. See [story-revision.md](story-revision.md) for verified short quotations, source limitations, the user-requested game chronology, and local verification.
+## Camp continuation adaptation
 
-**Bus**
-
-- Jason: "I know I'm supposed to remember you. There's just… nothing."
-- Piper: "Then stay with us. We can work it out together."
-- Leo: "I'm Leo. Excellent mechanic. Terrible study partner. Ringing any bells?"
-- Hedge: "Valdez! If that speaker starts singing again, you're carrying it home."
-
-**Arrival / warning**
-
-- Hedge: "I was watching two kids. Now there's you. Stick close until help arrives."
-- Jason: "Help with what?"
-- Hedge: "Whatever's hiding in that wind."
-
-**Reveal / coin**
-
-- Piper: "Dylan? What's happening to you?"
-- Dylan: "The disguise has served its purpose."
-- Jason: "My hands remember something my mind doesn't."
-
-**Rescue / ending**
-
-- Hedge: "I've got Leo! Jason, reach Piper!"
-- Piper: "You caught me… and the air caught us. How?"
-- Leo: "Gold sword. Flying. Missing coach. We need a much better explanation."
-- Jason: "I wish I had one. I still don't know who I am."
-- Piper: "Then that's what we find out next. Together."
+The local continuation follows Rodrigo's requested simultaneous parent signs at touchdown and Drew guiding all three to their cabins. This is a condensed game sequence, not the novel's exact claiming chronology. All added prose is action caption text. See [camp-revision.md](camp-revision.md) for sources, deliberate adaptations and asset provenance.

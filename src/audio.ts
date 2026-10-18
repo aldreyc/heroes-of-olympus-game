@@ -4,7 +4,7 @@ type SoundManager = Phaser.Scene["sound"];
 type Sound = ReturnType<SoundManager["add"]>;
 
 export const AUDIO_FILES: Record<string, string> = Object.fromEntries([
-  ...["intro", "ending", "combat", "wind", "bus", "reveal", "prophecy-natural"].map((key) => [key, key + ".mp3"]),
+  ...["intro", "ending", "combat", "wind", "bus", "reveal", "prophecy-natural", "rachel-prophecy", "hephaestus-reuse"].map((key) => [key, key + ".mp3"]),
   ...[
     "ui", "confirm", "slash", "hit", "heavy", "block", "jump", "land",
     "coin", "fire", "charm", "lightning", "gust", "victory", "defeat",
@@ -115,10 +115,10 @@ export class AudioDirector {
 
   sfx(kind: string) {
     if (this.muted) return;
-    const key = kind === "special" ? "coin" : kind;
+    const key = kind === "dragon-step" ? "heavy" : kind === "step" ? "land" : kind === "special" ? "coin" : kind;
     if (!this.manager?.game.cache.audio.exists(key)) return;
     // Phaser destroys one-shot sounds on completion.
-    const volume = ["heavy", "lightning"].includes(key) ? 0.34
+    const volume = kind === "dragon-step" ? 0.085 : kind === "step" ? 0.045 : ["heavy", "lightning"].includes(key) ? 0.34
       : ["jump", "land", "slash"].includes(key) ? 0.2 : 0.28;
     this.manager.play(key, { volume, detune: key === "hit" || key === "slash" ? Math.random() * 70 - 35 : 0 });
   }

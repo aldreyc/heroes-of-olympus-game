@@ -1,0 +1,44 @@
+{
+  "mode": "built-in image_gen",
+  "date": "2026-10-18",
+  "assets": [
+    {
+      "name": "festus-damaged-v1",
+      "transparent": true,
+      "refs": [
+        "festus-discovery-v1.png"
+      ],
+      "prompt": "Use case: illustration-story. Asset: single transparent detailed pixel-art 2D story sprite. The reference is Festus, bronze mechanical dragon, match his exact patinated armor and amber eyes. After a hard landing, he is lying on his belly and side with legs folded beneath him and head resting on the ground, facing RIGHT. Very damaged but WHOLE AND INTACT: scorched dented bronze plates, bent attached wing, exposed gears still connected, cracked armor, faint smoke wisps. No dismemberment, no separated head, no detached limbs or loose body pieces. The long tail and entire dragon must remain attached. Eyes faint dim amber, solemn emotional scene, not gruesome. Full body with generous empty transparent margin. No riders or people, no floor, no scenery, no text. Rich crisp pixel-art clusters and dark outlines consistent with reference.",
+      "file": "festus-damaged-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-d0e7826c-a019-45f2-9221-05b76900d192.png"
+    },
+    {
+      "name": "forge-story-cast-v1",
+      "transparent": true,
+      "refs": [
+        "story-heroes-v1.png"
+      ],
+      "prompt": "Use case: illustration-story. Asset: transparent pixel-art sheet with exactly TWO completely isolated figures in separate halves with broad empty gutter. LEFT: Hephaestus, a tall burly middle-aged blacksmith god, rugged soot-smudged face, thick dark beard streaked gray, unruly hair, worn work shirt with sleeves rolled up, leather blacksmith apron, tool belt, heavy boots, holding a small forge hammer lowered, kind but grave expression, full body standing. Subtle amber aura behind shoulders, no giant magic effect. RIGHT: Leo Valdez from the third figure in reference, same curly dark hair and goggles on forehead, olive jacket, white shirt, blue jeans and tool belt. Leo kneels on BOTH knees on the ground facing RIGHT, leaning forward with a wrench held out to repair a dragon offscreen. Sad worried focused face, empty hands not impossible, full knees and shoes safely in frame. Do not include dragon. Match reference identity and detailed expressive 2D pixel art with dark outlines. No background, no labels, no shadows, no extra figures.",
+      "file": "forge-story-cast-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-5723a306-5d0d-45d3-ac84-4cd5869bdd2a.png"
+    },
+    {
+      "name": "king-midas-combat-v1",
+      "transparent": true,
+      "refs": [
+        "story-heroes-v1.png"
+      ],
+      "prompt": "Use case: illustration-story. Asset: transparent four-frame 2D pixel-art boss sprite sheet, 2 by 2 grid, one isolated full-body King Midas per cell with large gutters and margins. Same middle-aged king in all cells, facing LEFT, short dark brown hair with some gray, trimmed beard, thin gold crown, tailored dark plum suit over cream shirt, gold vest and jewelry, polished shoes, one visibly gold hand. A wealthy dangerous modern mansion owner, not a medieval armored warrior. TOP LEFT poised idle with gold hand lowered, TOP RIGHT launching a small golden projectile from outstretched hand toward LEFT, BOTTOM LEFT sweeping gold hand outward casting a low golden blast toward LEFT, BOTTOM RIGHT staggering backward from a hit. Same scale and feet baseline per cell; small glow around hand, no large beam drawn. Full bodies and hands not cut off, no overlap between cells. Rich crisp detailed pixel-art rendering consistent with reference style. No text, no backgrounds, no shadow.",
+      "file": "king-midas-combat-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-d78b2f2d-9aa6-4daa-a883-9c5e7e657c65.png"
+    },
+    {
+      "name": "midas-mansion-arena-v1",
+      "transparent": false,
+      "refs": [],
+      "prompt": "Use case: illustration-story. Asset: wide 16:9 2D pixel-art fighting game background, interior of a wealthy private mountain MANSION at blue twilight. Elegant great room with dark timber beams and warm stone walls, sweeping private staircase in rear, amber wall lamps, tall windows showing snowy pines outside, tasteful gilded decorations and some gold furnishings. Expensive modern private house, NOT a royal palace or castle hall. Large clear dark polished stone floor across the lower third; fighters will stand at 82 percent image height, so no furniture or props on foreground fighting lane. Two clear spots in left and middle background for gold statues of friends to be overlaid later. Empty scene, no people, no statues, no dragon, no UI or text. Rich detailed crisp pixel art matching a modern mythological adventure, warm gold against plum and midnight blue.",
+      "file": "midas-mansion-arena-v1.png",
+      "source": "/Users/aldrey/.codex/generated_images/01a14d7c-a069-7120-b31b-59c9cd52f637/exec-a36f4110-66c1-4e1b-b0a8-a7fa539f1081.png"
+    }
+  ]
+}

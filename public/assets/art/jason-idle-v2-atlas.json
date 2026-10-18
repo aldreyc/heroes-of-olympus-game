@@ -1,0 +1,32 @@
+{
+  "frames": {
+    "jason-idle": {
+      "frame": {
+        "x": 127,
+        "y": 62,
+        "w": 1029,
+        "h": 1123
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1029,
+        "h": 1123
+      },
+      "sourceSize": {
+        "w": 1029,
+        "h": 1123
+      }
+    }
+  },
+  "meta": {
+    "image": "jason-idle-v2.png",
+    "size": {
+      "w": 1295,
+      "h": 1214
+    },
+    "note": "Single corrected idle pose: one golden sword and one empty fist. Measured alpha bounds; original PNG preserved."
+  }
+}

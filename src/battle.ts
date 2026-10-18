@@ -108,6 +108,7 @@ export class OlympusScene extends Phaser.Scene {
     this.load.image("bus", "/assets/art/bus.png");
     this.load.image("rescue", "/assets/art/rescue.png");
     this.load.image("heroes", "/assets/art/heroes.png");
+    this.load.atlas("jason-idle", "/assets/art/jason-idle-v2.png", "/assets/art/jason-idle-v2-atlas.json");
     this.load.image("wind-spirit", "/assets/art/wind-spirit-v2.png");
     this.load.atlas("strikes", "/assets/art/heroes-strikes-v2.png", "/assets/art/heroes-strikes-v2-atlas.json");
     this.load.atlas(
@@ -655,7 +656,11 @@ export class OlympusScene extends Phaser.Scene {
     this.onUpdate();
   }
   renderHero(pose: number) {
-    if (pose === 4) {
+    if (this.heroIndex === 0 && pose === 0) {
+      this.player.setTexture("jason-idle", "jason-idle");
+      const targetHeight = this.getRect(0, 0, 1536, 1024).h * 1.08;
+      this.player.setScale(targetHeight / this.player.frame.height);
+    } else if (pose === 4) {
       this.player.setTexture("strikes", `${HEROES[this.heroIndex].id}-quick`);
       const targetHeight = this.getRect(this.heroIndex, 4, 1536, 1024).h * 1.08;
       this.player.setScale(targetHeight / this.player.frame.height);

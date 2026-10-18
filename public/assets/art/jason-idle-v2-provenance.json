@@ -1,0 +1,9 @@
+{
+  "tool": "Built-in image_gen",
+  "date": "2026-10-18",
+  "file": "jason-idle-v2.png",
+  "reference": "heroes.png (top-left idle pose)",
+  "prompt": "Use case: precise-object-edit / identity-preserve. Input image is the reference combat sprite sheet. Edit ONLY the TOP LEFT character pose, the blond boy Jason in a purple T-shirt and jeans. Produce that ONE full-body idle/fighting-ready sprite ALONE on a genuinely transparent background. Preserve his exact face, spiky blond hair, blue eyes, youthful proportions, purple short-sleeved shirt, blue jeans, purple/white sneakers, side-view orientation facing screen-right, bent knees and broad balanced fighting stance, crisp detailed pixel-art style and warm shading. Crucial correction: he holds EXACTLY ONE golden short sword, in the lower hand near his left-on-image hip, with its single blade angled diagonally upward across his torso. His other hand, raised ahead of his body near the right-on-image shoulder, is an EMPTY clenched fist. Remove the erroneous second gold blade from that raised hand completely, rebuilding only the empty fist naturally. No second weapon anywhere, no dagger, no shield, no sword sheath, no extra arms, no extra fingers, no other poses or characters. Transparent padding around every edge; complete feet and sword tip visible. No ground shadow, glow, background, labels, text or UI. This is a replacement idle frame, so closely preserve the pose and proportions of the top-left original.",
+  "correction": "One golden sword in the hip-side hand, empty raised fist; retain original display height and feet anchor.",
+  "canonSource": "https://www.readriordan.com/2018/04/12/spotlight-on-jason-grace/"
+}

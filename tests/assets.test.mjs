@@ -7,10 +7,11 @@ function pngSize(path) {
   return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
 }
 test("all named combat and walk frames stay inside their source image", () => {
-  for (const name of ["heroes", "heroes-walk", "heroes-strikes-v2"]) {
+  const expectedFrames = { "heroes": 18, "heroes-walk": 12, "heroes-strikes-v2": 3, "jason-idle-v2": 1 };
+  for (const [name, count] of Object.entries(expectedFrames)) {
     const { w, h } = pngSize(root + `art/${name}.png`);
     const atlas = JSON.parse(fs.readFileSync(root + `art/${name}-atlas.json`));
-    assert.equal(Object.keys(atlas.frames).length, name === "heroes" ? 18 : name === "heroes-walk" ? 12 : 3);
+    assert.equal(Object.keys(atlas.frames).length, count);
     for (const [key, entry] of Object.entries(atlas.frames)) {
       const f = entry.frame;
       assert.ok(

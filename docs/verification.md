@@ -1,5 +1,9 @@
 # Verification record
 
+## Jason weapon correction — 18 October 2026
+
+The user's report was confirmed in the original Jason idle artwork: his raised free hand held an erroneous second blade. Checked the publisher's Jason profile (linked in `canon-notes.md`) and all active combat poses. Replaced only the idle art with a single-sword frame, including the story sword reveal that uses the same pose. Preserved its on-screen height and foot anchor. Generated with the built-in image tool; prompt and source recorded in `public/assets/art/jason-idle-v2-provenance.json`. Visually inspected the new asset; checked transparent alpha and atlas bounds. All 51 existing automated checks and the build passed. Live browser verification remains pending under the existing permission block.
+
 ## Storm and combat polish — 18 October 2026
 
 - Replaced the procedural spirit body with a detailed transparent pixel-art sprite, retaining animated wisps and orbiting debris. Enemy effects remain wind-only. Added layered haze, moving dust and papers, ground warnings, distinct Jason/Piper/Leo specials, impact bursts and a short finishing beat.
